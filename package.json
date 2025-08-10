@@ -1,0 +1,29 @@
+{
+  "name": "ahmed-e-portfolio",
+  "version": "1.0.0",
+  "description": "Personal portfolio website with interactive phone interface",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000",
+    "build": "echo 'No build step needed for vanilla JS'",
+    "test": "echo 'No tests specified'"
+  },
+  "keywords": [
+    "portfolio",
+    "vanilla-js",
+    "interactive",
+    "phone-interface",
+    "game"
+  ],
+  "author": "Ahmed E",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/ahmed-e-portfolio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/ahmed-e-portfolio/issues"
+  },
+  "homepage": "https://github.com/yourusername/ahmed-e-portfolio#readme"
+} 

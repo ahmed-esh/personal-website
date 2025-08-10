@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize audio
   function initAudio() {
     try {
-      themeAudio = new Audio("/sounds/theme.mp3");
+      themeAudio = new Audio("assets/sounds/theme.mp3");
       themeAudio.loop = true;
       themeAudio.volume = 0.35;
       themeAudio.play().catch(() => {});
@@ -159,9 +159,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function renderVideoApp() {
     const sampleVideos = [
-      { title: "Project A - Short Demo", src: "/videos/sample1.mp4" },
-      { title: "Project B - Scene Reel", src: "/videos/sample2.mp4" },
-      { title: "Project C - Test", src: "/videos/sample3.mp4" },
+      { title: "Project A - Short Demo", src: "assets/videos/sample1.mp4" },
+      { title: "Project B - Scene Reel", src: "assets/videos/sample2.mp4" },
+      { title: "Project C - Test", src: "assets/videos/sample3.mp4" },
     ];
 
     return `
@@ -223,9 +223,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function renderFramesApp() {
     const frames = [
-      { title: "Still 1", caption: "Child's perspective drawing", src: "" },
-      { title: "Still 2", caption: "Family scene (placeholder)", src: "" },
-      { title: "Still 3", caption: "Cars (placeholder)", src: "" },
+      { title: "Still 1", caption: "Child's perspective drawing", src: "assets/images/frame1.jpg" },
+      { title: "Still 2", caption: "Family scene (placeholder)", src: "assets/images/frame2.jpg" },
+      { title: "Still 3", caption: "Cars (placeholder)", src: "assets/images/frame3.jpg" },
     ];
 
     return `
@@ -335,9 +335,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function renderGalleryModal() {
     const sampleVideos = [
-      { title: "Project A - Short Demo", src: "/videos/sample1.mp4" },
-      { title: "Project B - Scene Reel", src: "/videos/sample2.mp4" },
-      { title: "Project C - Test", src: "/videos/sample3.mp4" },
+      { title: "Project A - Short Demo", src: "assets/videos/sample1.mp4" },
+      { title: "Project B - Scene Reel", src: "assets/videos/sample2.mp4" },
+      { title: "Project C - Test", src: "assets/videos/sample3.mp4" },
     ];
     const video = sampleVideos[galleryModal];
 
@@ -555,4 +555,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Start the app
   init();
-});
+}); 
