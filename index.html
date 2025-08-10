@@ -1,1 +1,42 @@
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ahmed E Portfolio</title>
+  <style>
+    @keyframes gradient {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    .animate-gradient {
+      background-size: 200% 200%;
+      animation: gradient 15s ease infinite;
+    }
+    .glitch-overlay {
+      background: repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.00) 2px);
+      animation: flicker 3s linear infinite;
+    }
+    @keyframes flicker {
+      0%,100%{opacity:0.1} 50%{opacity:0.05}
+    }
+    button:focus {
+      outline: 2px solid #38bdf8;
+      outline-offset: 2px;
+    }
+    .hover\:scale-105:hover {
+      transform: scale(1.05);
+    }
+    .transition-transform {
+      transition: transform 0.2s ease;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- Your bundled React app script will be injected here by your build tool -->
+  <script src="app.js"></script>
+</body>
+</html>
