@@ -201,7 +201,9 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="space-y-4">
           ${sampleVideos.map((v, i) => `
             <div class="bg-zinc-900 rounded-lg p-4 flex gap-4 items-center hover:bg-zinc-800 transition-colors">
-              <img src="${v.thumbnail}" alt="${v.title} thumbnail" class="w-24 h-16 object-cover rounded-lg">
+              <div class="w-24 h-16 bg-gradient-to-br from-gray-700 to-gray-900 rounded-lg flex items-center justify-center text-xs text-gray-400 border border-gray-600">
+                ${v.title.split(' ')[0]}
+              </div>
               <div class="flex-1">
                 <div class="font-semibold text-lg mb-1">${v.title}</div>
                 <div class="text-sm text-gray-400">${v.yearType}</div>
