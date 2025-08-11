@@ -47,4 +47,4 @@ coverage/
 
 # Temporary folders
 tmp/
-temp/ 
+temp/ *.mp4
