@@ -196,18 +196,15 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="text-xs text-gray-400">Video Gallery</div>
           <div></div>
         </div>
-        <div class="grid grid-cols-1 gap-3">
+        <div class="space-y-4">
           ${sampleVideos.map((v, i) => `
-            <div class="bg-zinc-900 rounded p-3 flex gap-3 items-center">
-              <img src="${v.thumbnail}" alt="${v.title} thumbnail" class="w-20 h-12 object-cover rounded">
+            <div class="bg-zinc-900 rounded-lg p-4 flex gap-4 items-center hover:bg-zinc-800 transition-colors">
+              <img src="${v.thumbnail}" alt="${v.title} thumbnail" class="w-24 h-16 object-cover rounded-lg">
               <div class="flex-1">
-                <div class="font-medium">${v.title}</div>
-                <div class="text-xs text-gray-400 mb-1">${v.yearType}</div>
-                <div class="text-xs text-gray-500">
-                  ${v.description}
-                </div>
+                <div class="font-semibold text-lg mb-1">${v.title}</div>
+                <div class="text-sm text-gray-400">${v.yearType}</div>
               </div>
-              <button class="open-video-btn text-sm text-sky-400" data-index="${i}">
+              <button class="open-video-btn px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg transition-colors" data-index="${i}">
                 Open
               </button>
             </div>
@@ -377,17 +374,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     return `
       <div class="fixed inset-0 bg-black bg-opacity-90 flex flex-col justify-center items-center z-50 gallery-modal">
-        <div class="w-11/12 h-3/4 max-w-4xl max-h-[80vh] bg-black flex items-center justify-center rounded-lg overflow-hidden">
+        <div class="w-11/12 h-3/4 max-w-5xl max-h-[80vh] bg-black flex items-center justify-center rounded-lg overflow-hidden">
           ${mediaContent}
         </div>
         <button
-          class="close-modal absolute top-6 right-6 text-white bg-red-600 rounded-full w-8 h-8 flex justify-center items-center"
+          class="close-modal absolute top-6 right-6 text-white bg-red-600 rounded-full w-8 h-8 flex justify-center items-center hover:bg-red-700 transition-colors"
         >
           ✕
         </button>
-        <h3 class="text-white text-lg font-medium mt-4">${video.title}</h3>
-        <p class="text-gray-400 text-sm">${video.yearType}</p>
-        <p class="text-gray-500 text-sm max-w-2xl text-center mt-2">${video.description}</p>
+        <div class="text-center mt-6 max-w-3xl">
+          <h3 class="text-white text-2xl font-bold mb-2">${video.title}</h3>
+          <p class="text-sky-400 text-lg mb-4">${video.yearType}</p>
+          <p class="text-gray-300 text-base leading-relaxed">${video.description}</p>
+        </div>
       </div>
     `;
   }
