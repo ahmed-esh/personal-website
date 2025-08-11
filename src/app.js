@@ -216,6 +216,43 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
   }
 
+  function renderGalleryModal() {
+    if (galleryModal === null) return '';
+    const video = sampleVideos[galleryModal];
+
+    let mediaContent = '';
+    let videoSrc = video.src;
+
+    if (videoSrc.includes("youtube.com/watch?v=")) {
+      const videoId = videoSrc.split('v=')[1].split('&')[0];
+      mediaContent = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    } else if (videoSrc.includes("drive.google.com/file/d/")) {
+      const fileId = videoSrc.split('/d/')[1].split('/view')[0];
+      mediaContent = `<iframe class="w-full h-full" src="https://docs.google.com/file/d/${fileId}/preview" frameborder="0" allowfullscreen></iframe>`;
+    } else {
+      // Assume local video file
+      mediaContent = `<video controls autoplay class="w-full h-full"><source src="${videoSrc}" type="video/mp4">Your browser does not support the video tag.</video>`;
+    }
+
+    return `
+      <div class="fixed inset-0 bg-black bg-opacity-90 flex flex-col justify-center items-center z-50 gallery-modal">
+        <div class="w-11/12 h-3/4 max-w-5xl max-h-[80vh] bg-black flex items-center justify-center rounded-lg overflow-hidden">
+          ${mediaContent}
+        </div>
+        <button
+          class="close-modal absolute top-6 right-6 text-white bg-red-600 rounded-full w-8 h-8 flex justify-center items-center hover:bg-red-700 transition-colors"
+        >
+          ✕
+        </button>
+        <div class="text-center mt-6 max-w-3xl">
+          <h3 class="text-white text-2xl font-bold mb-2">${video.title}</h3>
+          <p class="text-sky-400 text-lg mb-4">${video.yearType}</p>
+          <p class="text-gray-300 text-base leading-relaxed">${video.description}</p>
+        </div>
+      </div>
+    `;
+  }
+
   function renderXRApp() {
     const sampleXR = [
       { title: "XR Scene 1", desc: "Placeholder 3D scene (replace with A-Frame/GLB embed)" },
@@ -356,42 +393,7 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
   }
 
-  function renderGalleryModal() {
-    if (galleryModal === null) return '';
-    const video = sampleVideos[galleryModal];
 
-    let mediaContent = '';
-    let videoSrc = video.src;
-
-    if (videoSrc.includes("youtube.com/watch?v=")) {
-      const videoId = videoSrc.split('v=')[1].split('&')[0];
-      mediaContent = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-    } else if (videoSrc.includes("drive.google.com/file/d/")) {
-      const fileId = videoSrc.split('/d/')[1].split('/view')[0];
-      mediaContent = `<iframe class="w-full h-full" src="https://docs.google.com/file/d/${fileId}/preview" frameborder="0" allowfullscreen></iframe>`;
-    } else {
-      // Assume local video file
-      mediaContent = `<video controls autoplay class="w-full h-full"><source src="${videoSrc}" type="video/mp4">Your browser does not support the video tag.</video>`;
-    }
-
-    return `
-      <div class="fixed inset-0 bg-black bg-opacity-90 flex flex-col justify-center items-center z-50 gallery-modal">
-        <div class="w-11/12 h-3/4 max-w-5xl max-h-[80vh] bg-black flex items-center justify-center rounded-lg overflow-hidden">
-          ${mediaContent}
-        </div>
-        <button
-          class="close-modal absolute top-6 right-6 text-white bg-red-600 rounded-full w-8 h-8 flex justify-center items-center hover:bg-red-700 transition-colors"
-        >
-          ✕
-        </button>
-        <div class="text-center mt-6 max-w-3xl">
-          <h3 class="text-white text-2xl font-bold mb-2">${video.title}</h3>
-          <p class="text-sky-400 text-lg mb-4">${video.yearType}</p>
-          <p class="text-gray-300 text-base leading-relaxed">${video.description}</p>
-        </div>
-      </div>
-    `;
-  }
 
   function attachEventListeners() {
     // App icon clicks
