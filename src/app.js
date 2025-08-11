@@ -16,6 +16,38 @@ document.addEventListener('DOMContentLoaded', function() {
   ];
   const numCols = 3;
 
+  // Video projects data
+  const sampleVideos = [
+    { 
+      title: "Chiedo Asilo", 
+      yearType: "2025, Animation",
+      description: "Following the story of a young boy in a trafficking scene",
+      src: "https://www.youtube.com/watch?v=NVqyyPoi4xs&t=110s",
+      thumbnail: "assets/images/Chiedo Asilo.png"
+    },
+    { 
+      title: "SHAR", 
+      yearType: "2024, Animation, Digital Drawing",
+      description: "young Ahmed embarks on a personal journey into Libya's colonial past, guided by a poignant conversation with his grandfather.",
+      src: "https://drive.google.com/file/d/1_UNxKK8as9O3TVvWt76Y5bf7LJMN4JY2/view?usp=sharing",
+      thumbnail: "assets/images/SHAR.png"
+    },
+    { 
+      title: "Ciarat AL-hosh", 
+      yearType: "2024, Film, Digital Drawing",
+      description: "an experimental project that combines live-action footage with digitally illustrated cars, serving as a visual metaphor for the intersections of life choices, family dynamics, and societal class structures",
+      src: "assets/videos/Ciarat AL-hosh.mp4",
+      thumbnail: "assets/images/Ciarat AL-hosh.png"
+    },
+    { 
+      title: "Benghazi 101", 
+      yearType: "2023, Motion Graphic",
+      description: "Honing in on the 2012 attacks in Benghazi through a personal lens. This motion graphic intertwines a kid's lived experience.",
+      src: "https://www.youtube.com/watch?v=UjZEar7cqBo&t=5s",
+      thumbnail: "assets/images/Benghazi 101.png"
+    },
+  ];
+
   // Initialize audio
   function initAudio() {
     try {
@@ -158,36 +190,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function renderVideoApp() {
-    const sampleVideos = [
-      { 
-        title: "Chiedo Asilo", 
-        yearType: "2025, Animation",
-        description: "Following the story of a young boy in a trafficking scene",
-        src: "https://www.youtube.com/watch?v=NVqyyPoi4xs&t=110s",
-        thumbnail: "src/assets/images/Chiedo Asilo.png"
-      },
-      { 
-        title: "SHAR", 
-        yearType: "2024, Animation, Digital Drawing",
-        description: "young Ahmed embarks on a personal journey into Libya's colonial past, guided by a poignant conversation with his grandfather.",
-        src: "https://drive.google.com/file/d/1_UNxKK8as9O3TVvWt76Y5bf7LJMN4JY2/view?usp=sharing",
-        thumbnail: "src/assets/images/SHAR.png"
-      },
-      { 
-        title: "Ciarat AL-hosh", 
-        yearType: "2024, Film, Digital Drawing",
-        description: "an experimental project that combines live-action footage with digitally illustrated cars, serving as a visual metaphor for the intersections of life choices, family dynamics, and societal class structures",
-        src: "src/assets/videos/Ciarat AL-hosh.mp4",
-        thumbnail: "src/assets/images/Ciarat AL-hosh.png"
-      },
-      { 
-        title: "Benghazi 101", 
-        yearType: "2023, Motion Graphic",
-        description: "Honing in on the 2012 attacks in Benghazi through a personal lens. This motion graphic intertwines a kid's lived experience.",
-        src: "https://www.youtube.com/watch?v=UjZEar7cqBo&t=5s",
-        thumbnail: "src/assets/images/Benghazi 101.png"
-      },
-    ];
 
     return `
       <div class="h-full overflow-auto">
