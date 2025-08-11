@@ -23,28 +23,28 @@ document.addEventListener('DOMContentLoaded', function() {
       yearType: "2025, Animation",
       description: "Following the story of a young boy in a trafficking scene",
       src: "https://www.youtube.com/watch?v=NVqyyPoi4xs&t=110s",
-      thumbnail: "assets/images/Chiedo Asilo.png"
+      thumbnail: "src/assets/images/chiedo Asilo .webp"
     },
     { 
       title: "SHAR", 
       yearType: "2024, Animation, Digital Drawing",
       description: "young Ahmed embarks on a personal journey into Libya's colonial past, guided by a poignant conversation with his grandfather.",
       src: "https://drive.google.com/file/d/1_UNxKK8as9O3TVvWt76Y5bf7LJMN4JY2/view?usp=sharing",
-      thumbnail: "assets/images/SHAR.png"
+      thumbnail: "src/assets/images/SHAR .png"
     },
     { 
       title: "Ciarat AL-hosh", 
       yearType: "2024, Film, Digital Drawing",
       description: "an experimental project that combines live-action footage with digitally illustrated cars, serving as a visual metaphor for the intersections of life choices, family dynamics, and societal class structures",
       src: "assets/videos/Ciarat AL-hosh.mp4",
-      thumbnail: "assets/images/Ciarat AL-hosh.png"
+      thumbnail: "src/assets/images/Ciarat AL-hosh.png"
     },
     { 
       title: "Benghazi 101", 
       yearType: "2023, Motion Graphic",
       description: "Honing in on the 2012 attacks in Benghazi through a personal lens. This motion graphic intertwines a kid's lived experience.",
       src: "https://www.youtube.com/watch?v=UjZEar7cqBo&t=5s",
-      thumbnail: "assets/images/Benghazi 101.png"
+      thumbnail: "src/assets/images/Benghazi 101.png"
     },
   ];
 
@@ -201,9 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="space-y-4">
           ${sampleVideos.map((v, i) => `
             <div class="bg-zinc-900 rounded-lg p-4 flex gap-4 items-center hover:bg-zinc-800 transition-colors">
-              <div class="w-24 h-16 bg-gradient-to-br from-gray-700 to-gray-900 rounded-lg flex items-center justify-center text-xs text-gray-400 border border-gray-600">
-                ${v.title.split(' ')[0]}
-              </div>
+              <img src="${v.thumbnail}" alt="${v.title} thumbnail" class="w-24 h-16 object-cover rounded-lg">
               <div class="flex-1">
                 <div class="font-semibold text-lg mb-1">${v.title}</div>
                 <div class="text-sm text-gray-400">${v.yearType}</div>
