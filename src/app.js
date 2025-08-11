@@ -362,10 +362,54 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="text-xs text-gray-400">About</div>
           <div></div>
         </div>
-        <p>
-          This portfolio website was made by Ahmed E. It features a game, videos,
-          XR demos, and more.
-        </p>
+        <div class="space-y-4">
+          <p>
+            Ahmed Shuwehdi, a multimedia artist specializing in Extended Reality (XR), Virtual Reality (VR), Augmented Reality (AR), and video art. My work encompasses animations, motion graphics, and captured videos that engage with political issues, particularly those from my home country, Libya.
+          </p>
+          
+          <p>
+            My artistic journey has been deeply influenced by the political landscape and the stories of my homeland. Through my creations, I strive to bring awareness and provoke thought about the complexities and challenges faced by Libyans.
+          </p>
+          
+          <p>
+            In addition to my video work, I create immersive VR art experiences. These experiences are not traditional video games but rather artistic explorations in virtual environments. One of my recent projects involved a VR experience at the Robert Frost House, where I designed an immersive environment that allows visitors to live in the house and experience the atmosphere and era when Frost penned his poems.
+          </p>
+          
+          <p>
+            Currently, I am a student at Bennington College in Vermont, where I continue to expand my skills and artistic vision. My roots in Libya and my experiences in the United States profoundly shape my artistic perspective, driving me to create work that bridges cultural divides and fosters understanding.
+          </p>
+          
+          <div class="space-y-3">
+            <h3 class="font-semibold text-cyan-300">Exhibitions and interviews:</h3>
+            
+            <p>
+              <a href="https://techspressionism.com/artists/" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Techspressioism | Featured Artist</a>
+            </p>
+            
+            <p>
+              <a href="https://www.benningtonbanner.com/local-news/installation-brings-celebrated-robert-frost-poem-to-virtual-reality/article_6a12b21e-80dc-11ef-b11b-cf55304afe7b.html" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Bennington banner | Interview</a>
+            </p>
+            
+            <p>
+              <a href="https://techspressionism.com/brooklyn/media/video/" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">James Dawson | Interview</a>
+            </p>
+            
+            <p>
+              <a href="https://www.mowna.org/museum/techspressionism" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Wild & Newfangled Art Museum</a><br>
+              <span class="text-xs text-gray-500">Long Island City, NY<br>October 3, 2024 - January 26, 2025</span>
+            </p>
+            
+            <p>
+              <a href="https://www.bennington.edu/news-and-features/landscape-and-literature" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Robert Frost Stone House Virtual Reality Experience | Solo Exhibition</a><br>
+              <span class="text-xs text-gray-500">Bennington, Vermont<br>May 2024 – October 2024</span>
+            </p>
+            
+            <p>
+              <a href="https://techspressionism.com/brooklyn/" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Hello Brooklyn—Group Exhibition</a><br>
+              <span class="text-xs text-gray-500">Kingsborough Art Museum, Brooklyn, NY<br>August 7 – September 25, 2024</span>
+            </p>
+          </div>
+        </div>
       </div>
     `;
   }
