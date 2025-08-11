@@ -159,9 +159,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function renderVideoApp() {
     const sampleVideos = [
-      { title: "Project A - Short Demo", src: "assets/videos/sample1.mp4" },
-      { title: "Project B - Scene Reel", src: "assets/videos/sample2.mp4" },
-      { title: "Project C - Test", src: "assets/videos/sample3.mp4" },
+      { 
+        title: "Chiedo Asilo", 
+        yearType: "2025, Animation",
+        description: "Following the story of a young boy in a trafficking scene",
+        src: "https://www.youtube.com/watch?v=NVqyyPoi4xs&t=110s",
+        thumbnail: "src/assets/images/Chiedo Asilo.png"
+      },
+      { 
+        title: "SHAR", 
+        yearType: "2024, Animation, Digital Drawing",
+        description: "young Ahmed embarks on a personal journey into Libya's colonial past, guided by a poignant conversation with his grandfather.",
+        src: "https://drive.google.com/file/d/1_UNxKK8as9O3TVvWt76Y5bf7LJMN4JY2/view?usp=sharing",
+        thumbnail: "src/assets/images/SHAR.png"
+      },
+      { 
+        title: "Ciarat AL-hosh", 
+        yearType: "2024, Film, Digital Drawing",
+        description: "an experimental project that combines live-action footage with digitally illustrated cars, serving as a visual metaphor for the intersections of life choices, family dynamics, and societal class structures",
+        src: "src/assets/videos/Ciarat AL-hosh.mp4",
+        thumbnail: "src/assets/images/Ciarat AL-hosh.png"
+      },
+      { 
+        title: "Benghazi 101", 
+        yearType: "2023, Motion Graphic",
+        description: "Honing in on the 2012 attacks in Benghazi through a personal lens. This motion graphic intertwines a kid's lived experience.",
+        src: "https://www.youtube.com/watch?v=UjZEar7cqBo&t=5s",
+        thumbnail: "src/assets/images/Benghazi 101.png"
+      },
     ];
 
     return `
@@ -174,13 +199,12 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="grid grid-cols-1 gap-3">
           ${sampleVideos.map((v, i) => `
             <div class="bg-zinc-900 rounded p-3 flex gap-3 items-center">
-              <div class="w-20 h-12 bg-zinc-800 rounded flex items-center justify-center text-xs">
-                Thumb
-              </div>
+              <img src="${v.thumbnail}" alt="${v.title} thumbnail" class="w-20 h-12 object-cover rounded">
               <div class="flex-1">
                 <div class="font-medium">${v.title}</div>
-                <div class="text-xs text-gray-400">
-                  Sample description — replace with your project details
+                <div class="text-xs text-gray-400 mb-1">${v.yearType}</div>
+                <div class="text-xs text-gray-500">
+                  ${v.description}
                 </div>
               </div>
               <button class="open-video-btn text-sm text-sky-400" data-index="${i}">
@@ -334,26 +358,36 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function renderGalleryModal() {
-    const sampleVideos = [
-      { title: "Project A - Short Demo", src: "assets/videos/sample1.mp4" },
-      { title: "Project B - Scene Reel", src: "assets/videos/sample2.mp4" },
-      { title: "Project C - Test", src: "assets/videos/sample3.mp4" },
-    ];
+    if (galleryModal === null) return '';
     const video = sampleVideos[galleryModal];
+
+    let mediaContent = '';
+    let videoSrc = video.src;
+
+    if (videoSrc.includes("youtube.com/watch?v=")) {
+      const videoId = videoSrc.split('v=')[1].split('&')[0];
+      mediaContent = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    } else if (videoSrc.includes("drive.google.com/file/d/")) {
+      const fileId = videoSrc.split('/d/')[1].split('/view')[0];
+      mediaContent = `<iframe class="w-full h-full" src="https://docs.google.com/file/d/${fileId}/preview" frameborder="0" allowfullscreen></iframe>`;
+    } else {
+      // Assume local video file
+      mediaContent = `<video controls autoplay class="w-full h-full"><source src="${videoSrc}" type="video/mp4">Your browser does not support the video tag.</video>`;
+    }
 
     return `
       <div class="fixed inset-0 bg-black bg-opacity-90 flex flex-col justify-center items-center z-50 gallery-modal">
-        <video
-          src="${video.src}"
-          controls
-          autoplay
-          class="max-w-full max-h-full rounded"
-        ></video>
+        <div class="w-11/12 h-3/4 max-w-4xl max-h-[80vh] bg-black flex items-center justify-center rounded-lg overflow-hidden">
+          ${mediaContent}
+        </div>
         <button
           class="close-modal absolute top-6 right-6 text-white bg-red-600 rounded-full w-8 h-8 flex justify-center items-center"
         >
           ✕
         </button>
+        <h3 class="text-white text-lg font-medium mt-4">${video.title}</h3>
+        <p class="text-gray-400 text-sm">${video.yearType}</p>
+        <p class="text-gray-500 text-sm max-w-2xl text-center mt-2">${video.description}</p>
       </div>
     `;
   }
