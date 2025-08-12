@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="absolute inset-0 pointer-events-none glitch-overlay"></div>
 
         <div class="relative z-10 flex flex-col items-center max-w-xs sm:max-w-md overflow-hidden mx-auto">
-          <h1 class="mb-6 tracking-widest text-sm text-gray-400">AHMED E — PORTFOLIO</h1>
+          <h1 class="mb-6 tracking-widest text-sm text-gray-400">AHMED ESH Phone</h1>
 
           <div class="phone-outer w-80 md:w-96 bg-black/90 border border-zinc-800 rounded-3xl shadow-2xl p-4">
             <div class="notch w-24 h-3 bg-zinc-900 rounded-b-xl mx-auto mb-2"></div>
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
           </div>
 
-          <div class="mt-6 text-gray-500 text-xs">Prototype — click apps to open. Press ESC to close.</div>
+          <div class="mt-6 text-gray-500 text-xs">Click apps to open. Press ESC to close.</div>
         </div>
 
         ${galleryModal !== null ? renderGalleryModal() : ''}
