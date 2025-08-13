@@ -123,6 +123,38 @@ document.addEventListener('DOMContentLoaded', function() {
     root.innerHTML = `
       <div class="min-h-screen ${eshMode ? 'bg-gradient-to-br from-pink-200 via-yellow-200 to-purple-200 animate-bounce' : 'bg-gradient-to-br from-black via-gray-900 to-black animate-gradient'} text-white flex items-center justify-center p-6 relative overflow-hidden">
         <div class="absolute inset-0 pointer-events-none ${eshMode ? 'rainbow-overlay' : 'glitch-overlay'}"></div>
+        
+        ${eshMode ? `
+          <!-- Flying Emojis and Videos Overlay -->
+          <div class="absolute inset-0 pointer-events-none flying-emojis">
+            <div class="flying-emoji" style="left: 10%; top: 20%; animation-delay: 0s;">🎈</div>
+            <div class="flying-emoji" style="left: 80%; top: 30%; animation-delay: 1s;">🌟</div>
+            <div class="flying-emoji" style="left: 20%; top: 70%; animation-delay: 2s;">🎉</div>
+            <div class="flying-emoji" style="left: 70%; top: 80%; animation-delay: 3s;">🌈</div>
+            <div class="flying-emoji" style="left: 90%; top: 50%; animation-delay: 4s;">✨</div>
+            <div class="flying-emoji" style="left: 5%; top: 60%; animation-delay: 5s;">🎨</div>
+            <div class="flying-emoji" style="left: 60%; top: 15%; animation-delay: 6s;">🦄</div>
+            <div class="flying-emoji" style="left: 30%; top: 90%; animation-delay: 7s;">🎯</div>
+            
+            <!-- Floating Video Thumbnails -->
+            <div class="flying-video" style="left: 15%; top: 40%; animation-delay: 2.5s;">
+              <div class="video-thumbnail">🎬</div>
+              <div class="video-title">Chiedo Asilo</div>
+            </div>
+            <div class="flying-video" style="left: 75%; top: 60%; animation-delay: 4.5s;">
+              <div class="video-thumbnail">🎬</div>
+              <div class="video-title">SHAR</div>
+            </div>
+            <div class="flying-video" style="left: 45%; top: 25%; animation-delay: 6.5s;">
+              <div class="video-thumbnail">🎬</div>
+              <div class="video-title">Ciarat AL-hosh</div>
+            </div>
+            <div class="flying-video" style="left: 85%; top: 75%; animation-delay: 1.5s;">
+              <div class="video-thumbnail">🎬</div>
+              <div class="video-title">Benghazi 101</div>
+            </div>
+          </div>
+        ` : ''}
 
         <div class="relative z-10 flex flex-col items-center max-w-xs sm:max-w-md overflow-hidden mx-auto">
           <h1 class="mb-6 tracking-widest text-sm ${eshMode ? 'text-purple-600 font-bold' : 'text-gray-400'}">${eshMode ? '🌈 KID MODE PHONE 🌈' : 'AHMED ESH Phone'}</h1>
@@ -188,13 +220,6 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="mt-6 ${eshMode ? 'text-purple-600 font-bold' : 'text-gray-500'} text-xs">
           ${eshMode ? '🎈 Tap the colorful buttons! 🎈' : 'Hover icons • Click or tap to open'}
         </div>
-        ${eshMode ? `
-          <div class="mt-4">
-            <button id="exit-esh-mode" class="px-6 py-3 bg-gradient-to-r from-red-400 to-red-600 hover:from-red-500 hover:to-red-700 text-white font-bold rounded-xl transition-all transform hover:scale-105 shadow-lg">
-              🚪 Exit Esh Mode
-            </button>
-          </div>
-        ` : ''}
       </div>
     `;
   }
@@ -541,7 +566,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </div>
           <div class="mt-6 text-center">
             <div class="text-2xl mb-2">🎈</div>
-            <p class="text-purple-600 font-bold">Try opening other apps to see the magic! ✨</p>
+            <p class="text-purple-600 font-bold">Go back to see the magic on the home screen! ✨</p>
           </div>
         </div>
       </div>
@@ -587,9 +612,12 @@ document.addEventListener('DOMContentLoaded', function() {
           return;
         }
         
-        // Activate Esh Mode immediately when clicked
+        // Activate Esh Mode immediately when clicked and stay on home screen
         if (appKey === 'esh') {
           eshMode = true;
+          openApp = null; // Stay on home screen
+          render();
+          return;
         }
         
         openApp = appKey;
@@ -647,15 +675,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
-    // Exit Esh Mode button
-    const exitEshModeBtn = document.getElementById('exit-esh-mode');
-    if (exitEshModeBtn) {
-      exitEshModeBtn.addEventListener('click', function() {
-        eshMode = false;
-        openApp = null;
-        render();
-      });
-    }
+
 
     // Keyboard navigation
     const homeGrid = document.querySelector('[tabindex="0"]');
