@@ -118,10 +118,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const root = document.getElementById('root');
     if (!root) return;
 
+    console.log('Rendering with eshMode:', eshMode); // Debug log
+
     const formattedTime = time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
     root.innerHTML = `
-      <div class="min-h-screen ${eshMode ? 'bg-gradient-to-br from-pink-200 via-yellow-200 to-purple-200 animate-bounce' : 'bg-gradient-to-br from-black via-gray-900 to-black animate-gradient'} text-white flex items-center justify-center p-6 relative overflow-hidden">
+      <div class="min-h-screen text-white flex items-center justify-center p-6 relative overflow-hidden" style="${eshMode ? 'background: linear-gradient(to bottom right, #fce7f3, #fef3c7, #e9d5ff); animation: bounce 2s infinite;' : 'background: linear-gradient(to bottom right, #000000, #111827, #000000);'}">
         <div class="absolute inset-0 pointer-events-none ${eshMode ? 'rainbow-overlay' : 'glitch-overlay'}"></div>
         
         ${eshMode ? `
@@ -157,15 +159,15 @@ document.addEventListener('DOMContentLoaded', function() {
         ` : ''}
 
         <div class="relative z-10 flex flex-col items-center max-w-xs sm:max-w-md overflow-hidden mx-auto">
-          <h1 class="mb-6 tracking-widest text-sm ${eshMode ? 'text-purple-600 font-bold' : 'text-gray-400'}">${eshMode ? '🌈 KID MODE PHONE 🌈' : 'AHMED ESH Phone'}</h1>
+          <h1 class="mb-6 tracking-widest text-sm" style="${eshMode ? 'color: #9333ea; font-weight: bold;' : 'color: #9ca3af;'}">${eshMode ? '🌈 KID MODE PHONE 🌈' : 'AHMED ESH Phone'}</h1>
 
-          <div class="phone-outer w-80 md:w-96 ${eshMode ? 'bg-gradient-to-r from-pink-300 to-purple-300 border-4 border-yellow-400' : 'bg-black/90 border border-zinc-800'} rounded-3xl shadow-2xl p-4">
-            <div class="notch w-24 h-3 ${eshMode ? 'bg-yellow-400' : 'bg-zinc-900'} rounded-b-xl mx-auto mb-2"></div>
+          <div class="phone-outer w-80 md:w-96 rounded-3xl shadow-2xl p-4" style="${eshMode ? 'background: linear-gradient(to right, #f9a8d4, #d8b4fe); border: 4px solid #fbbf24;' : 'background: rgba(0, 0, 0, 0.9); border: 1px solid #3f3f46;'}">
+            <div class="notch w-24 h-3 rounded-b-xl mx-auto mb-2" style="${eshMode ? 'background: #fbbf24;' : 'background: #18181b;'}"></div>
 
-            <div class="phone-screen ${eshMode ? 'bg-gradient-to-br from-pink-100 to-purple-100' : 'bg-[#020202]'} rounded-2xl p-4 h-96 md:h-[540px] overflow-hidden relative">
-              <div class="flex justify-between items-center text-xs ${eshMode ? 'text-purple-600 font-bold' : 'text-gray-500'} mb-3">
+            <div class="phone-screen rounded-2xl p-4 h-96 md:h-[540px] overflow-hidden relative" style="${eshMode ? 'background: linear-gradient(to bottom right, #fce7f3, #e9d5ff);' : 'background: #020202;'}">
+              <div class="flex justify-between items-center text-xs mb-3" style="${eshMode ? 'color: #9333ea; font-weight: bold;' : 'color: #6b7280;'}">
                 <div class="flex items-center gap-2">
-                  <div class="w-2 h-2 rounded-full ${eshMode ? 'bg-pink-500' : 'bg-emerald-400/80'}"></div>
+                  <div class="w-2 h-2 rounded-full" style="${eshMode ? 'background: #ec4899;' : 'background: rgba(16, 185, 129, 0.8);'}"></div>
                   <span>${eshMode ? '🌈 Rainbow Network 🌈' : 'Libyana network'}</span>
                 </div>
                 <div class="opacity-60 time-display">${formattedTime}</div>
@@ -175,11 +177,11 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
 
             <div class="mt-3 flex justify-center">
-              <div class="w-10 h-2 ${eshMode ? 'bg-yellow-400' : 'bg-zinc-800'} rounded-full"></div>
+              <div class="w-10 h-2 rounded-full" style="${eshMode ? 'background: #fbbf24;' : 'background: #3f3f46;'}"></div>
             </div>
           </div>
 
-          <div class="mt-6 ${eshMode ? 'text-purple-600 font-bold' : 'text-gray-500'} text-xs">${eshMode ? '🎉 Welcome to Kid Mode! 🎉' : 'Click apps to open. Press ESC to close.'}</div>
+          <div class="mt-6 text-xs" style="${eshMode ? 'color: #9333ea; font-weight: bold;' : 'color: #6b7280;'}">${eshMode ? '🎉 Welcome to Kid Mode! 🎉' : 'Click apps to open. Press ESC to close.'}</div>
         </div>
 
         ${galleryModal !== null ? renderGalleryModal() : ''}
@@ -208,16 +210,17 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="grid grid-cols-3 gap-4 place-items-center">
           ${apps.map(({ key, label, emoji }, i) => `
             <button
-              class="app-icon w-20 h-20 ${eshMode ? 'bg-gradient-to-br from-pink-200 to-purple-200 border-4 border-yellow-300 shadow-lg' : 'bg-zinc-900/70 border border-zinc-800'} rounded-xl flex flex-col items-center justify-center gap-1 hover:scale-105 transition-transform"
+              class="app-icon w-20 h-20 rounded-xl flex flex-col items-center justify-center gap-1 hover:scale-105 transition-transform"
+              style="${eshMode ? 'background: linear-gradient(to bottom right, #fce7f3, #e9d5ff); border: 4px solid #fde68a; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);' : 'background: rgba(24, 24, 27, 0.7); border: 1px solid #3f3f46;'}"
               data-app="${key}"
               tabindex="-1"
             >
               <div class="text-2xl">${eshMode ? eshModeEmojis[key] || emoji : emoji}</div>
-              <div class="text-xs ${eshMode ? 'text-purple-700 font-bold' : 'text-gray-300'}">${label}</div>
+              <div class="text-xs" style="${eshMode ? 'color: #7c3aed; font-weight: bold;' : 'color: #d1d5db;'}">${label}</div>
             </button>
           `).join('')}
         </div>
-        <div class="mt-6 ${eshMode ? 'text-purple-600 font-bold' : 'text-gray-500'} text-xs">
+        <div class="mt-6 text-xs" style="${eshMode ? 'color: #9333ea; font-weight: bold;' : 'color: #6b7280;'}">
           ${eshMode ? '🎈 Tap the colorful buttons! 🎈' : 'Hover icons • Click or tap to open'}
         </div>
       </div>
@@ -615,6 +618,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Activate Esh Mode immediately when clicked and stay on home screen
         if (appKey === 'esh') {
           eshMode = true;
+          console.log('Esh Mode activated!', eshMode); // Debug log
           openApp = null; // Stay on home screen
           render();
           return;
