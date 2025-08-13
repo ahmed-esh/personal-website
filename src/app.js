@@ -444,7 +444,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <h4 class="text-lg font-semibold text-white mb-2">Ahmed Shuwehdi</h4>
           <p class="text-sm text-gray-400 mb-4">Multimedia Artist & XR Creator</p>
           <a 
-            href="https://www.linkedin.com/in/ahmed-shuwehdi/" 
+            href="https://www.linkedin.com/in/ahmed-shuwehdi-5130a819b/" 
             target="_blank" 
             class="inline-block px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
           >
