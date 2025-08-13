@@ -643,6 +643,25 @@ button:focus {
   --tw-gradient-to: #fb923c;
 }
 
+/* Red gradient for exit button */
+.from-red-400 {
+  --tw-gradient-from: #f87171;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(248, 113, 113, 0));
+}
+
+.to-red-600 {
+  --tw-gradient-to: #dc2626;
+}
+
+.from-red-500 {
+  --tw-gradient-from: #ef4444;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(239, 68, 68, 0));
+}
+
+.to-red-700 {
+  --tw-gradient-to: #b91c1c;
+}
+
 /* Esh Mode colors */
 .text-pink-500 {
   color: #ec4899;

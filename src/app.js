@@ -188,6 +188,13 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="mt-6 ${eshMode ? 'text-purple-600 font-bold' : 'text-gray-500'} text-xs">
           ${eshMode ? '🎈 Tap the colorful buttons! 🎈' : 'Hover icons • Click or tap to open'}
         </div>
+        ${eshMode ? `
+          <div class="mt-4">
+            <button id="exit-esh-mode" class="px-6 py-3 bg-gradient-to-r from-red-400 to-red-600 hover:from-red-500 hover:to-red-700 text-white font-bold rounded-xl transition-all transform hover:scale-105 shadow-lg">
+              🚪 Exit Esh Mode
+            </button>
+          </div>
+        ` : ''}
       </div>
     `;
   }
@@ -513,9 +520,6 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
   function renderEshMode() {
-    // Activate Esh Mode - this will transform the entire website
-    eshMode = true;
-    
     return `
       <div class="h-full overflow-auto px-1 text-sm text-gray-400">
         <div class="flex items-center justify-between mb-3">
@@ -583,6 +587,11 @@ document.addEventListener('DOMContentLoaded', function() {
           return;
         }
         
+        // Activate Esh Mode immediately when clicked
+        if (appKey === 'esh') {
+          eshMode = true;
+        }
+        
         openApp = appKey;
         render();
         if (openApp === 'game') {
@@ -594,9 +603,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Back button clicks
     document.querySelectorAll('.back-btn').forEach(btn => {
       btn.addEventListener('click', function() {
-        // If in Esh Mode, don't allow going back - force refresh
+        // If in Esh Mode, go back to home but keep Esh Mode active
         if (eshMode) {
-          alert("🎉 You're in Esh Mode! To go back, refresh the page! 🌈");
+          openApp = null;
+          render();
           return;
         }
         openApp = null;
@@ -636,6 +646,16 @@ document.addEventListener('DOMContentLoaded', function() {
         handleGameInput(direction);
       });
     });
+
+    // Exit Esh Mode button
+    const exitEshModeBtn = document.getElementById('exit-esh-mode');
+    if (exitEshModeBtn) {
+      exitEshModeBtn.addEventListener('click', function() {
+        eshMode = false;
+        openApp = null;
+        render();
+      });
+    }
 
     // Keyboard navigation
     const homeGrid = document.querySelector('[tabindex="0"]');
