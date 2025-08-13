@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     { key: "video", label: "Video", emoji: "🎥" },
     { key: "xr", label: "XR", emoji: "🌐" },
     { key: "frames", label: "Frames", emoji: "🖼️" },
-    { key: "instagram", label: "Instagram", emoji: "📷" },
+                    { key: "instagram", label: "Socials", emoji: "📷" },
     { key: "game", label: "Game", emoji: "🎮" },
     { key: "contact", label: "Contact", emoji: "✉️" },
     { key: "about", label: "About", emoji: "ℹ️" },
@@ -418,48 +418,43 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function renderInstagramApp() {
-    return `
-      <div class="h-full overflow-auto px-1 text-sm text-gray-400">
-        <div class="flex items-center justify-between mb-3">
-          <button class="back-btn text-sm text-cyan-300">Back</button>
-          <div class="text-xs text-gray-400">Instagram</div>
-          <div></div>
+  return `
+    <div class="h-full overflow-auto px-1 text-sm text-gray-400">
+      <div class="flex items-center justify-between mb-3">
+        <button class="back-btn text-sm text-cyan-300">Back</button>
+        <div class="text-xs text-gray-400">Socials</div>
+        <div></div>
+      </div>
+      <div class="space-y-4">
+        <div class="bg-zinc-900 rounded-lg p-6 text-center">
+          <div class="text-4xl mb-4">📷</div>
+          <h4 class="text-lg font-semibold text-white mb-2">@ahmed.eshhh</h4>
+          <p class="text-sm text-gray-400 mb-4">Multimedia Artist & XR Creator</p>
+          <a 
+            href="https://www.instagram.com/ahmed.eshhh/" 
+            target="_blank" 
+            class="inline-block px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+          >
+            View Instagram Profile
+          </a>
         </div>
-        <div class="space-y-4">
-          <div class="text-center">
-            <h3 class="text-lg font-semibold text-cyan-300 mb-4">Follow My Art Journey</h3>
-            <p class="text-sm text-gray-400 mb-6">
-              Check out my latest work, behind-the-scenes content, and artistic process on Instagram
-            </p>
-          </div>
-          
-          <div class="bg-zinc-900 rounded-lg p-6 text-center">
-            <div class="text-4xl mb-4">📷</div>
-            <h4 class="text-lg font-semibold text-white mb-2">@ahmed.eshhh</h4>
-            <p class="text-sm text-gray-400 mb-4">Multimedia Artist & XR Creator</p>
-            <a 
-              href="https://www.instagram.com/ahmed.eshhh/" 
-              target="_blank" 
-              class="inline-block px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
-            >
-              View Instagram Profile
-            </a>
-          </div>
-          
-          <div class="bg-zinc-800 rounded-lg p-4">
-            <h4 class="font-semibold text-cyan-300 mb-2">What You'll Find:</h4>
-            <ul class="text-sm text-gray-400 space-y-1">
-              <li>• Behind-the-scenes of my VR/AR projects</li>
-              <li>• Animation and motion graphics work</li>
-              <li>• Political art and Libyan cultural content</li>
-              <li>• Student life at Bennington College</li>
-              <li>• Exhibition updates and art events</li>
-            </ul>
-          </div>
+        
+        <div class="bg-zinc-900 rounded-lg p-6 text-center">
+          <div class="text-4xl mb-4">💼</div>
+          <h4 class="text-lg font-semibold text-white mb-2">Ahmed Shuwehdi</h4>
+          <p class="text-sm text-gray-400 mb-4">Multimedia Artist & XR Creator</p>
+          <a 
+            href="https://www.linkedin.com/in/ahmed-shuwehdi/" 
+            target="_blank" 
+            class="inline-block px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+          >
+            View LinkedIn Profile
+          </a>
         </div>
       </div>
-    `;
-  }
+    </div>
+  `;
+}
 
   function renderGameApp() {
     return `
