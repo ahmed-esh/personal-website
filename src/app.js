@@ -5,14 +5,12 @@ document.addEventListener('DOMContentLoaded', function() {
   let themeAudio = null;
   let time = new Date();
   let appRefs = [];
-  let eshMode = false;
 
   const apps = [
     { key: "video", label: "Video", emoji: "🎥" },
     { key: "xr", label: "XR", emoji: "🌐" },
     { key: "frames", label: "Frames", emoji: "🖼️" },
                     { key: "instagram", label: "Socials", emoji: "📷" },
-    { key: "esh", label: "Esh Mode", emoji: "🌈" },
     { key: "game", label: "Game", emoji: "🎮" },
     { key: "contact", label: "Contact", emoji: "✉️" },
     { key: "about", label: "About", emoji: "ℹ️" },
@@ -103,11 +101,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Global keyboard handler
   function onKey(e) {
     if (e.key === "Escape") {
-      // If in Esh Mode, don't allow escaping - force refresh
-      if (eshMode) {
-        alert("🎉 You're in Esh Mode! To go back, refresh the page! 🌈");
-        return;
-      }
       openApp = null;
       render();
     }
@@ -118,57 +111,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const root = document.getElementById('root');
     if (!root) return;
 
-    console.log('Rendering with eshMode:', eshMode); // Debug log
-
     const formattedTime = time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
     root.innerHTML = `
-      <div class="min-h-screen text-white flex items-center justify-center p-6 relative overflow-hidden" style="${eshMode ? 'background: linear-gradient(to bottom right, #fce7f3, #fef3c7, #e9d5ff); animation: bounce 2s infinite;' : 'background: linear-gradient(to bottom right, #000000, #111827, #000000);'}">
-        <div class="absolute inset-0 pointer-events-none ${eshMode ? 'rainbow-overlay' : 'glitch-overlay'}"></div>
-        
-        ${eshMode ? `
-          <!-- Flying Emojis and Videos Overlay -->
-          <div class="absolute inset-0 pointer-events-none flying-emojis">
-            <div class="flying-emoji" style="left: 10%; top: 20%; animation-delay: 0s;">🎈</div>
-            <div class="flying-emoji" style="left: 80%; top: 30%; animation-delay: 1s;">🌟</div>
-            <div class="flying-emoji" style="left: 20%; top: 70%; animation-delay: 2s;">🎉</div>
-            <div class="flying-emoji" style="left: 70%; top: 80%; animation-delay: 3s;">🌈</div>
-            <div class="flying-emoji" style="left: 90%; top: 50%; animation-delay: 4s;">✨</div>
-            <div class="flying-emoji" style="left: 5%; top: 60%; animation-delay: 5s;">🎨</div>
-            <div class="flying-emoji" style="left: 60%; top: 15%; animation-delay: 6s;">🦄</div>
-            <div class="flying-emoji" style="left: 30%; top: 90%; animation-delay: 7s;">🎯</div>
-            
-            <!-- Floating Video Thumbnails -->
-            <div class="flying-video" style="left: 15%; top: 40%; animation-delay: 2.5s;">
-              <div class="video-thumbnail">🎬</div>
-              <div class="video-title">Chiedo Asilo</div>
-            </div>
-            <div class="flying-video" style="left: 75%; top: 60%; animation-delay: 4.5s;">
-              <div class="video-thumbnail">🎬</div>
-              <div class="video-title">SHAR</div>
-            </div>
-            <div class="flying-video" style="left: 45%; top: 25%; animation-delay: 6.5s;">
-              <div class="video-thumbnail">🎬</div>
-              <div class="video-title">Ciarat AL-hosh</div>
-            </div>
-            <div class="flying-video" style="left: 85%; top: 75%; animation-delay: 1.5s;">
-              <div class="video-thumbnail">🎬</div>
-              <div class="video-title">Benghazi 101</div>
-            </div>
-          </div>
-        ` : ''}
+      <div class="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black animate-gradient text-white flex items-center justify-center p-6 relative overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none glitch-overlay"></div>
 
         <div class="relative z-10 flex flex-col items-center max-w-xs sm:max-w-md overflow-hidden mx-auto">
-          <h1 class="mb-6 tracking-widest text-sm" style="${eshMode ? 'color: #9333ea; font-weight: bold;' : 'color: #9ca3af;'}">${eshMode ? '🌈 KID MODE PHONE 🌈' : 'AHMED ESH Phone'}</h1>
+          <h1 class="mb-6 tracking-widest text-sm text-gray-400">AHMED ESH Phone</h1>
 
-          <div class="phone-outer w-80 md:w-96 rounded-3xl shadow-2xl p-4" style="${eshMode ? 'background: linear-gradient(to right, #f9a8d4, #d8b4fe); border: 4px solid #fbbf24;' : 'background: rgba(0, 0, 0, 0.9); border: 1px solid #3f3f46;'}">
-            <div class="notch w-24 h-3 rounded-b-xl mx-auto mb-2" style="${eshMode ? 'background: #fbbf24;' : 'background: #18181b;'}"></div>
+          <div class="phone-outer w-80 md:w-96 bg-black/90 border border-zinc-800 rounded-3xl shadow-2xl p-4">
+            <div class="notch w-24 h-3 bg-zinc-900 rounded-b-xl mx-auto mb-2"></div>
 
-            <div class="phone-screen rounded-2xl p-4 h-96 md:h-[540px] overflow-hidden relative" style="${eshMode ? 'background: linear-gradient(to bottom right, #fce7f3, #e9d5ff);' : 'background: #020202;'}">
-              <div class="flex justify-between items-center text-xs mb-3" style="${eshMode ? 'color: #9333ea; font-weight: bold;' : 'color: #6b7280;'}">
+            <div class="phone-screen bg-[#020202] rounded-2xl p-4 h-96 md:h-[540px] overflow-hidden relative">
+              <div class="flex justify-between items-center text-xs text-gray-500 mb-3">
                 <div class="flex items-center gap-2">
-                  <div class="w-2 h-2 rounded-full" style="${eshMode ? 'background: #ec4899;' : 'background: rgba(16, 185, 129, 0.8);'}"></div>
-                  <span>${eshMode ? '🌈 Rainbow Network 🌈' : 'Libyana network'}</span>
+                  <div class="w-2 h-2 rounded-full bg-emerald-400/80"></div>
+                  <span>Libyana network</span>
                 </div>
                 <div class="opacity-60 time-display">${formattedTime}</div>
               </div>
@@ -177,11 +136,11 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
 
             <div class="mt-3 flex justify-center">
-              <div class="w-10 h-2 rounded-full" style="${eshMode ? 'background: #fbbf24;' : 'background: #3f3f46;'}"></div>
+              <div class="w-10 h-2 bg-zinc-800 rounded-full"></div>
             </div>
           </div>
 
-          <div class="mt-6 text-xs" style="${eshMode ? 'color: #9333ea; font-weight: bold;' : 'color: #6b7280;'}">${eshMode ? '🎉 Welcome to Kid Mode! 🎉' : 'Click apps to open. Press ESC to close.'}</div>
+          <div class="mt-6 text-gray-500 text-xs">Click apps to open. Press ESC to close.</div>
         </div>
 
         ${galleryModal !== null ? renderGalleryModal() : ''}
@@ -193,36 +152,21 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function renderHomeGrid() {
-    // Define childish emojis for Esh Mode
-    const eshModeEmojis = {
-      "video": "🎬",
-      "xr": "🦄",
-      "frames": "🎨",
-      "instagram": "🦋",
-      "esh": "🌈",
-      "game": "🎯",
-      "contact": "📞",
-      "about": "📚"
-    };
-
     return `
       <div class="h-full flex flex-col items-center justify-center" tabindex="0">
         <div class="grid grid-cols-3 gap-4 place-items-center">
           ${apps.map(({ key, label, emoji }, i) => `
             <button
-              class="app-icon w-20 h-20 rounded-xl flex flex-col items-center justify-center gap-1 hover:scale-105 transition-transform"
-              style="${eshMode ? 'background: linear-gradient(to bottom right, #fce7f3, #e9d5ff); border: 4px solid #fde68a; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);' : 'background: rgba(24, 24, 27, 0.7); border: 1px solid #3f3f46;'}"
+              class="app-icon w-20 h-20 bg-zinc-900/70 border border-zinc-800 rounded-xl flex flex-col items-center justify-center gap-1 hover:scale-105 transition-transform"
               data-app="${key}"
               tabindex="-1"
             >
-              <div class="text-2xl">${eshMode ? eshModeEmojis[key] || emoji : emoji}</div>
-              <div class="text-xs" style="${eshMode ? 'color: #7c3aed; font-weight: bold;' : 'color: #d1d5db;'}">${label}</div>
+              <div class="text-2xl">${emoji}</div>
+              <div class="text-xs text-gray-300">${label}</div>
             </button>
           `).join('')}
         </div>
-        <div class="mt-6 text-xs" style="${eshMode ? 'color: #9333ea; font-weight: bold;' : 'color: #6b7280;'}">
-          ${eshMode ? '🎈 Tap the colorful buttons! 🎈' : 'Hover icons • Click or tap to open'}
-        </div>
+        <div class="mt-6 text-gray-500 text-xs">Hover icons • Click or tap to open</div>
       </div>
     `;
   }
@@ -237,8 +181,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return renderFramesApp();
       case "instagram":
         return renderInstagramApp();
-      case "esh":
-        return renderEshMode();
       case "contact":
         return renderContactApp();
       case "game":
@@ -251,40 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function renderVideoApp() {
-    if (eshMode) {
-      // Childish video gallery for Esh Mode
-      return `
-        <div class="h-full overflow-auto">
-          <div class="flex items-center justify-between mb-3">
-            <button class="back-btn text-sm text-pink-500 font-bold">🔙 Back</button>
-            <div class="text-xs text-purple-600 font-bold">🎬 Story Time! 🎬</div>
-            <div></div>
-          </div>
-          <div class="space-y-4">
-            ${sampleVideos.map((v, i) => `
-              <div class="bg-gradient-to-r from-pink-200 to-purple-200 rounded-2xl p-4 flex gap-4 items-center hover:scale-105 transition-transform border-4 border-yellow-300 shadow-lg">
-                <div class="w-24 h-16 bg-gradient-to-br from-yellow-200 to-orange-200 rounded-xl flex items-center justify-center text-4xl">
-                  🎥
-                </div>
-                <div class="flex-1">
-                  <div class="font-bold text-lg mb-1 text-purple-700">${v.title}</div>
-                  <div class="text-sm text-purple-600">${v.yearType}</div>
-                </div>
-                <button class="open-video-btn px-4 py-2 bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-white font-bold rounded-xl transition-all transform hover:scale-110 shadow-lg" data-index="${i}">
-                  🚀 Watch!
-                </button>
-              </div>
-            `).join('')}
-          </div>
-          <div class="mt-6 text-center">
-            <div class="text-2xl mb-2">🎉</div>
-            <p class="text-purple-600 font-bold">These are stories for kids like you! 🌟</p>
-          </div>
-        </div>
-      `;
-    }
 
-    // Normal video gallery
     return `
       <div class="h-full overflow-auto">
         <div class="flex items-center justify-between mb-3">
@@ -547,35 +456,6 @@ document.addEventListener('DOMContentLoaded', function() {
   `;
 }
 
-  function renderEshMode() {
-    return `
-      <div class="h-full overflow-auto px-1 text-sm text-gray-400">
-        <div class="flex items-center justify-between mb-3">
-          <button class="back-btn text-sm text-pink-500 font-bold">🔙 Back</button>
-          <div class="text-xs text-purple-600 font-bold">🌈 Esh Mode Activated! 🌈</div>
-          <div></div>
-        </div>
-        <div class="space-y-4 text-center">
-          <div class="text-6xl mb-4">🎉</div>
-          <h3 class="text-2xl font-bold text-pink-400 mb-4">Welcome to Esh Mode!</h3>
-          <p class="text-lg text-yellow-300 mb-6">
-            🎨 Your phone is now a KID'S PHONE! 🎨<br>
-            🌟 Everything is going to be super fun and colorful! 🌟
-          </p>
-          <div class="bg-gradient-to-r from-pink-400 to-purple-500 rounded-lg p-6">
-            <p class="text-white font-bold text-lg">
-              🚀 Your world is now transformed! 🚀
-            </p>
-          </div>
-          <div class="mt-6 text-center">
-            <div class="text-2xl mb-2">🎈</div>
-            <p class="text-purple-600 font-bold">Go back to see the magic on the home screen! ✨</p>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
   function renderGameApp() {
     return `
       <div class="h-full flex flex-col justify-between">
@@ -605,26 +485,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // App icon clicks
     document.querySelectorAll('.app-icon').forEach(btn => {
       btn.addEventListener('click', function() {
-        const appKey = this.dataset.app;
-        
-        // If in Esh Mode, only allow going back to home or opening Esh Mode again
-        if (eshMode && appKey !== 'esh') {
-          alert("🎉 You're in Esh Mode! You can only go back to the home screen! 🌈");
-          openApp = null;
-          render();
-          return;
-        }
-        
-        // Activate Esh Mode immediately when clicked and stay on home screen
-        if (appKey === 'esh') {
-          eshMode = true;
-          console.log('Esh Mode activated!', eshMode); // Debug log
-          openApp = null; // Stay on home screen
-          render();
-          return;
-        }
-        
-        openApp = appKey;
+        openApp = this.dataset.app;
         render();
         if (openApp === 'game') {
           initGame();
@@ -635,12 +496,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Back button clicks
     document.querySelectorAll('.back-btn').forEach(btn => {
       btn.addEventListener('click', function() {
-        // If in Esh Mode, go back to home but keep Esh Mode active
-        if (eshMode) {
-          openApp = null;
-          render();
-          return;
-        }
         openApp = null;
         render();
       });
@@ -678,8 +533,6 @@ document.addEventListener('DOMContentLoaded', function() {
         handleGameInput(direction);
       });
     });
-
-
 
     // Keyboard navigation
     const homeGrid = document.querySelector('[tabindex="0"]');
