@@ -93,6 +93,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  // Pause theme music (for videos)
+  function pauseThemeMusic() {
+    if (themeAudio && !themeAudio.paused) {
+      themeAudio.pause();
+    }
+  }
+
   // Update time
   function updateTime() {
     time = new Date();
@@ -139,7 +146,9 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       // If closing video modal, resume theme music
       if (galleryModal !== null) {
-        switchToThemeMusic();
+        if (themeAudio && !openApp) {
+          themeAudio.play().catch(() => {});
+        }
         galleryModal = null;
       }
       openApp = null;
@@ -161,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="relative z-10 flex flex-col items-center max-w-xs sm:max-w-md overflow-hidden mx-auto">
           <h1 class="mb-6 tracking-widest text-sm text-gray-400">AHMED ESH Phone</h1>
 
-          <div class="phone-outer w-80 md:w-96 bg-black/90 border border-zinc-800 rounded-3xl shadow-2xl p-4" onclick="startThemeMusic()">
+          <div class="phone-outer w-80 md:w-96 bg-black/90 border border-zinc-800 rounded-3xl shadow-2xl p-4" onclick="startThemeMusicIfNeeded()">
             <div class="notch w-24 h-3 bg-zinc-900 rounded-b-xl mx-auto mb-2"></div>
 
             <div class="phone-screen bg-[#020202] rounded-2xl p-4 h-96 md:h-[540px] overflow-hidden relative">
@@ -574,9 +583,7 @@ document.addEventListener('DOMContentLoaded', function() {
       btn.addEventListener('click', function() {
         galleryModal = parseInt(this.dataset.index);
         // Pause theme music when video opens
-        if (themeAudio && themeAudio.played.length > 0) {
-          themeAudio.pause();
-        }
+        pauseThemeMusic();
         render();
       });
     });
@@ -587,7 +594,7 @@ document.addEventListener('DOMContentLoaded', function() {
         galleryModal = null;
         // Resume theme music when video closes
         if (themeAudio && !openApp) {
-          switchToThemeMusic();
+          themeAudio.play().catch(() => {});
         }
         render();
       });
@@ -774,6 +781,13 @@ document.addEventListener('DOMContentLoaded', function() {
       themeAudio.play().catch((e) => {
         console.log("Theme audio failed to play:", e);
       });
+    }
+  };
+
+  // Start theme music only if no app is open and music hasn't started
+  window.startThemeMusicIfNeeded = function() {
+    if (!openApp && themeAudio && themeAudio.paused) {
+      startThemeMusic();
     }
   };
 
