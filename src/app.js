@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
   let galleryModal = null;
   let themeAudio = null;
   let gameAudio = null;
-  let xrExperience = null;
   let time = new Date();
   let appRefs = [];
 
@@ -54,12 +53,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize audio
   function initAudio() {
     try {
-      // Check if Audio API is available
-      if (typeof Audio === 'undefined') {
-        console.log("Audio API not available");
-        return;
-      }
-      
       themeAudio = new Audio("src/assets/sounds/theme.mp3");
       themeAudio.loop = true;
       themeAudio.volume = 0.35;
@@ -167,17 +160,6 @@ document.addEventListener('DOMContentLoaded', function() {
       if (openApp === "game") {
         switchToThemeMusic();
       }
-      
-      // If exiting XR app, cleanup XR experience
-      if (openApp === "xr" && xrExperience) {
-        xrExperience.dispose();
-        xrExperience = null;
-        // Resume theme music when exiting XR
-        if (themeAudio && !openApp) {
-          themeAudio.play().catch(() => {});
-        }
-      }
-      
       // If closing video modal, resume theme music
       if (galleryModal !== null) {
         if (themeAudio && !openApp) {
@@ -341,15 +323,28 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function renderXRApp() {
+    const sampleXR = [
+      { title: "XR Scene 1", desc: "Placeholder 3D scene (replace with A-Frame/GLB embed)" },
+      { title: "XR Scene 2", desc: "Placeholder interaction demo" },
+    ];
+
     return `
       <div class="h-full overflow-auto">
         <div class="flex items-center justify-between mb-3">
           <button class="back-btn text-sm text-cyan-300">Back</button>
-          <div class="text-xs text-gray-400">XR / VR Experience</div>
+          <div class="text-xs text-gray-400">XR / VR Samples</div>
           <div></div>
         </div>
-        <div class="w-full h-full bg-black rounded overflow-hidden">
-          <div id="xr-container" class="w-full h-full"></div>
+        <div class="space-y-3">
+          ${sampleXR.map((x, i) => `
+            <div class="bg-zinc-900 rounded p-3">
+              <div class="font-medium">${x.title}</div>
+              <div class="text-xs text-gray-400 mb-2">${x.desc}</div>
+              <div class="w-full h-36 bg-black/40 rounded flex items-center justify-center text-xs">
+                Placeholder for A-Frame / Three.js viewer
+              </div>
+            </div>
+          `).join('')}
         </div>
       </div>
     `;
@@ -536,9 +531,9 @@ document.addEventListener('DOMContentLoaded', function() {
           </a>
         </div>
       </div>
-    </div>
-  `;
-}
+      </div>
+    `;
+  }
 
   function renderGameApp() {
     return `
@@ -588,9 +583,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (appToOpen === 'video') {
           console.log("Video app opened, pausing theme music");
           pauseThemeMusic();
-        } else if (appToOpen === 'xr') {
-          console.log("XR app opened, pausing theme music");
-          pauseThemeMusic();
         }
         
         openApp = appToOpen;
@@ -598,11 +590,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (openApp === 'game') {
           initGame();
-        } else if (openApp === 'xr') {
-          // Initialize XR experience after render
-          setTimeout(() => {
-            initXRExperience();
-          }, 500);
         }
       });
     });
@@ -614,17 +601,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (openApp === "game") {
           switchToThemeMusic();
         }
-        
-        // If exiting XR app, cleanup XR experience
-        if (openApp === "xr" && xrExperience) {
-          xrExperience.dispose();
-          xrExperience = null;
-          // Resume theme music when exiting XR
-          if (themeAudio && !openApp) {
-            themeAudio.play().catch(() => {});
-          }
-        }
-        
         openApp = null;
         render();
       });
@@ -796,46 +772,6 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!gameAlive) {
         controls.innerHTML = '<div style="text-align: center; margin-top: 10px; color: #fff;">Game Over - Refresh page</div>';
       }
-    }
-  }
-
-  // Initialize XR Experience
-  function initXRExperience() {
-    console.log("Initializing XR Experience...");
-    
-    if (xrExperience) {
-      console.log("Disposing existing XR experience");
-      xrExperience.dispose();
-    }
-    
-    const container = document.getElementById('xr-container');
-    console.log("XR Container found:", container);
-    console.log("XRExperience class available:", window.XRExperience);
-    
-    if (container && window.XRExperience) {
-      // Wait for Three.js to load
-      if (typeof THREE === 'undefined') {
-        console.log("Three.js not loaded yet, waiting...");
-        setTimeout(initXRExperience, 500);
-        return;
-      }
-      
-      try {
-        xrExperience = new window.XRExperience();
-        console.log("XRExperience instance created:", xrExperience);
-        xrExperience.init(container);
-        
-        // Add window resize handler
-        window.addEventListener('resize', () => {
-          if (xrExperience) {
-            xrExperience.onWindowResize();
-          }
-        });
-      } catch (error) {
-        console.error("Error creating XR Experience:", error);
-      }
-    } else {
-      console.error("Missing container or XRExperience class");
     }
   }
 
