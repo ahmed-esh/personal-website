@@ -1,4 +1,4 @@
-// Vanilla JavaScript version of the portfolio app
+// Vanilla JavaScript 
 document.addEventListener('DOMContentLoaded', function() {
   let openApp = null;
   let galleryModal = null;
