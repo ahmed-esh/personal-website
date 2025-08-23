@@ -8,8 +8,17 @@
 </head>
 <body>
   <div id="root"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r158/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.min.js"></script>
+    <script>
+      // Check if Three.js loaded
+      window.addEventListener('load', () => {
+        if (typeof THREE !== 'undefined') {
+          console.log('Three.js loaded successfully');
+        } else {
+          console.error('Three.js failed to load');
+        }
+      });
+    </script>
     <script src="src/xrApp.js"></script>
     <script src="src/app.js"></script>
 </body>

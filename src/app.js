@@ -795,21 +795,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Initialize XR Experience
   function initXRExperience() {
+    console.log("Initializing XR Experience...");
+    
     if (xrExperience) {
+      console.log("Disposing existing XR experience");
       xrExperience.dispose();
     }
     
     const container = document.getElementById('xr-container');
+    console.log("XR Container found:", container);
+    console.log("XRExperience class available:", window.XRExperience);
+    
     if (container && window.XRExperience) {
-      xrExperience = new window.XRExperience();
-      xrExperience.init(container);
-      
-      // Add window resize handler
-      window.addEventListener('resize', () => {
-        if (xrExperience) {
-          xrExperience.onWindowResize();
-        }
-      });
+      try {
+        xrExperience = new window.XRExperience();
+        console.log("XRExperience instance created:", xrExperience);
+        xrExperience.init(container);
+        
+        // Add window resize handler
+        window.addEventListener('resize', () => {
+          if (xrExperience) {
+            xrExperience.onWindowResize();
+          }
+        });
+      } catch (error) {
+        console.error("Error creating XR Experience:", error);
+      }
+    } else {
+      console.error("Missing container or XRExperience class");
     }
   }
 
