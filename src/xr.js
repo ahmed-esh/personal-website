@@ -1,5 +1,5 @@
 // XR.js
-import * as THREE from '../node_modules/three/build/three.module.js';
+import * as THREE from 'three';
 
 export function renderXRApp() {
   // Container fills screen with 3D scene
