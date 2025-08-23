@@ -74,65 +74,14 @@ class XRExperience {
     this.container.appendChild(this.renderer.domElement);
   }
 
-  // Setup basic camera controls (no OrbitControls dependency)
+  // Setup orbit controls
   setupControls() {
-    // Simple mouse controls for rotation
-    let isMouseDown = false;
-    let mouseX = 0;
-    let mouseY = 0;
-    
-    this.renderer.domElement.addEventListener('mousedown', (event) => {
-      isMouseDown = true;
-      mouseX = event.clientX;
-      mouseY = event.clientY;
-    });
-    
-    this.renderer.domElement.addEventListener('mouseup', () => {
-      isMouseDown = false;
-    });
-    
-    this.renderer.domElement.addEventListener('mousemove', (event) => {
-      if (isMouseDown) {
-        const deltaX = event.clientX - mouseX;
-        const deltaY = event.clientY - mouseY;
-        
-        // Rotate camera around the scene
-        const radius = Math.sqrt(
-          this.camera.position.x ** 2 + 
-          this.camera.position.z ** 2
-        );
-        
-        const angleX = deltaX * 0.01;
-        const angleY = deltaY * 0.01;
-        
-        this.camera.position.x = radius * Math.cos(angleX);
-        this.camera.position.z = radius * Math.sin(angleX);
-        this.camera.position.y = Math.max(2, Math.min(15, this.camera.position.y - angleY));
-        
-        this.camera.lookAt(0, 0, 0);
-        
-        mouseX = event.clientX;
-        mouseY = event.clientY;
-      }
-    });
-    
-    // Zoom with mouse wheel
-    this.renderer.domElement.addEventListener('wheel', (event) => {
-      const zoomSpeed = 0.1;
-      const delta = event.deltaY > 0 ? 1 : -1;
-      
-      const radius = Math.sqrt(
-        this.camera.position.x ** 2 + 
-        this.camera.position.z ** 2
-      );
-      
-      const newRadius = Math.max(5, Math.min(30, radius + delta * zoomSpeed));
-      const scale = newRadius / radius;
-      
-      this.camera.position.x *= scale;
-      this.camera.position.z *= scale;
-      this.camera.position.y *= scale;
-    });
+    this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.enableDamping = true;
+    this.controls.dampingFactor = 0.05;
+    this.controls.maxDistance = 50;
+    this.controls.minDistance = 5;
+    this.controls.maxPolarAngle = Math.PI / 2;
   }
 
   // Create the forest world
@@ -481,6 +430,11 @@ class XRExperience {
   animate() {
     this.animationId = requestAnimationFrame(() => this.animate());
     
+    // Update controls
+    if (this.controls) {
+      this.controls.update();
+    }
+    
     // Animate fireflies
     if (this.fireflies) {
       this.fireflies.forEach((firefly, index) => {
@@ -528,8 +482,10 @@ class XRExperience {
       this.renderer = null;
     }
     
-    // Controls are just event listeners, no need to dispose
-    // They will be garbage collected when the DOM element is removed
+    if (this.controls) {
+      this.controls.dispose();
+      this.controls = null;
+    }
     
     // Dispose geometries and materials only if scene exists
     if (this.scene) {
