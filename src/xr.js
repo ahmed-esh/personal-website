@@ -1,5 +1,7 @@
 // XR.js
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+import { FontLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/FontLoader.js';
+import { TextGeometry } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/geometries/TextGeometry.js';
 
 export function renderXRApp() {
   // Container fills screen with 3D scene
@@ -92,9 +94,9 @@ export function initXRScene() {
     scene.add(screen);
 
     // Text below
-    const loader = new THREE.FontLoader();
+    const loader = new FontLoader();
     loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (font) {
-      const textGeo = new THREE.TextGeometry(v.text, {
+    const textGeo = new TextGeometry(v.text, {
         font: font,
         size: 0.3,
         height: 0.01
