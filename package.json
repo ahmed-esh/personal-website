@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/yourusername/ahmed-e-portfolio/issues"
   },
-  "homepage": "https://github.com/yourusername/ahmed-e-portfolio#readme"
-} 
+  "homepage": "https://github.com/yourusername/ahmed-e-portfolio#readme",
+  "dependencies": {
+    "three": "^0.179.1"
+  }
+}
