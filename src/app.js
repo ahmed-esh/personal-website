@@ -61,14 +61,19 @@ document.addEventListener('DOMContentLoaded', function() {
       gameAudio.loop = true;
       gameAudio.volume = 0.35;
       
-      // Start theme music after a short delay to ensure it loads
-      setTimeout(() => {
-        themeAudio.play().catch((e) => {
-          console.log("Theme audio failed to play:", e);
-        });
-      }, 100);
+      // Don't auto-play - wait for user interaction
+      console.log("Audio initialized - waiting for user interaction to start");
     } catch (e) {
       console.log("Audio not available:", e);
+    }
+  }
+
+  // Start theme music after user interaction
+  function startThemeMusic() {
+    if (themeAudio && themeAudio.paused) {
+      themeAudio.play().catch((e) => {
+        console.log("Theme audio failed to play:", e);
+      });
     }
   }
 
@@ -156,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="relative z-10 flex flex-col items-center max-w-xs sm:max-w-md overflow-hidden mx-auto">
           <h1 class="mb-6 tracking-widest text-sm text-gray-400">AHMED ESH Phone</h1>
 
-          <div class="phone-outer w-80 md:w-96 bg-black/90 border border-zinc-800 rounded-3xl shadow-2xl p-4">
+          <div class="phone-outer w-80 md:w-96 bg-black/90 border border-zinc-800 rounded-3xl shadow-2xl p-4" onclick="startThemeMusic()">
             <div class="notch w-24 h-3 bg-zinc-900 rounded-b-xl mx-auto mb-2"></div>
 
             <div class="phone-screen bg-[#020202] rounded-2xl p-4 h-96 md:h-[540px] overflow-hidden relative">
@@ -531,9 +536,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   function attachEventListeners() {
+    // Start theme music on first user interaction
+    let musicStarted = false;
+    
     // App icon clicks
     document.querySelectorAll('.app-icon').forEach(btn => {
       btn.addEventListener('click', function() {
+        // Start theme music on first app click if not already started
+        if (!musicStarted && !openApp) {
+          startThemeMusic();
+          musicStarted = true;
+        }
+        
         openApp = this.dataset.app;
         render();
         if (openApp === 'game') {
@@ -752,6 +766,15 @@ document.addEventListener('DOMContentLoaded', function() {
   window.closeFullScreen = function() {
     const modal = document.getElementById('fullScreenModal');
     modal.classList.add('hidden');
+  };
+
+  // Global audio control function
+  window.startThemeMusic = function() {
+    if (themeAudio && themeAudio.paused) {
+      themeAudio.play().catch((e) => {
+        console.log("Theme audio failed to play:", e);
+      });
+    }
   };
 
   // Start the app
