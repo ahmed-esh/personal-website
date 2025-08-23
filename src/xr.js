@@ -9,6 +9,9 @@ export function renderXRApp() {
       <div class="absolute bottom-4 left-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
         🖱️ Drag to look around • 🖱️ Scroll to zoom • ⌨️ WASD/Arrows to move
       </div>
+      <div class="absolute top-4 right-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
+        🌲 3D Forest Environment • 📺 Interactive Screens
+      </div>
     </div>
   `;
 }
@@ -25,7 +28,7 @@ export function initXRScene() {
 
   // Scene, Camera, Renderer
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x000000);
+  scene.background = new THREE.Color(0x87CEEB); // Light blue sky
 
   // Get container dimensions and set proper aspect ratio
   const containerWidth = container.clientWidth;
@@ -46,15 +49,15 @@ export function initXRScene() {
 
   // Ground (forest floor)
   const groundGeometry = new THREE.PlaneGeometry(50, 50);
-  const groundMaterial = new THREE.MeshPhongMaterial({ color: 0x223311 });
+  const groundMaterial = new THREE.MeshPhongMaterial({ color: 0x8FBC8F }); // Dark sea green
   const ground = new THREE.Mesh(groundGeometry, groundMaterial);
   ground.rotation.x = -Math.PI / 2;
   scene.add(ground);
 
   // Simple “trees”
-  const treeMaterial = new THREE.MeshPhongMaterial({ color: 0x116611 });
+  const treeMaterial = new THREE.MeshPhongMaterial({ color: 0x228B22 }); // Forest green
   for (let i = 0; i < 30; i++) {
-    const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 2), new THREE.MeshPhongMaterial({ color: 0x5c3a21 }));
+    const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 2), new THREE.MeshPhongMaterial({ color: 0x8B4513 })); // Saddle brown
     trunk.position.set((Math.random() - 0.5) * 40, 1, (Math.random() - 0.5) * 40);
     scene.add(trunk);
 
@@ -89,20 +92,37 @@ export function initXRScene() {
   ];
 
   videos.forEach(v => {
-    const geometry = new THREE.PlaneGeometry(4, 2.25);
-    const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    const screen = new THREE.Mesh(geometry, material);
+    // Create screen frame (black border)
+    const frameGeometry = new THREE.PlaneGeometry(4.2, 2.45);
+    const frameMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
+    const frame = new THREE.Mesh(frameGeometry, frameMaterial);
+    frame.position.set(...v.pos);
+    scene.add(frame);
+    
+    // Create screen content (blue glow)
+    const screenGeometry = new THREE.PlaneGeometry(4, 2.25);
+    const screenMaterial = new THREE.MeshPhongMaterial({ 
+      color: 0x0066ff,
+      emissive: 0x0033cc,
+      shininess: 100
+    });
+    const screen = new THREE.Mesh(screenGeometry, screenMaterial);
     screen.position.set(...v.pos);
     scene.add(screen);
-
-    // Simple text label (without font loading)
+    
+    // Add screen text overlay
     const textDiv = document.createElement('div');
     textDiv.textContent = v.text;
     textDiv.style.position = 'absolute';
-    textDiv.style.color = '#ffff00';
-    textDiv.style.fontSize = '12px';
+    textDiv.style.color = '#ffffff';
+    textDiv.style.fontSize = '14px';
     textDiv.style.fontWeight = 'bold';
-    textDiv.style.textShadow = '2px 2px 4px rgba(0,0,0,0.8)';
+    textDiv.style.textAlign = 'center';
+    textDiv.style.textShadow = '2px 2px 4px rgba(0,0,0,0.9)';
+    textDiv.style.backgroundColor = 'rgba(0,0,0,0.7)';
+    textDiv.style.padding = '8px 12px';
+    textDiv.style.borderRadius = '6px';
+    textDiv.style.border = '2px solid #0066ff';
     
     // Position the text below the screen
     const textElement = document.createElement('div');
@@ -110,7 +130,8 @@ export function initXRScene() {
     textElement.style.position = 'absolute';
     textElement.style.left = '50%';
     textElement.style.transform = 'translateX(-50%)';
-    textElement.style.bottom = '20px';
+    textElement.style.bottom = '30px';
+    textElement.style.zIndex = '1000';
     
     container.appendChild(textElement);
   });
