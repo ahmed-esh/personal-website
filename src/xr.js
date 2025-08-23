@@ -1,6 +1,5 @@
 // XR.js
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
-
 export function renderXRApp() {
   // Container fills screen with 3D scene
   return `
@@ -8,7 +7,7 @@ export function renderXRApp() {
       <button class="back-btn text-sm text-cyan-300 absolute top-4 left-4 z-10">Back</button>
       <div id="xr-container" style="width:100%; height:100%; background: #000;"></div>
       <div class="absolute bottom-4 left-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
-        Use mouse to look around • Scroll to zoom
+        🖱️ Drag to look around • 🖱️ Scroll to zoom • ⌨️ WASD/Arrows to move
       </div>
     </div>
   `;
@@ -28,11 +27,16 @@ export function initXRScene() {
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x000000);
 
-  const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 2, 6);
+  // Get container dimensions and set proper aspect ratio
+  const containerWidth = container.clientWidth;
+  const containerHeight = container.clientHeight;
+  
+  const camera = new THREE.PerspectiveCamera(60, containerWidth / containerHeight, 0.1, 1000);
+  camera.position.set(0, 5, 15); // Start further back to see more of the world
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(containerWidth, containerHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
   container.appendChild(renderer.domElement);
 
   // Light
@@ -111,9 +115,91 @@ export function initXRScene() {
     container.appendChild(textElement);
   });
 
+  // Camera controls
+  let isMouseDown = false;
+  let mouseX = 0;
+  let mouseY = 0;
+  let targetRotationX = 0;
+  let targetRotationY = 0;
+  let currentRotationX = 0;
+  let currentRotationY = 0;
+
+  // Mouse event listeners
+  container.addEventListener('mousedown', (event) => {
+    isMouseDown = true;
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+  });
+
+  container.addEventListener('mouseup', () => {
+    isMouseDown = false;
+  });
+
+  container.addEventListener('mousemove', (event) => {
+    if (isMouseDown) {
+      const deltaX = event.clientX - mouseX;
+      const deltaY = event.clientY - mouseY;
+      
+      targetRotationY += deltaX * 0.01;
+      targetRotationX += deltaY * 0.01;
+      
+      // Limit vertical rotation
+      targetRotationX = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, targetRotationX));
+      
+      mouseX = event.clientX;
+      mouseY = event.clientY;
+    }
+  });
+
+  // Keyboard controls
+  const keys = {};
+  document.addEventListener('keydown', (event) => {
+    keys[event.code] = true;
+  });
+  
+  document.addEventListener('keyup', (event) => {
+    keys[event.code] = false;
+  });
+
+  // Zoom with mouse wheel
+  container.addEventListener('wheel', (event) => {
+    const zoomSpeed = 0.1;
+    const delta = event.deltaY > 0 ? 1 : -1;
+    camera.position.z += delta * zoomSpeed;
+    camera.position.z = Math.max(5, Math.min(30, camera.position.z)); // Limit zoom
+  });
+
   // Animation loop
   function animate() {
     requestAnimationFrame(animate);
+    
+    // Smooth camera rotation
+    currentRotationX += (targetRotationX - currentRotationX) * 0.1;
+    currentRotationY += (targetRotationY - currentRotationY) * 0.1;
+    
+    // Apply rotation to camera
+    camera.rotation.x = currentRotationX;
+    camera.rotation.y = currentRotationY;
+    
+    // Keyboard movement
+    const moveSpeed = 0.2;
+    if (keys['KeyW'] || keys['ArrowUp']) {
+      camera.position.z -= moveSpeed;
+    }
+    if (keys['KeyS'] || keys['ArrowDown']) {
+      camera.position.z += moveSpeed;
+    }
+    if (keys['KeyA'] || keys['ArrowLeft']) {
+      camera.position.x -= moveSpeed;
+    }
+    if (keys['KeyD'] || keys['ArrowRight']) {
+      camera.position.x += moveSpeed;
+    }
+    
+    // Keep camera within bounds
+    camera.position.x = Math.max(-20, Math.min(20, camera.position.x));
+    camera.position.z = Math.max(5, Math.min(30, camera.position.z));
+    
     renderer.render(scene, camera);
   }
   animate();
