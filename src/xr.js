@@ -1,7 +1,5 @@
 // XR.js
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
-import { FontLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders/FontLoader.js";
-import { TextGeometry } from "https://unpkg.com/three@0.160.0/examples/jsm/geometries/TextGeometry.js";
 
 export function renderXRApp() {
   // Container fills screen with 3D scene
@@ -93,19 +91,24 @@ export function initXRScene() {
     screen.position.set(...v.pos);
     scene.add(screen);
 
-    // Text below
-    const loader = new FontLoader();
-    loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (font) {
-    const textGeo = new TextGeometry(v.text, {
-        font: font,
-        size: 0.3,
-        height: 0.01
-      });
-      const textMat = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-      const mesh = new THREE.Mesh(textGeo, textMat);
-      mesh.position.set(v.pos[0] - 1.5, v.pos[1] - 1.5, v.pos[2]);
-      scene.add(mesh);
-    });
+    // Simple text label (without font loading)
+    const textDiv = document.createElement('div');
+    textDiv.textContent = v.text;
+    textDiv.style.position = 'absolute';
+    textDiv.style.color = '#ffff00';
+    textDiv.style.fontSize = '12px';
+    textDiv.style.fontWeight = 'bold';
+    textDiv.style.textShadow = '2px 2px 4px rgba(0,0,0,0.8)';
+    
+    // Position the text below the screen
+    const textElement = document.createElement('div');
+    textElement.appendChild(textDiv);
+    textElement.style.position = 'absolute';
+    textElement.style.left = '50%';
+    textElement.style.transform = 'translateX(-50%)';
+    textElement.style.bottom = '20px';
+    
+    container.appendChild(textElement);
   });
 
   // Animation loop
