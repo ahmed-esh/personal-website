@@ -56,13 +56,19 @@ document.addEventListener('DOMContentLoaded', function() {
       themeAudio = new Audio("src/assets/sounds/theme.mp3");
       themeAudio.loop = true;
       themeAudio.volume = 0.35;
-      themeAudio.play().catch(() => {});
       
       gameAudio = new Audio("src/assets/sounds/game app.mp3");
       gameAudio.loop = true;
       gameAudio.volume = 0.35;
+      
+      // Start theme music after a short delay to ensure it loads
+      setTimeout(() => {
+        themeAudio.play().catch((e) => {
+          console.log("Theme audio failed to play:", e);
+        });
+      }, 100);
     } catch (e) {
-      console.log("Audio not available");
+      console.log("Audio not available:", e);
     }
   }
 
@@ -122,6 +128,15 @@ document.addEventListener('DOMContentLoaded', function() {
   // Global keyboard handler
   function onKey(e) {
     if (e.key === "Escape") {
+      // If exiting game app, switch back to theme music
+      if (openApp === "game") {
+        switchToThemeMusic();
+      }
+      // If closing video modal, resume theme music
+      if (galleryModal !== null) {
+        switchToThemeMusic();
+        galleryModal = null;
+      }
       openApp = null;
       render();
     }
@@ -544,6 +559,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.open-video-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         galleryModal = parseInt(this.dataset.index);
+        // Pause theme music when video opens
+        if (themeAudio && themeAudio.played.length > 0) {
+          themeAudio.pause();
+        }
         render();
       });
     });
@@ -552,6 +571,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.close-modal').forEach(btn => {
       btn.addEventListener('click', function() {
         galleryModal = null;
+        // Resume theme music when video closes
+        if (themeAudio && !openApp) {
+          switchToThemeMusic();
+        }
         render();
       });
     });
