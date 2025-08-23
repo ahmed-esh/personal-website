@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let openApp = null;
   let galleryModal = null;
   let themeAudio = null;
+  let gameAudio = null;
   let time = new Date();
   let appRefs = [];
 
@@ -52,12 +53,32 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize audio
   function initAudio() {
     try {
-      themeAudio = new Audio("assets/sounds/theme.mp3");
+      themeAudio = new Audio("src/assets/sounds/theme.mp3");
       themeAudio.loop = true;
       themeAudio.volume = 0.35;
       themeAudio.play().catch(() => {});
+      
+      gameAudio = new Audio("src/assets/sounds/game app.mp3");
+      gameAudio.loop = true;
+      gameAudio.volume = 0.35;
     } catch (e) {
       console.log("Audio not available");
+    }
+  }
+
+  // Switch to game music
+  function switchToGameMusic() {
+    if (themeAudio && gameAudio) {
+      themeAudio.pause();
+      gameAudio.play().catch(() => {});
+    }
+  }
+
+  // Switch back to theme music
+  function switchToThemeMusic() {
+    if (themeAudio && gameAudio) {
+      gameAudio.pause();
+      themeAudio.play().catch(() => {});
     }
   }
 
@@ -501,6 +522,7 @@ document.addEventListener('DOMContentLoaded', function() {
         openApp = this.dataset.app;
         render();
         if (openApp === 'game') {
+          switchToGameMusic();
           initGame();
         }
       });
@@ -509,6 +531,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Back button clicks
     document.querySelectorAll('.back-btn').forEach(btn => {
       btn.addEventListener('click', function() {
+        // If exiting game app, switch back to theme music
+        if (openApp === "game") {
+          switchToThemeMusic();
+        }
         openApp = null;
         render();
       });
