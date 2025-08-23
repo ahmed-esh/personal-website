@@ -244,6 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
       case "video":
         return renderVideoApp();
       case "xr":
+        console.log("Rendering XR app with imported function...");
         return renderXRApp();
       case "frames":
         return renderFramesApp();
@@ -324,33 +325,7 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
   }
 
-  function renderXRApp() {
-    const sampleXR = [
-      { title: "XR Scene 1", desc: "Placeholder 3D scene (replace with A-Frame/GLB embed)" },
-      { title: "XR Scene 2", desc: "Placeholder interaction demo" },
-    ];
 
-    return `
-      <div class="h-full overflow-auto">
-        <div class="flex items-center justify-between mb-3">
-          <button class="back-btn text-sm text-cyan-300">Back</button>
-          <div class="text-xs text-gray-400">XR / VR Samples</div>
-          <div></div>
-        </div>
-        <div class="space-y-3">
-          ${sampleXR.map((x, i) => `
-            <div class="bg-zinc-900 rounded p-3">
-              <div class="font-medium">${x.title}</div>
-              <div class="text-xs text-gray-400 mb-2">${x.desc}</div>
-              <div class="w-full h-36 bg-black/40 rounded flex items-center justify-center text-xs">
-                Placeholder for A-Frame / Three.js viewer
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-  }
 
   function renderFramesApp() {
     const frames = [
@@ -597,7 +572,9 @@ document.addEventListener('DOMContentLoaded', function() {
           initGame();
         } else if (openApp === 'xr') {
           // Initialize XR scene after render is complete
+          console.log("About to call initXRScene...");
           setTimeout(() => {
+            console.log("Calling initXRScene now...");
             initXRScene();
           }, 100);
         }
