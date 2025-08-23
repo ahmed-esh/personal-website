@@ -1,7 +1,7 @@
 // XR.js
-import * as THREE from '../node_modules/three/build/three.module.js';
-import { FontLoader } from '../node_modules/three/examples/jsm/loaders/FontLoader.js';
-import { TextGeometry } from '../node_modules/three/examples/jsm/geometries/TextGeometry.js';
+import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
+import { FontLoader } from "https://unpkg.com/three@0.160.0/examples/jsm/loaders/FontLoader.js";
+import { TextGeometry } from "https://unpkg.com/three@0.160.0/examples/jsm/geometries/TextGeometry.js";
 
 export function renderXRApp() {
   // Container fills screen with 3D scene
