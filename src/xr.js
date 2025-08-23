@@ -1,5 +1,5 @@
 // XR.js
-import * as THREE from 'three';
+import * as THREE from '../node_modules/three/build/three.module.js';
 
 export function renderXRApp() {
   // Container fills screen (1920x1080 world)

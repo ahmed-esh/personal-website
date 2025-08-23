@@ -1,4 +1,6 @@
-// Vanilla JavaScript 
+import { renderXRApp, initXRScene } from './xr.js';
+
+// Vanilla JavaScript version of the portfolio app
 document.addEventListener('DOMContentLoaded', function() {
   let openApp = null;
   let galleryModal = null;
@@ -242,6 +244,9 @@ document.addEventListener('DOMContentLoaded', function() {
       case "video":
         return renderVideoApp();
       case "xr":
+        if (openApp === 'xr') {
+          initXRScene();
+        }
         return renderXRApp();
       case "frames":
         return renderFramesApp();
@@ -583,6 +588,9 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (appToOpen === 'video') {
           console.log("Video app opened, pausing theme music");
           pauseThemeMusic();
+        } else if (appToOpen === 'xr') {
+          console.log("XR app opened, initializing XR scene");
+          // XR scene will be initialized in renderAppScreen
         }
         
         openApp = appToOpen;
