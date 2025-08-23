@@ -286,9 +286,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function renderFramesApp() {
     const frames = [
-      { title: "Still 1", caption: "Child's perspective drawing", src: "assets/images/frame1.jpg" },
-      { title: "Still 2", caption: "Family scene (placeholder)", src: "assets/images/frame2.jpg" },
-      { title: "Still 3", caption: "Cars (placeholder)", src: "assets/images/frame3.jpg" },
+      { title: "Shas", caption: "A moment of quiet reflection, capturing the essence of childhood innocence and wonder", src: "src/assets/picsforstils/Shas.png" },
+      { title: "Italian Kids", caption: "Young spirits exploring cultural boundaries, finding joy in the simple moments of discovery", src: "src/assets/picsforstils/Italian Kids.png" },
+      { title: "SHAR 4", caption: "The fourth chapter of a story told through the eyes of youth, where imagination meets reality", src: "src/assets/picsforstils/SHAR 4.png" },
+      { title: "Soldiers", caption: "Children's perspective on strength and protection, where play becomes a metaphor for courage", src: "src/assets/picsforstils/soilders.png" },
+      { title: "Woke Up Like This", caption: "The natural beauty of morning moments, when the world feels fresh and full of possibilities", src: "src/assets/picsforstils/Woke up like this.png" },
+      { title: "For Instagram 2", caption: "A snapshot of life's candid moments, perfectly framed for sharing with the world", src: "src/assets/picsforstils/for instgram 2.png" },
+      { title: "Dodge 1", caption: "The thrill of movement and speed, captured through the lens of youthful energy and excitement", src: "src/assets/picsforstils/Dodge 1.png" },
+      { title: "The Fight After Prayer", caption: "Contrasting moments of peace and conflict, showing the complexity of human emotions", src: "src/assets/picsforstils/the fight after prayer.png" },
+      { title: "Friday", caption: "The joy of weekend freedom, when time seems endless and adventures await around every corner", src: "src/assets/picsforstils/Friday.png" },
+      { title: "Bozaid", caption: "A portrait of resilience and hope, embodying the spirit of youth facing life's challenges", src: "src/assets/picsforstils/Bozaid.png" },
     ];
 
     return `
@@ -301,10 +308,8 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="grid grid-cols-2 gap-3">
           ${frames.map((f, i) => `
             <div class="bg-zinc-900 rounded p-2">
-              <div class="w-full h-32 bg-black/40 rounded mb-2 flex items-center justify-center text-xs">
-                Image ${i + 1}
-              </div>
-              <div class="text-sm">${f.title}</div>
+              <img src="${f.src}" alt="${f.title}" class="w-full h-32 object-cover rounded mb-2">
+              <div class="text-sm font-semibold">${f.title}</div>
               <div class="text-xs text-gray-400">${f.caption}</div>
             </div>
           `).join('')}
