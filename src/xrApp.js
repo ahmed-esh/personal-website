@@ -17,6 +17,9 @@ class XRExperience {
     console.log("Starting XR Experience initialization...");
     console.log("Container:", container);
     console.log("THREE available:", typeof THREE !== 'undefined');
+    console.log("THREE object:", THREE);
+    console.log("THREE.Scene:", THREE.Scene);
+    console.log("THREE.PerspectiveCamera:", THREE.PerspectiveCamera);
     
     if (typeof THREE === 'undefined') {
       console.error("THREE.js library not loaded!");

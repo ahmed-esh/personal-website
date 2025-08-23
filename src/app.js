@@ -54,6 +54,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize audio
   function initAudio() {
     try {
+      // Check if Audio API is available
+      if (typeof Audio === 'undefined') {
+        console.log("Audio API not available");
+        return;
+      }
+      
       themeAudio = new Audio("src/assets/sounds/theme.mp3");
       themeAudio.loop = true;
       themeAudio.volume = 0.35;
@@ -596,7 +602,7 @@ document.addEventListener('DOMContentLoaded', function() {
           // Initialize XR experience after render
           setTimeout(() => {
             initXRExperience();
-          }, 100);
+          }, 500);
         }
       });
     });
