@@ -61,6 +61,15 @@ document.addEventListener('DOMContentLoaded', function() {
       gameAudio.loop = true;
       gameAudio.volume = 0.35;
       
+      // Add load event listeners for debugging
+      themeAudio.addEventListener('loadeddata', () => {
+        console.log("Theme audio loaded successfully");
+      });
+      
+      gameAudio.addEventListener('loadeddata', () => {
+        console.log("Game audio loaded successfully");
+      });
+      
       // Don't auto-play - wait for user interaction
       console.log("Audio initialized - waiting for user interaction to start");
     } catch (e) {
@@ -79,22 +88,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Switch to game music
   function switchToGameMusic() {
+    console.log("Switching to game music");
     if (themeAudio && gameAudio) {
       themeAudio.pause();
-      gameAudio.play().catch(() => {});
+      gameAudio.play().catch((e) => {
+        console.log("Game audio failed to play:", e);
+      });
     }
   }
 
   // Switch back to theme music
   function switchToThemeMusic() {
+    console.log("Switching back to theme music");
     if (themeAudio && gameAudio) {
       gameAudio.pause();
-      themeAudio.play().catch(() => {});
+      themeAudio.play().catch((e) => {
+        console.log("Theme audio failed to play:", e);
+      });
     }
   }
 
   // Pause theme music (for videos)
   function pauseThemeMusic() {
+    console.log("Pausing theme music for video");
     if (themeAudio && !themeAudio.paused) {
       themeAudio.pause();
     }
@@ -557,10 +573,22 @@ document.addEventListener('DOMContentLoaded', function() {
           musicStarted = true;
         }
         
-        openApp = this.dataset.app;
-        render();
-        if (openApp === 'game') {
+        const appToOpen = this.dataset.app;
+        console.log("Opening app:", appToOpen);
+        
+        // Handle music switching BEFORE setting openApp and rendering
+        if (appToOpen === 'game') {
+          console.log("Game app opened, switching music");
           switchToGameMusic();
+        } else if (appToOpen === 'video') {
+          console.log("Video app opened, pausing theme music");
+          pauseThemeMusic();
+        }
+        
+        openApp = appToOpen;
+        render();
+        
+        if (openApp === 'game') {
           initGame();
         }
       });
@@ -787,6 +815,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Start theme music only if no app is open and music hasn't started
   window.startThemeMusicIfNeeded = function() {
     if (!openApp && themeAudio && themeAudio.paused) {
+      console.log("Starting theme music from phone click");
       startThemeMusic();
     }
   };
