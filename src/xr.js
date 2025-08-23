@@ -2,19 +2,27 @@
 import * as THREE from '../node_modules/three/build/three.module.js';
 
 export function renderXRApp() {
-  // Container fills screen (1920x1080 world)
+  // Container fills screen with 3D scene
   return `
-    <div class="h-full w-full">
+    <div class="h-full w-full relative">
       <button class="back-btn text-sm text-cyan-300 absolute top-4 left-4 z-10">Back</button>
-      <div id="xr-container" style="width:100%; height:100%;"></div>
+      <div id="xr-container" style="width:100%; height:100%; background: #000;"></div>
+      <div class="absolute bottom-4 left-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
+        Use mouse to look around • Scroll to zoom
+      </div>
     </div>
   `;
 }
 
 // Function to initialize Three.js after DOM render
 export function initXRScene() {
+  console.log("Initializing XR scene...");
   const container = document.getElementById('xr-container');
-  if (!container) return;
+  if (!container) {
+    console.error("XR container not found!");
+    return;
+  }
+  console.log("XR container found, creating 3D scene...");
 
   // Scene, Camera, Renderer
   const scene = new THREE.Scene();

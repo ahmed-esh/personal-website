@@ -244,9 +244,6 @@ document.addEventListener('DOMContentLoaded', function() {
       case "video":
         return renderVideoApp();
       case "xr":
-        if (openApp === 'xr') {
-          initXRScene();
-        }
         return renderXRApp();
       case "frames":
         return renderFramesApp();
@@ -598,6 +595,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (openApp === 'game') {
           initGame();
+        } else if (openApp === 'xr') {
+          // Initialize XR scene after render is complete
+          setTimeout(() => {
+            initXRScene();
+          }, 100);
         }
       });
     });
