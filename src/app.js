@@ -807,6 +807,13 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("XRExperience class available:", window.XRExperience);
     
     if (container && window.XRExperience) {
+      // Wait for Three.js to load
+      if (typeof THREE === 'undefined') {
+        console.log("Three.js not loaded yet, waiting...");
+        setTimeout(initXRExperience, 500);
+        return;
+      }
+      
       try {
         xrExperience = new window.XRExperience();
         console.log("XRExperience instance created:", xrExperience);

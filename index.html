@@ -8,16 +8,35 @@
 </head>
 <body>
   <div id="root"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.min.js"></script>
     <script>
-      // Check if Three.js loaded
-      window.addEventListener('load', () => {
-        if (typeof THREE !== 'undefined') {
-          console.log('Three.js loaded successfully');
-        } else {
-          console.error('Three.js failed to load');
-        }
-      });
+      // Load Three.js with fallback
+      function loadThreeJS() {
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r159/three.min.js';
+        script.onload = () => {
+          console.log('Three.js loaded successfully from CDN');
+        };
+        script.onerror = () => {
+          console.log('CDN failed, trying fallback...');
+          loadThreeJSFallback();
+        };
+        document.head.appendChild(script);
+      }
+      
+      function loadThreeJSFallback() {
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/three@0.159.0/build/three.min.js';
+        script.onload = () => {
+          console.log('Three.js loaded successfully from fallback');
+        };
+        script.onerror = () => {
+          console.error('All Three.js sources failed to load');
+        };
+        document.head.appendChild(script);
+      }
+      
+      // Start loading
+      loadThreeJS();
     </script>
     <script src="src/xrApp.js"></script>
     <script src="src/app.js"></script>
