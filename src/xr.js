@@ -12,6 +12,9 @@ export function renderXRApp() {
       <div class="absolute top-4 right-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
         🌲 3D Forest Environment • 📺 Interactive Screens
       </div>
+      <div class="absolute bottom-4 right-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
+        📱 Touch to look around • 📱 Pinch to zoom
+      </div>
     </div>
   `;
 }
@@ -85,7 +88,7 @@ export function initXRScene() {
     return { element: div, position: new THREE.Vector3(x, y, z) };
   }
 
-  // Screens with text under them
+  // Create functional video screens
   const videos = [
     { id: "4N4h6-egdr8", pos: [-3, 3, -5], text: "Screen 1: YouTube Video" },
     { id: "thAZV2Km4b4", pos: [3, 3, -5], text: "Screen 2: YouTube Video" }
@@ -99,41 +102,56 @@ export function initXRScene() {
     frame.position.set(...v.pos);
     scene.add(frame);
     
-    // Create screen content (blue glow)
-    const screenGeometry = new THREE.PlaneGeometry(4, 2.25);
-    const screenMaterial = new THREE.MeshPhongMaterial({ 
-      color: 0x0066ff,
-      emissive: 0x0033cc,
-      shininess: 100
-    });
-    const screen = new THREE.Mesh(screenGeometry, screenMaterial);
-    screen.position.set(...v.pos);
-    scene.add(screen);
+    // Create actual video screen with iframe
+    const videoContainer = document.createElement('div');
+    videoContainer.style.width = '400px';
+    videoContainer.style.height = '225px';
+    videoContainer.style.border = '2px solid #0066ff';
+    videoContainer.style.borderRadius = '8px';
+    videoContainer.style.overflow = 'hidden';
+    videoContainer.style.backgroundColor = '#000';
     
-    // Add screen text overlay
+    // Create YouTube iframe
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube.com/embed/${v.id}?autoplay=1&mute=1&controls=1&rel=0`;
+    iframe.width = '100%';
+    iframe.height = '100%';
+    iframe.frameBorder = '0';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.allowFullscreen = true;
+    
+    videoContainer.appendChild(iframe);
+    
+    // Position the video container in 3D space
+    const videoElement = document.createElement('div');
+    videoElement.appendChild(videoContainer);
+    videoElement.style.position = 'absolute';
+    videoElement.style.left = '50%';
+    videoElement.style.transform = 'translateX(-50%)';
+    videoElement.style.top = '50%';
+    videoElement.style.transform = 'translate(-50%, -50%)';
+    videoElement.style.zIndex = '1000';
+    
+    // Add text label below video
     const textDiv = document.createElement('div');
     textDiv.textContent = v.text;
     textDiv.style.position = 'absolute';
     textDiv.style.color = '#ffffff';
-    textDiv.style.fontSize = '14px';
+    textDiv.style.fontSize = '16px';
     textDiv.style.fontWeight = 'bold';
     textDiv.style.textAlign = 'center';
     textDiv.style.textShadow = '2px 2px 4px rgba(0,0,0,0.9)';
-    textDiv.style.backgroundColor = 'rgba(0,0,0,0.7)';
-    textDiv.style.padding = '8px 12px';
-    textDiv.style.borderRadius = '6px';
+    textDiv.style.backgroundColor = 'rgba(0,0,0,0.8)';
+    textDiv.style.padding = '10px 15px';
+    textDiv.style.borderRadius = '8px';
     textDiv.style.border = '2px solid #0066ff';
+    textDiv.style.top = '250px';
+    textDiv.style.left = '50%';
+    textDiv.style.transform = 'translateX(-50%)';
+    textDiv.style.whiteSpace = 'nowrap';
     
-    // Position the text below the screen
-    const textElement = document.createElement('div');
-    textElement.appendChild(textDiv);
-    textElement.style.position = 'absolute';
-    textElement.style.left = '50%';
-    textElement.style.transform = 'translateX(-50%)';
-    textElement.style.bottom = '30px';
-    textElement.style.zIndex = '1000';
-    
-    container.appendChild(textElement);
+    videoElement.appendChild(textDiv);
+    container.appendChild(videoElement);
   });
 
   // Camera controls
@@ -145,7 +163,12 @@ export function initXRScene() {
   let currentRotationX = 0;
   let currentRotationY = 0;
 
-  // Mouse event listeners
+  // Mouse and touch event listeners
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let isTouching = false;
+
+  // Mouse events
   container.addEventListener('mousedown', (event) => {
     isMouseDown = true;
     mouseX = event.clientX;
@@ -169,6 +192,66 @@ export function initXRScene() {
       
       mouseX = event.clientX;
       mouseY = event.clientY;
+    }
+  });
+
+  // Touch events for mobile
+  container.addEventListener('touchstart', (event) => {
+    event.preventDefault();
+    isTouching = true;
+    const touch = event.touches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+  });
+
+  container.addEventListener('touchend', (event) => {
+    event.preventDefault();
+    isTouching = false;
+  });
+
+  container.addEventListener('touchmove', (event) => {
+    event.preventDefault();
+    if (isTouching && event.touches.length === 1) {
+      const touch = event.touches[0];
+      const deltaX = touch.clientX - touchStartX;
+      const deltaY = touch.clientY - touchStartY;
+      
+      targetRotationY += deltaX * 0.02; // Slightly more sensitive for touch
+      targetRotationX += deltaY * 0.02;
+      
+      // Limit vertical rotation
+      targetRotationX = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, targetRotationX));
+      
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+    }
+  });
+
+  // Pinch to zoom for mobile
+  let initialDistance = 0;
+  container.addEventListener('touchstart', (event) => {
+    if (event.touches.length === 2) {
+      initialDistance = Math.hypot(
+        event.touches[0].clientX - event.touches[1].clientX,
+        event.touches[0].clientY - event.touches[1].clientY
+      );
+    }
+  });
+
+  container.addEventListener('touchmove', (event) => {
+    if (event.touches.length === 2) {
+      const currentDistance = Math.hypot(
+        event.touches[0].clientX - event.touches[1].clientX,
+        event.touches[0].clientY - event.touches[1].clientY
+      );
+      
+      const delta = currentDistance - initialDistance;
+      const zoomSpeed = 0.01;
+      
+      camera.position.z += delta * zoomSpeed;
+      camera.position.z = Math.max(5, Math.min(30, camera.position.z));
+      
+      initialDistance = currentDistance;
     }
   });
 
