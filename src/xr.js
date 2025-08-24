@@ -1,5 +1,6 @@
 // XR.js
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
+import { CSS3DRenderer } from "https://unpkg.com/three@0.160.0/examples/jsm/renderers/CSS3DRenderer.js";
 export function renderXRApp() {
   // Container fills screen with 3D scene
   return `
@@ -10,7 +11,7 @@ export function renderXRApp() {
         🖱️ Drag to look around • 🖱️ Scroll to zoom • ⌨️ WASD/Arrows to move
       </div>
       <div class="absolute top-4 right-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
-        🌲 3D Forest Environment • 📺 Interactive Screens
+        🌲 3D Forest Environment • 📺 Interactive Video Screens
       </div>
       <div class="absolute bottom-4 right-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
         📱 Touch to look around • 📱 Pinch to zoom
@@ -45,6 +46,15 @@ export function initXRScene() {
   renderer.setPixelRatio(window.devicePixelRatio);
   container.appendChild(renderer.domElement);
 
+  // Create CSS3D renderer for HTML elements
+  const cssRenderer = new CSS3DRenderer();
+  cssRenderer.setSize(containerWidth, containerHeight);
+  cssRenderer.domElement.style.position = 'absolute';
+  cssRenderer.domElement.style.top = '0';
+  cssRenderer.domElement.style.left = '0';
+  cssRenderer.domElement.style.pointerEvents = 'none';
+  container.appendChild(cssRenderer.domElement);
+
   // Light
   const light = new THREE.DirectionalLight(0xffffff, 1);
   light.position.set(5, 10, 7.5);
@@ -69,26 +79,9 @@ export function initXRScene() {
     scene.add(leaves);
   }
 
-  // Flying screens with YouTube videos
-  function createVideoPlane(videoId, x, y, z) {
-    const iframe = document.createElement('iframe');
-    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
-    iframe.width = "560";
-    iframe.height = "315";
-    iframe.frameBorder = "0";
-    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-    iframe.allowFullscreen = true;
 
-    const div = document.createElement('div');
-    div.style.width = "560px";
-    div.style.height = "315px";
-    div.appendChild(iframe);
 
-    // Use CSS3DObject for embedding
-    return { element: div, position: new THREE.Vector3(x, y, z) };
-  }
-
-  // Create functional video screens
+  // Create functional video screens integrated into 3D scene
   const videos = [
     { id: "4N4h6-egdr8", pos: [-3, 3, -5], text: "Screen 1: YouTube Video" },
     { id: "thAZV2Km4b4", pos: [3, 3, -5], text: "Screen 2: YouTube Video" }
@@ -102,7 +95,7 @@ export function initXRScene() {
     frame.position.set(...v.pos);
     scene.add(frame);
     
-    // Create actual video screen with iframe
+    // Create video screen using CSS3D
     const videoContainer = document.createElement('div');
     videoContainer.style.width = '400px';
     videoContainer.style.height = '225px';
@@ -110,6 +103,7 @@ export function initXRScene() {
     videoContainer.style.borderRadius = '8px';
     videoContainer.style.overflow = 'hidden';
     videoContainer.style.backgroundColor = '#000';
+    videoContainer.style.boxShadow = '0 0 20px rgba(0, 102, 255, 0.6)';
     
     // Create YouTube iframe
     const iframe = document.createElement('iframe');
@@ -122,20 +116,14 @@ export function initXRScene() {
     
     videoContainer.appendChild(iframe);
     
-    // Position the video container in 3D space
-    const videoElement = document.createElement('div');
-    videoElement.appendChild(videoContainer);
-    videoElement.style.position = 'absolute';
-    videoElement.style.left = '50%';
-    videoElement.style.transform = 'translateX(-50%)';
-    videoElement.style.top = '50%';
-    videoElement.style.transform = 'translate(-50%, -50%)';
-    videoElement.style.zIndex = '1000';
+    // Create CSS3D object for the video
+    const videoObject = new THREE.CSS3DObject(videoContainer);
+    videoObject.position.set(...v.pos);
+    scene.add(videoObject);
     
-    // Add text label below video
+    // Add text label as a separate CSS3D object below the video
     const textDiv = document.createElement('div');
     textDiv.textContent = v.text;
-    textDiv.style.position = 'absolute';
     textDiv.style.color = '#ffffff';
     textDiv.style.fontSize = '16px';
     textDiv.style.fontWeight = 'bold';
@@ -145,13 +133,12 @@ export function initXRScene() {
     textDiv.style.padding = '10px 15px';
     textDiv.style.borderRadius = '8px';
     textDiv.style.border = '2px solid #0066ff';
-    textDiv.style.top = '250px';
-    textDiv.style.left = '50%';
-    textDiv.style.transform = 'translateX(-50%)';
     textDiv.style.whiteSpace = 'nowrap';
+    textDiv.style.width = 'fit-content';
     
-    videoElement.appendChild(textDiv);
-    container.appendChild(videoElement);
+    const textObject = new THREE.CSS3DObject(textDiv);
+    textObject.position.set(v.pos[0], v.pos[1] - 1.5, v.pos[2]);
+    scene.add(textObject);
   });
 
   // Camera controls
@@ -304,7 +291,22 @@ export function initXRScene() {
     camera.position.x = Math.max(-20, Math.min(20, camera.position.x));
     camera.position.z = Math.max(5, Math.min(30, camera.position.z));
     
+    // Render both WebGL and CSS3D scenes
     renderer.render(scene, camera);
+    cssRenderer.render(scene, camera);
   }
   animate();
+
+  // Add instructions
+  const instructions = document.createElement('div');
+  instructions.innerHTML = `
+    <div style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); color: white; text-align: center; background: rgba(0,0,0,0.7); padding: 15px; border-radius: 10px; border: 2px solid #0066ff; z-index: 1000;">
+      <h3 style="margin: 0 0 10px 0; color: #0066ff;">XR World Controls</h3>
+      <p style="margin: 5px 0;"><strong>Mouse:</strong> Click and drag to look around</p>
+      <p style="margin: 5px 0;"><strong>Touch:</strong> Swipe to look around, pinch to zoom</p>
+      <p style="margin: 5px 0;"><strong>Keyboard:</strong> WASD or Arrow keys to move</p>
+      <p style="margin: 5px 0;"><strong>Scroll:</strong> Zoom in/out</p>
+    </div>
+  `;
+  container.appendChild(instructions);
 }
