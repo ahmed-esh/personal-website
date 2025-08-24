@@ -1,4 +1,4 @@
-import { renderXRApp, initXRScene } from './xr.js';
+import { renderXRApp, initXRScene } from './xr.js?v=3';
 
 // Vanilla JavaScript version of the portfolio app
 document.addEventListener('DOMContentLoaded', function() {
