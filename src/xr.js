@@ -1,6 +1,7 @@
 // XR.js (refactored with CSS3DRenderer for working YouTube screens)
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
-import { CSS3DRenderer, CSS3DObject } from "https://unpkg.com/three@0.160.0/examples/jsm/renderers/CSS3DRenderer.js";
+import { CSS3DRenderer, CSS3DObject } from "https://unpkg.com/three@0.160.0/examples/jsm/renderers/CSS3DRenderer.js?module";
+
 
 export function renderXRApp() {
   // Container fills screen with 3D scene
