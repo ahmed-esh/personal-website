@@ -117,7 +117,7 @@ export function initXRScene() {
     videoContainer.appendChild(iframe);
     
     // Create CSS3D object for the video
-    const videoObject = new THREE.CSS3DObject(videoContainer);
+    const videoObject = new CSS3DObject(videoContainer);
     videoObject.position.set(...v.pos);
     scene.add(videoObject);
     
@@ -136,7 +136,7 @@ export function initXRScene() {
     textDiv.style.whiteSpace = 'nowrap';
     textDiv.style.width = 'fit-content';
     
-    const textObject = new THREE.CSS3DObject(textDiv);
+    const textObject = new CSS3DObject(textDiv);
     textObject.position.set(v.pos[0], v.pos[1] - 1.5, v.pos[2]);
     scene.add(textObject);
   });
