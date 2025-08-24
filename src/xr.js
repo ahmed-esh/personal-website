@@ -1,6 +1,6 @@
 // XR.js
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
-import { CSS3DRenderer } from "https://unpkg.com/three@0.160.0/examples/jsm/renderers/CSS3DRenderer.js";
+import CSS3DRenderer from "https://unpkg.com/three@0.160.0/examples/jsm/renderers/CSS3DRenderer.js";
 export function renderXRApp() {
   // Container fills screen with 3D scene
   return `
