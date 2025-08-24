@@ -1,6 +1,5 @@
 // XR.js
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
-import { CSS3DRenderer } from "https://unpkg.com/three@0.160.0/examples/jsm/renderers/CSS3DRenderer.js";
 export function renderXRApp() {
   // Container fills screen with 3D scene
   return `
@@ -11,10 +10,7 @@ export function renderXRApp() {
         🖱️ Drag to look around • 🖱️ Scroll to zoom • ⌨️ WASD/Arrows to move
       </div>
       <div class="absolute top-4 right-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
-        🌲 3D Forest Environment • 📺 Interactive Video Screens
-      </div>
-      <div class="absolute bottom-4 right-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
-        📱 Touch to look around • 📱 Pinch to zoom
+        🌲 3D Forest Environment • 📺 Interactive Screens
       </div>
     </div>
   `;
@@ -46,15 +42,6 @@ export function initXRScene() {
   renderer.setPixelRatio(window.devicePixelRatio);
   container.appendChild(renderer.domElement);
 
-  // Create CSS3D renderer for HTML elements
-  const cssRenderer = new CSS3DRenderer();
-  cssRenderer.setSize(containerWidth, containerHeight);
-  cssRenderer.domElement.style.position = 'absolute';
-  cssRenderer.domElement.style.top = '0';
-  cssRenderer.domElement.style.left = '0';
-  cssRenderer.domElement.style.pointerEvents = 'none';
-  container.appendChild(cssRenderer.domElement);
-
   // Light
   const light = new THREE.DirectionalLight(0xffffff, 1);
   light.position.set(5, 10, 7.5);
@@ -79,9 +66,26 @@ export function initXRScene() {
     scene.add(leaves);
   }
 
+  // Flying screens with YouTube videos
+  function createVideoPlane(videoId, x, y, z) {
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
+    iframe.width = "560";
+    iframe.height = "315";
+    iframe.frameBorder = "0";
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
 
+    const div = document.createElement('div');
+    div.style.width = "560px";
+    div.style.height = "315px";
+    div.appendChild(iframe);
 
-  // Create functional video screens integrated into 3D scene
+    // Use CSS3DObject for embedding
+    return { element: div, position: new THREE.Vector3(x, y, z) };
+  }
+
+  // Screens with text under them
   const videos = [
     { id: "4N4h6-egdr8", pos: [-3, 3, -5], text: "Screen 1: YouTube Video" },
     { id: "thAZV2Km4b4", pos: [3, 3, -5], text: "Screen 2: YouTube Video" }
@@ -95,50 +99,41 @@ export function initXRScene() {
     frame.position.set(...v.pos);
     scene.add(frame);
     
-    // Create video screen using CSS3D
-    const videoContainer = document.createElement('div');
-    videoContainer.style.width = '400px';
-    videoContainer.style.height = '225px';
-    videoContainer.style.border = '2px solid #0066ff';
-    videoContainer.style.borderRadius = '8px';
-    videoContainer.style.overflow = 'hidden';
-    videoContainer.style.backgroundColor = '#000';
-    videoContainer.style.boxShadow = '0 0 20px rgba(0, 102, 255, 0.6)';
+    // Create screen content (blue glow)
+    const screenGeometry = new THREE.PlaneGeometry(4, 2.25);
+    const screenMaterial = new THREE.MeshPhongMaterial({ 
+      color: 0x0066ff,
+      emissive: 0x0033cc,
+      shininess: 100
+    });
+    const screen = new THREE.Mesh(screenGeometry, screenMaterial);
+    screen.position.set(...v.pos);
+    scene.add(screen);
     
-    // Create YouTube iframe
-    const iframe = document.createElement('iframe');
-    iframe.src = `https://www.youtube.com/embed/${v.id}?autoplay=1&mute=1&controls=1&rel=0`;
-    iframe.width = '100%';
-    iframe.height = '100%';
-    iframe.frameBorder = '0';
-    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-    iframe.allowFullscreen = true;
-    
-    videoContainer.appendChild(iframe);
-    
-    // Create CSS3D object for the video
-    const videoObject = new THREE.CSS3DObject(videoContainer);
-    videoObject.position.set(...v.pos);
-    scene.add(videoObject);
-    
-    // Add text label as a separate CSS3D object below the video
+    // Add screen text overlay
     const textDiv = document.createElement('div');
     textDiv.textContent = v.text;
+    textDiv.style.position = 'absolute';
     textDiv.style.color = '#ffffff';
-    textDiv.style.fontSize = '16px';
+    textDiv.style.fontSize = '14px';
     textDiv.style.fontWeight = 'bold';
     textDiv.style.textAlign = 'center';
     textDiv.style.textShadow = '2px 2px 4px rgba(0,0,0,0.9)';
-    textDiv.style.backgroundColor = 'rgba(0,0,0,0.8)';
-    textDiv.style.padding = '10px 15px';
-    textDiv.style.borderRadius = '8px';
+    textDiv.style.backgroundColor = 'rgba(0,0,0,0.7)';
+    textDiv.style.padding = '8px 12px';
+    textDiv.style.borderRadius = '6px';
     textDiv.style.border = '2px solid #0066ff';
-    textDiv.style.whiteSpace = 'nowrap';
-    textDiv.style.width = 'fit-content';
     
-    const textObject = new THREE.CSS3DObject(textDiv);
-    textObject.position.set(v.pos[0], v.pos[1] - 1.5, v.pos[2]);
-    scene.add(textObject);
+    // Position the text below the screen
+    const textElement = document.createElement('div');
+    textElement.appendChild(textDiv);
+    textElement.style.position = 'absolute';
+    textElement.style.left = '50%';
+    textElement.style.transform = 'translateX(-50%)';
+    textElement.style.bottom = '30px';
+    textElement.style.zIndex = '1000';
+    
+    container.appendChild(textElement);
   });
 
   // Camera controls
@@ -150,12 +145,7 @@ export function initXRScene() {
   let currentRotationX = 0;
   let currentRotationY = 0;
 
-  // Mouse and touch event listeners
-  let touchStartX = 0;
-  let touchStartY = 0;
-  let isTouching = false;
-
-  // Mouse events
+  // Mouse event listeners
   container.addEventListener('mousedown', (event) => {
     isMouseDown = true;
     mouseX = event.clientX;
@@ -179,66 +169,6 @@ export function initXRScene() {
       
       mouseX = event.clientX;
       mouseY = event.clientY;
-    }
-  });
-
-  // Touch events for mobile
-  container.addEventListener('touchstart', (event) => {
-    event.preventDefault();
-    isTouching = true;
-    const touch = event.touches[0];
-    touchStartX = touch.clientX;
-    touchStartY = touch.clientY;
-  });
-
-  container.addEventListener('touchend', (event) => {
-    event.preventDefault();
-    isTouching = false;
-  });
-
-  container.addEventListener('touchmove', (event) => {
-    event.preventDefault();
-    if (isTouching && event.touches.length === 1) {
-      const touch = event.touches[0];
-      const deltaX = touch.clientX - touchStartX;
-      const deltaY = touch.clientY - touchStartY;
-      
-      targetRotationY += deltaX * 0.02; // Slightly more sensitive for touch
-      targetRotationX += deltaY * 0.02;
-      
-      // Limit vertical rotation
-      targetRotationX = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, targetRotationX));
-      
-      touchStartX = touch.clientX;
-      touchStartY = touch.clientY;
-    }
-  });
-
-  // Pinch to zoom for mobile
-  let initialDistance = 0;
-  container.addEventListener('touchstart', (event) => {
-    if (event.touches.length === 2) {
-      initialDistance = Math.hypot(
-        event.touches[0].clientX - event.touches[1].clientX,
-        event.touches[0].clientY - event.touches[1].clientY
-      );
-    }
-  });
-
-  container.addEventListener('touchmove', (event) => {
-    if (event.touches.length === 2) {
-      const currentDistance = Math.hypot(
-        event.touches[0].clientX - event.touches[1].clientX,
-        event.touches[0].clientY - event.touches[1].clientY
-      );
-      
-      const delta = currentDistance - initialDistance;
-      const zoomSpeed = 0.01;
-      
-      camera.position.z += delta * zoomSpeed;
-      camera.position.z = Math.max(5, Math.min(30, camera.position.z));
-      
-      initialDistance = currentDistance;
     }
   });
 
@@ -291,22 +221,7 @@ export function initXRScene() {
     camera.position.x = Math.max(-20, Math.min(20, camera.position.x));
     camera.position.z = Math.max(5, Math.min(30, camera.position.z));
     
-    // Render both WebGL and CSS3D scenes
     renderer.render(scene, camera);
-    cssRenderer.render(scene, camera);
   }
   animate();
-
-  // Add instructions
-  const instructions = document.createElement('div');
-  instructions.innerHTML = `
-    <div style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); color: white; text-align: center; background: rgba(0,0,0,0.7); padding: 15px; border-radius: 10px; border: 2px solid #0066ff; z-index: 1000;">
-      <h3 style="margin: 0 0 10px 0; color: #0066ff;">XR World Controls</h3>
-      <p style="margin: 5px 0;"><strong>Mouse:</strong> Click and drag to look around</p>
-      <p style="margin: 5px 0;"><strong>Touch:</strong> Swipe to look around, pinch to zoom</p>
-      <p style="margin: 5px 0;"><strong>Keyboard:</strong> WASD or Arrow keys to move</p>
-      <p style="margin: 5px 0;"><strong>Scroll:</strong> Zoom in/out</p>
-    </div>
-  `;
-  container.appendChild(instructions);
 }
