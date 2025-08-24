@@ -351,19 +351,12 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="grid grid-cols-2 gap-3">
           ${frames.map((f, i) => `
             <div class="bg-zinc-900 rounded p-2">
-              <img src="${f.src}" alt="${f.title}" class="w-full h-32 object-cover rounded mb-2 cursor-pointer hover:opacity-80 transition-opacity" onclick="openFullScreen('${f.src}', '${f.title}')">
+              <a href="${f.src}" target="_blank" class="block">
+                <img src="${f.src}" alt="${f.title}" class="w-full h-32 object-cover rounded mb-2 cursor-pointer hover:opacity-80 transition-opacity">
+              </a>
               <div class="text-sm font-semibold">${f.title}</div>
             </div>
           `).join('')}
-        </div>
-        
-        <!-- Full Screen Modal -->
-        <div id="fullScreenModal" class="fixed inset-0 bg-black bg-opacity-95 hidden z-50 flex items-center justify-center">
-          <div class="relative max-w-4xl max-h-full">
-            <img id="fullScreenImage" src="" alt="" class="max-w-full max-h-full object-contain">
-            <div id="fullScreenTitle" class="absolute bottom-4 left-4 text-white text-xl font-bold bg-black bg-opacity-50 px-3 py-2 rounded"></div>
-            <button onclick="closeFullScreen()" class="absolute top-4 right-4 text-white bg-red-600 rounded-full w-10 h-10 flex justify-center items-center hover:bg-red-700 transition-colors text-xl">✕</button>
-          </div>
         </div>
       </div>
     `;
@@ -377,37 +370,12 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="text-xs text-gray-400">Contact</div>
           <div></div>
         </div>
-        <div class="space-y-3 text-sm">
-          <div>
-            <strong>Email:</strong> yourname@example.com
+        <div class="flex items-center justify-center h-full">
+          <div class="text-center">
+            <div class="text-4xl mb-4">✉️</div>
+            <div class="text-lg font-semibold text-white mb-2">Get in Touch</div>
+            <div class="text-cyan-300 text-xl font-mono">info@ahmedesh.com</div>
           </div>
-          <div>
-            <strong>Instagram:</strong> @yourhandle
-          </div>
-          <div>
-            <strong>Location:</strong> New York, NY
-          </div>
-          <form class="mt-3 space-y-2 contact-form">
-            <input
-              class="w-full bg-zinc-900 p-2 rounded text-sm"
-              placeholder="Name"
-            />
-            <input
-              class="w-full bg-zinc-900 p-2 rounded text-sm"
-              placeholder="Email"
-            />
-            <textarea
-              class="w-full bg-zinc-900 p-2 rounded text-sm"
-              placeholder="Message"
-              rows="4"
-            ></textarea>
-            <button
-              type="submit"
-              class="w-full bg-cyan-600 hover:bg-cyan-700 rounded p-2 text-white"
-            >
-              Send
-            </button>
-          </form>
         </div>
       </div>
     `;
@@ -774,21 +742,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('keydown', onKey);
   }
 
-  // Full Screen Image Functions
-  window.openFullScreen = function(src, title) {
-    const modal = document.getElementById('fullScreenModal');
-    const image = document.getElementById('fullScreenImage');
-    const titleElement = document.getElementById('fullScreenTitle');
-    
-    image.src = src;
-    titleElement.textContent = title;
-    modal.classList.remove('hidden');
-  };
 
-  window.closeFullScreen = function() {
-    const modal = document.getElementById('fullScreenModal');
-    modal.classList.add('hidden');
-  };
 
   // Global audio control function
   window.startThemeMusic = function() {
