@@ -509,6 +509,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Start theme music on first user interaction
     let musicStarted = false;
     
+    // Listen for XR back button events
+    document.addEventListener('xrBackButton', (event) => {
+      if (event.detail.action === 'close') {
+        openApp = null;
+        render();
+      }
+    });
+    
     // App icon clicks
     document.querySelectorAll('.app-icon').forEach(btn => {
       btn.addEventListener('click', function() {

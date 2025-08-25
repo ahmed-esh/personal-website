@@ -27,6 +27,18 @@ export function initXRScene() {
     return;
   }
 
+  // Add back button functionality for XR app
+  const backButton = container.parentElement.querySelector('.back-btn');
+  if (backButton) {
+    backButton.addEventListener('click', () => {
+      // Dispatch a custom event that the main app can listen to
+      const backEvent = new CustomEvent('xrBackButton', {
+        detail: { action: 'close' }
+      });
+      document.dispatchEvent(backEvent);
+    });
+  }
+
   // Scene, Camera, Renderer
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x87CEEB); // Light blue sky
