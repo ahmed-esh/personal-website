@@ -32,12 +32,37 @@ export function initXRScene() {
   if (backButton) {
     console.log("Back button found, adding event listener");
     backButton.addEventListener('click', () => {
-      console.log("Back button clicked, dispatching event");
-      // Dispatch a custom event that the main app can listen to
-      const backEvent = new CustomEvent('xrBackButton', {
-        detail: { action: 'close' }
-      });
-      document.dispatchEvent(backEvent);
+      console.log("Back button clicked, trying to close XR app");
+      
+      // Try to find and call the main app's render function
+      // Look for any function that might be the main render function
+      const possibleRenderFunctions = [
+        window.render,
+        window.renderPhone,
+        window.renderApp
+      ];
+      
+      let renderFunction = null;
+      for (const func of possibleRenderFunctions) {
+        if (typeof func === 'function') {
+          renderFunction = func;
+          break;
+        }
+      }
+      
+      if (renderFunction) {
+        console.log("Found render function, calling it");
+        renderFunction();
+      } else {
+        console.log("No render function found, trying to clear and recreate");
+        // Fallback: clear the root and try to recreate the main interface
+        const root = document.getElementById('root');
+        if (root) {
+          root.innerHTML = '';
+          // Try to trigger a re-render by dispatching a custom event
+          document.dispatchEvent(new Event('DOMContentLoaded'));
+        }
+      }
     });
   } else {
     console.error("Back button not found!");
