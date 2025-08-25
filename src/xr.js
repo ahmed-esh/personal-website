@@ -8,7 +8,7 @@ export function renderXRApp() {
   return `
     <div class="h-full w-full relative">
       <button class="back-btn text-sm text-cyan-300 absolute top-4 left-4 z-50">Back</button>
-      <div id="xr-container" style="width:100%; height:100%; background: #000;"></div>
+      <div id="xr-container" style="width:100%; height:100%; background: #000; padding-top: 60px;"></div>
       <div class="absolute bottom-4 left-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded z-40">
         📱 Touch & drag to look around • 📱 Pinch to zoom • 📱 Touch to move
       </div>
