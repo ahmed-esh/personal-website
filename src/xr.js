@@ -7,12 +7,12 @@ export function renderXRApp() {
   // Container fills screen with 3D scene
   return `
     <div class="h-full w-full relative">
-      <button class="back-btn text-sm text-cyan-300 absolute top-4 left-4 z-10">Back</button>
+      <button class="back-btn text-sm text-cyan-300 absolute top-4 left-4 z-50">Back</button>
       <div id="xr-container" style="width:100%; height:100%; background: #000;"></div>
-      <div class="absolute bottom-4 left-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
+      <div class="absolute bottom-4 left-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded z-40">
         📱 Touch & drag to look around • 📱 Pinch to zoom • 📱 Touch to move
       </div>
-      <div class="absolute top-4 right-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
+      <div class="absolute top-4 right-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded z-40">
         🌲 3D Forest Environment • 📺 Interactive Screens
       </div>
     </div>
@@ -48,6 +48,7 @@ export function initXRScene() {
   cssRenderer.setSize(containerWidth, containerHeight);
   cssRenderer.domElement.style.position = 'absolute';
   cssRenderer.domElement.style.top = '0';
+  cssRenderer.domElement.style.zIndex = '10'; // Lower z-index than UI elements
 
   // Append both renderers
   container.appendChild(renderer.domElement);
