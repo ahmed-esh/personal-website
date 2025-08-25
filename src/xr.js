@@ -10,7 +10,7 @@ export function renderXRApp() {
       <button class="back-btn text-sm text-cyan-300 absolute top-4 left-4 z-10">Back</button>
       <div id="xr-container" style="width:100%; height:100%; background: #000;"></div>
       <div class="absolute bottom-4 left-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
-        🖱️ Drag to look around • 🖱️ Scroll to zoom • ⌨️ WASD/Arrows to move
+        📱 Touch & drag to look around • 📱 Pinch to zoom • 📱 Touch to move
       </div>
       <div class="absolute top-4 right-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded">
         🌲 3D Forest Environment • 📺 Interactive Screens
@@ -106,6 +106,14 @@ export function initXRScene() {
   let currentRotationX = 0;
   let currentRotationY = 0;
 
+  // Touch controls
+  let isTouching = false;
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let lastTouchDistance = 0;
+  let initialCameraZ = camera.position.z;
+
+  // Mouse controls (for desktop)
   container.addEventListener('mousedown', (event) => {
     isMouseDown = true;
     mouseX = event.clientX;
@@ -130,12 +138,71 @@ export function initXRScene() {
     }
   });
 
-  // Keyboard controls
+  // Touch controls (for mobile)
+  container.addEventListener('touchstart', (event) => {
+    event.preventDefault();
+    isTouching = true;
+    
+    if (event.touches.length === 1) {
+      // Single touch - look around
+      touchStartX = event.touches[0].clientX;
+      touchStartY = event.touches[0].clientY;
+    } else if (event.touches.length === 2) {
+      // Two touches - pinch to zoom
+      const touch1 = event.touches[0];
+      const touch2 = event.touches[1];
+      lastTouchDistance = Math.sqrt(
+        Math.pow(touch2.clientX - touch1.clientX, 2) + 
+        Math.pow(touch2.clientY - touch1.clientY, 2)
+      );
+    }
+  });
+
+  container.addEventListener('touchmove', (event) => {
+    event.preventDefault();
+    
+    if (event.touches.length === 1 && isTouching) {
+      // Single touch - look around
+      const touch = event.touches[0];
+      const deltaX = touch.clientX - touchStartX;
+      const deltaY = touch.clientY - touchStartY;
+
+      targetRotationY += deltaX * 0.02; // Slightly more sensitive for touch
+      targetRotationX += deltaY * 0.02;
+      targetRotationX = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, targetRotationX));
+
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+    } else if (event.touches.length === 2 && isTouching) {
+      // Two touches - pinch to zoom
+      const touch1 = event.touches[0];
+      const touch2 = event.touches[1];
+      const currentDistance = Math.sqrt(
+        Math.pow(touch2.clientX - touch1.clientX, 2) + 
+        Math.pow(touch2.clientY - touch1.clientY, 2)
+      );
+      
+      if (lastTouchDistance > 0) {
+        const zoomDelta = (lastTouchDistance - currentDistance) * 0.01;
+        camera.position.z += zoomDelta;
+        camera.position.z = Math.max(5, Math.min(40, camera.position.z));
+      }
+      
+      lastTouchDistance = currentDistance;
+    }
+  });
+
+  container.addEventListener('touchend', (event) => {
+    isTouching = false;
+    lastTouchDistance = 0;
+  });
+
+  // Keyboard controls (for desktop)
   const keys = {};
   document.addEventListener('keydown', (event) => { keys[event.code] = true; });
   document.addEventListener('keyup', (event) => { keys[event.code] = false; });
 
-  // Zoom
+  // Zoom (mouse wheel for desktop)
   container.addEventListener('wheel', (event) => {
     const zoomSpeed = 0.1;
     const delta = event.deltaY > 0 ? 1 : -1;
