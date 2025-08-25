@@ -571,6 +571,15 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
+    // XR app back button (needs special handling since it's rendered dynamically)
+    document.addEventListener('click', function(event) {
+      if (event.target.classList.contains('back-btn') && openApp === 'xr') {
+        console.log("XR back button clicked, closing XR app");
+        openApp = null;
+        render();
+      }
+    });
+
     // Open video buttons
     document.querySelectorAll('.open-video-btn').forEach(btn => {
       btn.addEventListener('click', function() {

@@ -27,47 +27,6 @@ export function initXRScene() {
     return;
   }
 
-  // Add back button functionality for XR app
-  const backButton = document.querySelector('.back-btn');
-  if (backButton) {
-    console.log("Back button found, adding event listener");
-    backButton.addEventListener('click', () => {
-      console.log("Back button clicked, trying to close XR app");
-      
-      // Try to find and call the main app's render function
-      // Look for any function that might be the main render function
-      const possibleRenderFunctions = [
-        window.render,
-        window.renderPhone,
-        window.renderApp
-      ];
-      
-      let renderFunction = null;
-      for (const func of possibleRenderFunctions) {
-        if (typeof func === 'function') {
-          renderFunction = func;
-          break;
-        }
-      }
-      
-      if (renderFunction) {
-        console.log("Found render function, calling it");
-        renderFunction();
-      } else {
-        console.log("No render function found, trying to clear and recreate");
-        // Fallback: clear the root and try to recreate the main interface
-        const root = document.getElementById('root');
-        if (root) {
-          root.innerHTML = '';
-          // Try to trigger a re-render by dispatching a custom event
-          document.dispatchEvent(new Event('DOMContentLoaded'));
-        }
-      }
-    });
-  } else {
-    console.error("Back button not found!");
-  }
-
   // Scene, Camera, Renderer
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x87CEEB); // Light blue sky
