@@ -8,7 +8,8 @@ export function renderXRApp() {
   return `
     <div class="h-full w-full relative">
       <button class="back-btn text-sm text-cyan-300 absolute top-4 left-4 z-50">Back</button>
-      <div id="xr-container" style="width:100%; height:calc(100%-80px); top:80px; position:absolute; background: #000;"></div>
+      <div id="xr-container" style="width:100%; height:100%; position:absolute; top:0; left:0; background: #000; pointer-events: none;"></div>
+      <div id="xr-interactive" style="width:100%; height:100%; position:absolute; top:0; left:0; pointer-events: auto;"></div>
       <div class="absolute bottom-4 left-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded z-40">
         📱 Touch & drag to look around • 📱 Pinch to zoom • 📱 Touch to move
       </div>
@@ -22,8 +23,10 @@ export function renderXRApp() {
 export function initXRScene() {
   console.log("Initializing XR scene...");
   const container = document.getElementById('xr-container');
-  if (!container) {
-    console.error("XR container not found!");
+  const interactiveContainer = document.getElementById('xr-interactive');
+  
+  if (!container || !interactiveContainer) {
+    console.error("XR containers not found!");
     return;
   }
 
@@ -50,7 +53,7 @@ export function initXRScene() {
   cssRenderer.domElement.style.top = '0';
   cssRenderer.domElement.style.zIndex = '10'; // Lower z-index than UI elements
 
-  // Append both renderers
+  // Append both renderers to the visual container
   container.appendChild(renderer.domElement);
   container.appendChild(cssRenderer.domElement);
 
@@ -115,17 +118,17 @@ export function initXRScene() {
   let initialCameraZ = camera.position.z;
 
   // Mouse controls (for desktop)
-  container.addEventListener('mousedown', (event) => {
+  interactiveContainer.addEventListener('mousedown', (event) => {
     isMouseDown = true;
     mouseX = event.clientX;
     mouseY = event.clientY;
   });
 
-  container.addEventListener('mouseup', () => {
+  interactiveContainer.addEventListener('mouseup', () => {
     isMouseDown = false;
   });
 
-  container.addEventListener('mousemove', (event) => {
+  interactiveContainer.addEventListener('mousemove', (event) => {
     if (isMouseDown) {
       const deltaX = event.clientX - mouseX;
       const deltaY = event.clientY - mouseY;
@@ -140,7 +143,7 @@ export function initXRScene() {
   });
 
   // Touch controls (for mobile)
-  container.addEventListener('touchstart', (event) => {
+  interactiveContainer.addEventListener('touchstart', (event) => {
     event.preventDefault();
     isTouching = true;
     
@@ -159,7 +162,7 @@ export function initXRScene() {
     }
   });
 
-  container.addEventListener('touchmove', (event) => {
+  interactiveContainer.addEventListener('touchmove', (event) => {
     event.preventDefault();
     
     if (event.touches.length === 1 && isTouching) {
@@ -193,7 +196,7 @@ export function initXRScene() {
     }
   });
 
-  container.addEventListener('touchend', (event) => {
+  interactiveContainer.addEventListener('touchend', (event) => {
     isTouching = false;
     lastTouchDistance = 0;
   });
@@ -204,7 +207,7 @@ export function initXRScene() {
   document.addEventListener('keyup', (event) => { keys[event.code] = false; });
 
   // Zoom (mouse wheel for desktop)
-  container.addEventListener('wheel', (event) => {
+  interactiveContainer.addEventListener('wheel', (event) => {
     const zoomSpeed = 0.1;
     const delta = event.deltaY > 0 ? 1 : -1;
     camera.position.z += delta * zoomSpeed;
