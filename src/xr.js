@@ -9,12 +9,6 @@ export function renderXRApp() {
     <div class="h-full w-full relative">
       <button class="back-btn text-sm text-cyan-300 absolute top-4 left-4 z-50" style="position: absolute; z-index: 9999; pointer-events: auto;">Back</button>
       <div id="xr-container" style="width:100%; height:100%; position:absolute; top:0; left:0; background: #000; z-index: 1;"></div>
-      <div class="absolute bottom-4 left-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded z-40" style="position: absolute; z-index: 9998; pointer-events: auto;">
-        📱 Touch & drag to look around • 📱 Pinch to zoom • 📱 Touch to move
-      </div>
-      <div class="absolute top-4 right-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded z-40" style="position: absolute; z-index: 9998; pointer-events: auto;">
-        🌲 3D Forest Environment • 📺 Interactive Screens
-      </div>
     </div>
   `;
 }
