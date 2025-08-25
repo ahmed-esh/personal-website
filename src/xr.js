@@ -7,13 +7,12 @@ export function renderXRApp() {
   // Container fills screen with 3D scene
   return `
     <div class="h-full w-full relative">
-      <button class="back-btn text-sm text-cyan-300 absolute top-4 left-4 z-50">Back</button>
-      <div id="xr-container" style="width:100%; height:100%; position:absolute; top:0; left:0; background: #000; pointer-events: none;"></div>
-      <div id="xr-interactive" style="width:100%; height:100%; position:absolute; top:0; left:0; pointer-events: auto;"></div>
-      <div class="absolute bottom-4 left-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded z-40">
+      <button class="back-btn text-sm text-cyan-300 absolute top-4 left-4 z-50" style="position: absolute; z-index: 9999; pointer-events: auto;">Back</button>
+      <div id="xr-container" style="width:100%; height:100%; position:absolute; top:0; left:0; background: #000; z-index: 1;"></div>
+      <div class="absolute bottom-4 left-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded z-40" style="position: absolute; z-index: 9998; pointer-events: auto;">
         📱 Touch & drag to look around • 📱 Pinch to zoom • 📱 Touch to move
       </div>
-      <div class="absolute top-4 right-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded z-40">
+      <div class="absolute top-4 right-4 text-white text-sm bg-black bg-opacity-50 px-2 py-1 rounded z-40" style="position: absolute; z-index: 9998; pointer-events: auto;">
         🌲 3D Forest Environment • 📺 Interactive Screens
       </div>
     </div>
@@ -23,10 +22,9 @@ export function renderXRApp() {
 export function initXRScene() {
   console.log("Initializing XR scene...");
   const container = document.getElementById('xr-container');
-  const interactiveContainer = document.getElementById('xr-interactive');
   
-  if (!container || !interactiveContainer) {
-    console.error("XR containers not found!");
+  if (!container) {
+    console.error("XR container not found!");
     return;
   }
 
@@ -118,17 +116,17 @@ export function initXRScene() {
   let initialCameraZ = camera.position.z;
 
   // Mouse controls (for desktop)
-  interactiveContainer.addEventListener('mousedown', (event) => {
+  container.addEventListener('mousedown', (event) => {
     isMouseDown = true;
     mouseX = event.clientX;
     mouseY = event.clientY;
   });
 
-  interactiveContainer.addEventListener('mouseup', () => {
+  container.addEventListener('mouseup', () => {
     isMouseDown = false;
   });
 
-  interactiveContainer.addEventListener('mousemove', (event) => {
+  container.addEventListener('mousemove', (event) => {
     if (isMouseDown) {
       const deltaX = event.clientX - mouseX;
       const deltaY = event.clientY - mouseY;
@@ -143,7 +141,7 @@ export function initXRScene() {
   });
 
   // Touch controls (for mobile)
-  interactiveContainer.addEventListener('touchstart', (event) => {
+  container.addEventListener('touchstart', (event) => {
     event.preventDefault();
     isTouching = true;
     
@@ -162,7 +160,7 @@ export function initXRScene() {
     }
   });
 
-  interactiveContainer.addEventListener('touchmove', (event) => {
+  container.addEventListener('touchmove', (event) => {
     event.preventDefault();
     
     if (event.touches.length === 1 && isTouching) {
@@ -196,7 +194,7 @@ export function initXRScene() {
     }
   });
 
-  interactiveContainer.addEventListener('touchend', (event) => {
+  container.addEventListener('touchend', (event) => {
     isTouching = false;
     lastTouchDistance = 0;
   });
@@ -207,7 +205,7 @@ export function initXRScene() {
   document.addEventListener('keyup', (event) => { keys[event.code] = false; });
 
   // Zoom (mouse wheel for desktop)
-  interactiveContainer.addEventListener('wheel', (event) => {
+  container.addEventListener('wheel', (event) => {
     const zoomSpeed = 0.1;
     const delta = event.deltaY > 0 ? 1 : -1;
     camera.position.z += delta * zoomSpeed;
