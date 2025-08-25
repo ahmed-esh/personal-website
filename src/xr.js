@@ -98,7 +98,7 @@ export function initXRScene() {
     iframe.style.border = "0";
     const object = new CSS3DObject(iframe);
     object.position.set(x, y, z);
-    object.scale.set(0.07, 0.07, 0.07); // Scale up 10x from 0.007 to 0.07
+    object.scale.set(0.014, 0.014, 0.014); // Scale up 2x from 0.007 to 0.014
     return object;
   }
 
