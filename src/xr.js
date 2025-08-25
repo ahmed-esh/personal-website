@@ -28,15 +28,19 @@ export function initXRScene() {
   }
 
   // Add back button functionality for XR app
-  const backButton = container.parentElement.querySelector('.back-btn');
+  const backButton = document.querySelector('.back-btn');
   if (backButton) {
+    console.log("Back button found, adding event listener");
     backButton.addEventListener('click', () => {
+      console.log("Back button clicked, dispatching event");
       // Dispatch a custom event that the main app can listen to
       const backEvent = new CustomEvent('xrBackButton', {
         detail: { action: 'close' }
       });
       document.dispatchEvent(backEvent);
     });
+  } else {
+    console.error("Back button not found!");
   }
 
   // Scene, Camera, Renderer

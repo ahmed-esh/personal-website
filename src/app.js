@@ -511,7 +511,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Listen for XR back button events
     document.addEventListener('xrBackButton', (event) => {
+      console.log("XR back button event received:", event.detail);
       if (event.detail.action === 'close') {
+        console.log("Closing XR app...");
         openApp = null;
         render();
       }
