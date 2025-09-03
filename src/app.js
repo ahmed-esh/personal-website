@@ -1,6 +1,5 @@
 import { renderXRApp, initXRScene } from './xr.js';
 
-// Vanilla JavaScript version of the portfolio app
 document.addEventListener('DOMContentLoaded', function() {
   let openApp = null;
   let galleryModal = null;
@@ -20,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
   ];
   const numCols = 3;
 
-  // Video projects data
   const sampleVideos = [
     { 
       title: "Chiedo Asilo", 
@@ -40,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
       title: "Ciarat AL-hosh", 
       yearType: "2024, Film, Digital Drawing",
       description: "an experimental project that combines live-action footage with digitally illustrated cars, serving as a visual metaphor for the intersections of life choices, family dynamics, and societal class structures",
-      src: "assets/videos/Ciarat AL-hosh.mp4",
+      src: "https://www.youtube.com/watch?v=v4nr08ajLZY",
       thumbnail: "src/assets/images/Ciarat.png"
     },
     { 
@@ -52,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
     },
   ];
 
-  // Initialize audio
   function initAudio() {
     try {
       themeAudio = new Audio("src/assets/sounds/theme.mp3");
@@ -63,7 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
       gameAudio.loop = true;
       gameAudio.volume = 0.35;
       
-      // Add load event listeners for debugging
       themeAudio.addEventListener('loadeddata', () => {
         console.log("Theme audio loaded successfully");
       });
@@ -72,14 +68,12 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("Game audio loaded successfully");
       });
       
-      // Don't auto-play - wait for user interaction
       console.log("Audio initialized - waiting for user interaction to start");
     } catch (e) {
       console.log("Audio not available:", e);
     }
   }
 
-  // Start theme music after user interaction
   function startThemeMusic() {
     if (themeAudio && themeAudio.paused) {
       themeAudio.play().catch((e) => {
@@ -88,7 +82,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Switch to game music
   function switchToGameMusic() {
     console.log("Switching to game music");
     if (themeAudio && gameAudio) {
@@ -99,7 +92,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Switch back to theme music
   function switchToThemeMusic() {
     console.log("Switching back to theme music");
     if (themeAudio && gameAudio) {
@@ -110,7 +102,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Pause theme music (for videos)
   function pauseThemeMusic() {
     console.log("Pausing theme music for video");
     if (themeAudio && !themeAudio.paused) {
@@ -118,7 +109,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Update time
   function updateTime() {
     time = new Date();
     const timeElement = document.querySelector('.time-display');
@@ -127,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Keyboard navigation
+  // keybord navigation
   function onAppGridKeyDown(e) {
     const currentIndex = appRefs.findIndex(el => el === document.activeElement);
     if (currentIndex === -1) return;
@@ -155,14 +145,11 @@ document.addEventListener('DOMContentLoaded', function() {
     e.preventDefault();
   }
 
-  // Global keyboard handler
   function onKey(e) {
     if (e.key === "Escape") {
-      // If exiting game app, switch back to theme music
       if (openApp === "game") {
         switchToThemeMusic();
       }
-      // If closing video modal, resume theme music
       if (galleryModal !== null) {
         if (themeAudio && !openApp) {
           themeAudio.play().catch(() => {});
@@ -174,7 +161,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Render the app
   function render() {
     const root = document.getElementById('root');
     if (!root) return;
@@ -215,7 +201,6 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     `;
 
-    // Re-attach event listeners
     attachEventListeners();
   }
 
@@ -302,7 +287,6 @@ document.addEventListener('DOMContentLoaded', function() {
       const fileId = videoSrc.split('/d/')[1].split('/view')[0];
       mediaContent = `<iframe class="w-full h-full" src="https://docs.google.com/file/d/${fileId}/preview" frameborder="0" allowfullscreen></iframe>`;
     } else {
-      // Assume local video file
       mediaContent = `<video controls autoplay class="w-full h-full"><source src="${videoSrc}" type="video/mp4">Your browser does not support the video tag.</video>`;
     }
 
@@ -506,10 +490,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   function attachEventListeners() {
-    // Start theme music on first user interaction
     let musicStarted = false;
     
-    // Listen for XR back button events
     document.addEventListener('xrBackButton', (event) => {
       console.log("XR back button event received:", event.detail);
       if (event.detail.action === 'close') {
@@ -519,10 +501,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
-    // App icon clicks
     document.querySelectorAll('.app-icon').forEach(btn => {
       btn.addEventListener('click', function() {
-        // Start theme music on first app click if not already started
         if (!musicStarted && !openApp) {
           startThemeMusic();
           musicStarted = true;
@@ -531,7 +511,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const appToOpen = this.dataset.app;
         console.log("Opening app:", appToOpen);
         
-        // Handle music switching BEFORE setting openApp and rendering
         if (appToOpen === 'game') {
           console.log("Game app opened, switching music");
           switchToGameMusic();
@@ -540,7 +519,6 @@ document.addEventListener('DOMContentLoaded', function() {
           pauseThemeMusic();
         } else if (appToOpen === 'xr') {
           console.log("XR app opened, initializing XR scene");
-          // XR scene will be initialized in renderAppScreen
         }
         
         openApp = appToOpen;
@@ -549,7 +527,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (openApp === 'game') {
           initGame();
         } else if (openApp === 'xr') {
-          // Initialize XR scene after render is complete
           console.log("About to call initXRScene...");
           setTimeout(() => {
             console.log("Calling initXRScene now...");
@@ -559,10 +536,8 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
-    // Back button clicks
     document.querySelectorAll('.back-btn').forEach(btn => {
       btn.addEventListener('click', function() {
-        // If exiting game app, switch back to theme music
         if (openApp === "game") {
           switchToThemeMusic();
         }
@@ -571,7 +546,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
-    // XR app back button (needs special handling since it's rendered dynamically)
     document.addEventListener('click', function(event) {
       if (event.target.classList.contains('back-btn') && openApp === 'xr') {
         console.log("XR back button clicked, closing XR app");
@@ -580,21 +554,17 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
-    // Open video buttons
     document.querySelectorAll('.open-video-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         galleryModal = parseInt(this.dataset.index);
-        // Pause theme music when video opens
         pauseThemeMusic();
         render();
       });
     });
 
-    // Close modal
     document.querySelectorAll('.close-modal').forEach(btn => {
       btn.addEventListener('click', function() {
         galleryModal = null;
-        // Resume theme music when video closes
         if (themeAudio && !openApp) {
           themeAudio.play().catch(() => {});
         }
@@ -602,7 +572,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
-    // Contact form
     const contactForm = document.querySelector('.contact-form');
     if (contactForm) {
       contactForm.addEventListener('submit', function(e) {
@@ -611,7 +580,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    // Game controls
     document.querySelectorAll('.game-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         const direction = this.dataset.direction;
@@ -619,17 +587,14 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
-    // Keyboard navigation
     const homeGrid = document.querySelector('[tabindex="0"]');
     if (homeGrid) {
       homeGrid.addEventListener('keydown', onAppGridKeyDown);
     }
 
-    // Store app refs for keyboard navigation
     appRefs = Array.from(document.querySelectorAll('.app-icon'));
   }
 
-  // Game variables
   let gameInterval;
   let snake = [];
   let food = {};
@@ -662,7 +627,6 @@ document.addEventListener('DOMContentLoaded', function() {
         y: (snake[0].y + direction.y + rows) % rows 
       };
 
-      // Check collision with self
       for (let s of snake) {
         if (s.x === head.x && s.y === head.y) {
           gameAlive = false;
@@ -679,7 +643,6 @@ document.addEventListener('DOMContentLoaded', function() {
         snake.pop();
       }
 
-      // Draw
       ctx.fillStyle = "#000";
       ctx.fillRect(0, 0, 260, 220);
       
@@ -692,11 +655,9 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    // Clear previous interval
     if (gameInterval) clearInterval(gameInterval);
     gameInterval = setInterval(gameLoop, 120);
 
-    // Keyboard controls
     function gameKeyHandler(e) {
       switch (e.key) {
         case "ArrowUp":
@@ -716,7 +677,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('keydown', gameKeyHandler);
 
-    // Cleanup function
     return () => {
       if (gameInterval) clearInterval(gameInterval);
       window.removeEventListener('keydown', gameKeyHandler);
@@ -749,21 +709,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Initialize
   function init() {
     initAudio();
     render();
     
-    // Start time updates
     setInterval(updateTime, 1000);
     
-    // Global keyboard handler
     window.addEventListener('keydown', onKey);
   }
 
 
 
-  // Global audio control function
   window.startThemeMusic = function() {
     if (themeAudio && themeAudio.paused) {
       themeAudio.play().catch((e) => {
@@ -772,7 +728,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
 
-  // Start theme music only if no app is open and music hasn't started
   window.startThemeMusicIfNeeded = function() {
     if (!openApp && themeAudio && themeAudio.paused) {
       console.log("Starting theme music from phone click");
@@ -780,6 +735,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
 
-  // Start the app
   init();
 }); 
