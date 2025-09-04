@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let openApp = null;
   let galleryModal = null;
   let interactiveModal = false;
+  let interactivePage = 0;
   let themeAudio = null;
   let gameAudio = null;
   let time = new Date();
@@ -163,6 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
           themeAudio.play().catch(() => {});
         }
         interactiveModal = false;
+        interactivePage = 0; // Reset page when closing with ESC
       }
       openApp = null;
       render();
@@ -321,214 +323,192 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function renderInteractiveModal() {
+    const interactivePages = [
+      {
+        title: "Welcome to My Interactive Portfolio",
+        content: `
+          <div class="text-center">
+            <h1 class="text-4xl font-bold text-white mb-6">Ahmed Shuwehdi</h1>
+            <p class="text-xl text-gray-300 mb-8">Multimedia Artist & XR Creator</p>
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+              Explore my journey as a multimedia artist specializing in Extended Reality (XR), 
+              Virtual Reality (VR), and immersive digital experiences that engage with political 
+              issues from my home country, Libya.
+            </p>
+          </div>
+        `
+      },
+      {
+        title: "About My Work",
+        content: `
+          <div class="text-center">
+            <h2 class="text-3xl font-bold text-white mb-6">My Artistic Journey</h2>
+            <p class="text-lg text-gray-300 mb-6 max-w-3xl mx-auto">
+              My work encompasses animations, motion graphics, and captured videos that engage 
+              with political issues, particularly those from Libya. Through my creations, I strive 
+              to bring awareness and provoke thought about the complexities and challenges faced by Libyans.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+              <div class="bg-white/10 rounded-lg p-6">
+                <div class="text-4xl mb-4">🎨</div>
+                <h3 class="text-xl font-semibold mb-2">Digital Art</h3>
+                <p class="text-gray-300">Immersive digital experiences</p>
+              </div>
+              <div class="bg-white/10 rounded-lg p-6">
+                <div class="text-4xl mb-4">🌐</div>
+                <h3 class="text-xl font-semibold mb-2">XR Projects</h3>
+                <p class="text-gray-300">Virtual Reality experiences</p>
+              </div>
+              <div class="bg-white/10 rounded-lg p-6">
+                <div class="text-4xl mb-4">🎬</div>
+                <h3 class="text-xl font-semibold mb-2">Video Art</h3>
+                <p class="text-gray-300">Political narratives</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        title: "Featured Projects",
+        content: `
+          <div class="text-center">
+            <h2 class="text-3xl font-bold text-white mb-8">My Recent Work</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div class="bg-white/10 rounded-lg p-6">
+                <div class="h-32 bg-gradient-to-br from-purple-400 to-pink-400 rounded-lg mb-4 flex items-center justify-center">
+                  <span class="text-4xl">🎨</span>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Robert Frost VR Experience</h3>
+                <p class="text-gray-300 mb-3">Immersive virtual environment at the Robert Frost House</p>
+                <span class="inline-block bg-purple-500 text-white px-3 py-1 rounded-full text-sm">VR</span>
+              </div>
+              <div class="bg-white/10 rounded-lg p-6">
+                <div class="h-32 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-lg mb-4 flex items-center justify-center">
+                  <span class="text-4xl">🎬</span>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Chiedo Asilo</h3>
+                <p class="text-gray-300 mb-3">Animation following a young boy in a trafficking scene</p>
+                <span class="inline-block bg-blue-500 text-white px-3 py-1 rounded-full text-sm">Animation</span>
+              </div>
+              <div class="bg-white/10 rounded-lg p-6">
+                <div class="h-32 bg-gradient-to-br from-green-400 to-emerald-400 rounded-lg mb-4 flex items-center justify-center">
+                  <span class="text-4xl">🌐</span>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">SHAR</h3>
+                <p class="text-gray-300 mb-3">Personal journey into Libya's colonial past</p>
+                <span class="inline-block bg-green-500 text-white px-3 py-1 rounded-full text-sm">Digital Drawing</span>
+              </div>
+              <div class="bg-white/10 rounded-lg p-6">
+                <div class="h-32 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-lg mb-4 flex items-center justify-center">
+                  <span class="text-4xl">🎭</span>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Ciarat AL-hosh</h3>
+                <p class="text-gray-300 mb-3">Experimental project combining live-action and digital illustration</p>
+                <span class="inline-block bg-yellow-500 text-white px-3 py-1 rounded-full text-sm">Film</span>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        title: "Education & Exhibitions",
+        content: `
+          <div class="text-center">
+            <h2 class="text-3xl font-bold text-white mb-8">My Journey</h2>
+            <div class="max-w-4xl mx-auto">
+              <div class="bg-white/10 rounded-lg p-8 mb-6">
+                <h3 class="text-2xl font-semibold mb-4">Education</h3>
+                <p class="text-lg text-gray-300">Currently studying at Bennington College, Vermont</p>
+              </div>
+              <div class="bg-white/10 rounded-lg p-8">
+                <h3 class="text-2xl font-semibold mb-4">Recent Exhibitions</h3>
+                <div class="text-left space-y-4">
+                  <div class="flex items-start">
+                    <span class="text-2xl mr-4">🏛️</span>
+                    <div>
+                      <p class="font-semibold text-white">Wild & Newfangled Art Museum</p>
+                      <p class="text-gray-300">Long Island City, NY • October 2024 - January 2025</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <span class="text-2xl mr-4">🏠</span>
+                    <div>
+                      <p class="font-semibold text-white">Robert Frost Stone House VR Experience</p>
+                      <p class="text-gray-300">Bennington, Vermont • May 2024 - October 2024</p>
+                    </div>
+                  </div>
+                  <div class="flex items-start">
+                    <span class="text-2xl mr-4">🎨</span>
+                    <div>
+                      <p class="font-semibold text-white">Hello Brooklyn—Group Exhibition</p>
+                      <p class="text-gray-300">Kingsborough Art Museum, Brooklyn, NY • August 2024</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        title: "Get In Touch",
+        content: `
+          <div class="text-center">
+            <h2 class="text-3xl font-bold text-white mb-8">Connect With Me</h2>
+            <div class="max-w-2xl mx-auto">
+              <div class="bg-white/10 rounded-lg p-8 mb-6">
+                <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
+                <div class="space-y-4">
+                  <div class="flex items-center justify-center">
+                    <span class="text-2xl mr-4">📧</span>
+                    <span class="text-lg">info@ahmedesh.com</span>
+                  </div>
+                  <div class="flex items-center justify-center">
+                    <span class="text-2xl mr-4">🎓</span>
+                    <span class="text-lg">Bennington College, Vermont</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white/10 rounded-lg p-8">
+                <h3 class="text-2xl font-semibold mb-6">Social Media</h3>
+                <div class="space-y-4">
+                  <a href="https://www.instagram.com/ahmed.eshhh/" target="_blank" class="flex items-center justify-center text-purple-300 hover:text-purple-200 transition-colors">
+                    <span class="text-2xl mr-4">📷</span>
+                    <span class="text-lg">@ahmed.eshhh</span>
+                  </a>
+                  <a href="https://www.linkedin.com/in/ahmed-shuwehdi-5130a819b/" target="_blank" class="flex items-center justify-center text-blue-300 hover:text-blue-200 transition-colors">
+                    <span class="text-2xl mr-4">💼</span>
+                    <span class="text-lg">LinkedIn Profile</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      }
+    ];
+
     return `
-      <div class="fixed inset-0 bg-black bg-opacity-95 flex flex-col justify-center items-center z-50 interactive-modal">
-        <div class="w-11/12 h-5/6 max-w-6xl max-h-[90vh] bg-white rounded-lg overflow-hidden shadow-2xl">
-          <div class="h-full flex flex-col">
-            <!-- Header -->
-            <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6">
-              <div class="flex justify-between items-center">
-                <h1 class="text-3xl font-bold">Ahmed Shuwehdi</h1>
-                <button class="close-interactive-modal text-white hover:text-gray-200 transition-colors">
-                  <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                  </svg>
-                </button>
-              </div>
-              <p class="text-purple-100 mt-2">Multimedia Artist & XR Creator</p>
-            </div>
-
-            <!-- Navigation -->
-            <div class="bg-gray-50 border-b border-gray-200 px-6 py-4">
-              <nav class="flex space-x-8">
-                <button class="nav-tab active text-purple-600 font-semibold border-b-2 border-purple-600 pb-2" data-tab="home">Home</button>
-                <button class="nav-tab text-gray-600 hover:text-purple-600 transition-colors pb-2" data-tab="about">About</button>
-                <button class="nav-tab text-gray-600 hover:text-purple-600 transition-colors pb-2" data-tab="projects">Projects</button>
-                <button class="nav-tab text-gray-600 hover:text-purple-600 transition-colors pb-2" data-tab="contact">Contact</button>
-              </nav>
-            </div>
-
-            <!-- Content Area -->
-            <div class="flex-1 overflow-y-auto">
-              <!-- Home Tab -->
-              <div id="tab-home" class="tab-content p-8">
-                <div class="text-center mb-12">
-                  <h2 class="text-4xl font-bold text-gray-800 mb-4">Welcome to My Interactive Portfolio</h2>
-                  <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Explore my journey as a multimedia artist specializing in Extended Reality (XR), 
-                    Virtual Reality (VR), and immersive digital experiences.
-                  </p>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-lg p-6 hover:shadow-lg transition-shadow">
-                    <div class="text-4xl mb-4">🎨</div>
-                    <h3 class="text-xl font-semibold mb-2">Digital Art</h3>
-                    <p class="text-gray-600">Immersive digital experiences and interactive installations</p>
-                  </div>
-                  
-                  <div class="bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg p-6 hover:shadow-lg transition-shadow">
-                    <div class="text-4xl mb-4">🌐</div>
-                    <h3 class="text-xl font-semibold mb-2">XR Projects</h3>
-                    <p class="text-gray-600">Virtual and Augmented Reality experiences</p>
-                  </div>
-                  
-                  <div class="bg-gradient-to-br from-green-100 to-emerald-100 rounded-lg p-6 hover:shadow-lg transition-shadow">
-                    <div class="text-4xl mb-4">🎬</div>
-                    <h3 class="text-xl font-semibold mb-2">Video Art</h3>
-                    <p class="text-gray-600">Political narratives through multimedia storytelling</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- About Tab -->
-              <div id="tab-about" class="tab-content p-8 hidden">
-                <h2 class="text-3xl font-bold text-gray-800 mb-6">About Me</h2>
-                <div class="prose max-w-none">
-                  <p class="text-lg text-gray-600 mb-6">
-                    Ahmed Shuwehdi is a multimedia artist specializing in Extended Reality (XR), 
-                    Virtual Reality (VR), Augmented Reality (AR), and video art. My work encompasses 
-                    animations, motion graphics, and captured videos that engage with political issues, 
-                    particularly those from my home country, Libya.
-                  </p>
-                  
-                  <p class="text-lg text-gray-600 mb-6">
-                    My artistic journey has been deeply influenced by the political landscape and the 
-                    stories of my homeland. Through my creations, I strive to bring awareness and provoke 
-                    thought about the complexities and challenges faced by Libyans.
-                  </p>
-                  
-                  <div class="bg-gray-50 rounded-lg p-6 mb-6">
-                    <h3 class="text-xl font-semibold mb-4">Education</h3>
-                    <p class="text-gray-700">Currently studying at Bennington College, Vermont</p>
-                  </div>
-                  
-                  <div class="bg-gray-50 rounded-lg p-6">
-                    <h3 class="text-xl font-semibold mb-4">Specializations</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                      <div class="flex items-center">
-                        <span class="text-2xl mr-3">🎨</span>
-                        <span>Digital Art</span>
-                      </div>
-                      <div class="flex items-center">
-                        <span class="text-2xl mr-3">🌐</span>
-                        <span>XR/VR/AR</span>
-                      </div>
-                      <div class="flex items-center">
-                        <span class="text-2xl mr-3">🎬</span>
-                        <span>Video Art</span>
-                      </div>
-                      <div class="flex items-center">
-                        <span class="text-2xl mr-3">🎭</span>
-                        <span>Interactive Media</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Projects Tab -->
-              <div id="tab-projects" class="tab-content p-8 hidden">
-                <h2 class="text-3xl font-bold text-gray-800 mb-6">Featured Projects</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                    <div class="h-48 bg-gradient-to-br from-purple-200 to-pink-200 flex items-center justify-center">
-                      <span class="text-6xl">🎨</span>
-                    </div>
-                    <div class="p-6">
-                      <h3 class="text-xl font-semibold mb-2">Robert Frost VR Experience</h3>
-                      <p class="text-gray-600 mb-4">Immersive virtual environment at the Robert Frost House</p>
-                      <span class="inline-block bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">VR</span>
-                    </div>
-                  </div>
-                  
-                  <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                    <div class="h-48 bg-gradient-to-br from-blue-200 to-cyan-200 flex items-center justify-center">
-                      <span class="text-6xl">🎬</span>
-                    </div>
-                    <div class="p-6">
-                      <h3 class="text-xl font-semibold mb-2">Chiedo Asilo</h3>
-                      <p class="text-gray-600 mb-4">Animation following a young boy in a trafficking scene</p>
-                      <span class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Animation</span>
-                    </div>
-                  </div>
-                  
-                  <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                    <div class="h-48 bg-gradient-to-br from-green-200 to-emerald-200 flex items-center justify-center">
-                      <span class="text-6xl">🌐</span>
-                    </div>
-                    <div class="p-6">
-                      <h3 class="text-xl font-semibold mb-2">SHAR</h3>
-                      <p class="text-gray-600 mb-4">Personal journey into Libya's colonial past</p>
-                      <span class="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Digital Drawing</span>
-                    </div>
-                  </div>
-                  
-                  <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                    <div class="h-48 bg-gradient-to-br from-yellow-200 to-orange-200 flex items-center justify-center">
-                      <span class="text-6xl">🎭</span>
-                    </div>
-                    <div class="p-6">
-                      <h3 class="text-xl font-semibold mb-2">Ciarat AL-hosh</h3>
-                      <p class="text-gray-600 mb-4">Experimental project combining live-action and digital illustration</p>
-                      <span class="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">Film</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Contact Tab -->
-              <div id="tab-contact" class="tab-content p-8 hidden">
-                <h2 class="text-3xl font-bold text-gray-800 mb-6">Get In Touch</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div>
-                    <h3 class="text-xl font-semibold mb-4">Contact Information</h3>
-                    <div class="space-y-4">
-                      <div class="flex items-center">
-                        <span class="text-2xl mr-4">📧</span>
-                        <div>
-                          <p class="font-semibold">Email</p>
-                          <p class="text-gray-600">info@ahmedesh.com</p>
-                        </div>
-                      </div>
-                      
-                      <div class="flex items-center">
-                        <span class="text-2xl mr-4">🎓</span>
-                        <div>
-                          <p class="font-semibold">Education</p>
-                          <p class="text-gray-600">Bennington College, Vermont</p>
-                        </div>
-                      </div>
-                      
-                      <div class="flex items-center">
-                        <span class="text-2xl mr-4">🌍</span>
-                        <div>
-                          <p class="font-semibold">Location</p>
-                          <p class="text-gray-600">Vermont, USA</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h3 class="text-xl font-semibold mb-4">Social Media</h3>
-                    <div class="space-y-4">
-                      <a href="https://www.instagram.com/ahmed.eshhh/" target="_blank" class="flex items-center text-purple-600 hover:text-purple-800 transition-colors">
-                        <span class="text-2xl mr-4">📷</span>
-                        <span>@ahmed.eshhh</span>
-                      </a>
-                      
-                      <a href="https://www.linkedin.com/in/ahmed-shuwehdi-5130a819b/" target="_blank" class="flex items-center text-blue-600 hover:text-blue-800 transition-colors">
-                        <span class="text-2xl mr-4">💼</span>
-                        <span>LinkedIn Profile</span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <div class="fixed inset-0 bg-black bg-opacity-90 flex flex-col justify-center items-center z-50 interactive-modal">
+        <div class="w-11/12 h-3/4 max-w-5xl max-h-[80vh] bg-black flex items-center justify-center rounded-lg overflow-hidden">
+          <div id="interactive-content" class="w-full h-full flex items-center justify-center p-8">
+            ${interactivePages[0].content}
+          </div>
+        </div>
+        <button
+          class="close-interactive-modal absolute top-6 right-6 text-white bg-red-600 rounded-full w-8 h-8 flex justify-center items-center hover:bg-red-700 transition-colors"
+        >
+          ✕
+        </button>
+        <div class="text-center mt-6 max-w-3xl">
+          <h3 class="text-white text-2xl font-bold mb-2" id="interactive-title">${interactivePages[0].title}</h3>
+          <div class="flex justify-center space-x-4 mt-4">
+            <button id="prev-interactive" class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors" disabled>
+              ← Previous
+            </button>
+            <button id="next-interactive" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors">
+              Next →
+            </button>
           </div>
         </div>
       </div>
@@ -820,6 +800,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.open-interactive-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         interactiveModal = true;
+        interactivePage = 0; // Reset to first page
         pauseThemeMusic();
         render();
       });
@@ -838,10 +819,386 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.close-interactive-modal').forEach(btn => {
       btn.addEventListener('click', function() {
         interactiveModal = false;
+        interactivePage = 0; // Reset page when closing
         if (themeAudio && !openApp) {
           themeAudio.play().catch(() => {});
         }
         render();
+      });
+    });
+
+    // Interactive modal navigation
+    document.querySelectorAll('#next-interactive').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const interactivePages = [
+          {
+            title: "Welcome to My Interactive Portfolio",
+            content: `
+              <div class="text-center">
+                <h1 class="text-4xl font-bold text-white mb-6">Ahmed Shuwehdi</h1>
+                <p class="text-xl text-gray-300 mb-8">Multimedia Artist & XR Creator</p>
+                <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+                  Explore my journey as a multimedia artist specializing in Extended Reality (XR), 
+                  Virtual Reality (VR), and immersive digital experiences that engage with political 
+                  issues from my home country, Libya.
+                </p>
+              </div>
+            `
+          },
+          {
+            title: "About My Work",
+            content: `
+              <div class="text-center">
+                <h2 class="text-3xl font-bold text-white mb-6">My Artistic Journey</h2>
+                <p class="text-lg text-gray-300 mb-6 max-w-3xl mx-auto">
+                  My work encompasses animations, motion graphics, and captured videos that engage 
+                  with political issues, particularly those from Libya. Through my creations, I strive 
+                  to bring awareness and provoke thought about the complexities and challenges faced by Libyans.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                  <div class="bg-white/10 rounded-lg p-6">
+                    <div class="text-4xl mb-4">🎨</div>
+                    <h3 class="text-xl font-semibold mb-2">Digital Art</h3>
+                    <p class="text-gray-300">Immersive digital experiences</p>
+                  </div>
+                  <div class="bg-white/10 rounded-lg p-6">
+                    <div class="text-4xl mb-4">🌐</div>
+                    <h3 class="text-xl font-semibold mb-2">XR Projects</h3>
+                    <p class="text-gray-300">Virtual Reality experiences</p>
+                  </div>
+                  <div class="bg-white/10 rounded-lg p-6">
+                    <div class="text-4xl mb-4">🎬</div>
+                    <h3 class="text-xl font-semibold mb-2">Video Art</h3>
+                    <p class="text-gray-300">Political narratives</p>
+                  </div>
+                </div>
+              </div>
+            `
+          },
+          {
+            title: "Featured Projects",
+            content: `
+              <div class="text-center">
+                <h2 class="text-3xl font-bold text-white mb-8">My Recent Work</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div class="bg-white/10 rounded-lg p-6">
+                    <div class="h-32 bg-gradient-to-br from-purple-400 to-pink-400 rounded-lg mb-4 flex items-center justify-center">
+                      <span class="text-4xl">🎨</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Robert Frost VR Experience</h3>
+                    <p class="text-gray-300 mb-3">Immersive virtual environment at the Robert Frost House</p>
+                    <span class="inline-block bg-purple-500 text-white px-3 py-1 rounded-full text-sm">VR</span>
+                  </div>
+                  <div class="bg-white/10 rounded-lg p-6">
+                    <div class="h-32 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-lg mb-4 flex items-center justify-center">
+                      <span class="text-4xl">🎬</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Chiedo Asilo</h3>
+                    <p class="text-gray-300 mb-3">Animation following a young boy in a trafficking scene</p>
+                    <span class="inline-block bg-blue-500 text-white px-3 py-1 rounded-full text-sm">Animation</span>
+                  </div>
+                  <div class="bg-white/10 rounded-lg p-6">
+                    <div class="h-32 bg-gradient-to-br from-green-400 to-emerald-400 rounded-lg mb-4 flex items-center justify-center">
+                      <span class="text-4xl">🌐</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">SHAR</h3>
+                    <p class="text-gray-300 mb-3">Personal journey into Libya's colonial past</p>
+                    <span class="inline-block bg-green-500 text-white px-3 py-1 rounded-full text-sm">Digital Drawing</span>
+                  </div>
+                  <div class="bg-white/10 rounded-lg p-6">
+                    <div class="h-32 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-lg mb-4 flex items-center justify-center">
+                      <span class="text-4xl">🎭</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Ciarat AL-hosh</h3>
+                    <p class="text-gray-300 mb-3">Experimental project combining live-action and digital illustration</p>
+                    <span class="inline-block bg-yellow-500 text-white px-3 py-1 rounded-full text-sm">Film</span>
+                  </div>
+                </div>
+              </div>
+            `
+          },
+          {
+            title: "Education & Exhibitions",
+            content: `
+              <div class="text-center">
+                <h2 class="text-3xl font-bold text-white mb-8">My Journey</h2>
+                <div class="max-w-4xl mx-auto">
+                  <div class="bg-white/10 rounded-lg p-8 mb-6">
+                    <h3 class="text-2xl font-semibold mb-4">Education</h3>
+                    <p class="text-lg text-gray-300">Currently studying at Bennington College, Vermont</p>
+                  </div>
+                  <div class="bg-white/10 rounded-lg p-8">
+                    <h3 class="text-2xl font-semibold mb-4">Recent Exhibitions</h3>
+                    <div class="text-left space-y-4">
+                      <div class="flex items-start">
+                        <span class="text-2xl mr-4">🏛️</span>
+                        <div>
+                          <p class="font-semibold text-white">Wild & Newfangled Art Museum</p>
+                          <p class="text-gray-300">Long Island City, NY • October 2024 - January 2025</p>
+                        </div>
+                      </div>
+                      <div class="flex items-start">
+                        <span class="text-2xl mr-4">🏠</span>
+                        <div>
+                          <p class="font-semibold text-white">Robert Frost Stone House VR Experience</p>
+                          <p class="text-gray-300">Bennington, Vermont • May 2024 - October 2024</p>
+                        </div>
+                      </div>
+                      <div class="flex items-start">
+                        <span class="text-2xl mr-4">🎨</span>
+                        <div>
+                          <p class="font-semibold text-white">Hello Brooklyn—Group Exhibition</p>
+                          <p class="text-gray-300">Kingsborough Art Museum, Brooklyn, NY • August 2024</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `
+          },
+          {
+            title: "Get In Touch",
+            content: `
+              <div class="text-center">
+                <h2 class="text-3xl font-bold text-white mb-8">Connect With Me</h2>
+                <div class="max-w-2xl mx-auto">
+                  <div class="bg-white/10 rounded-lg p-8 mb-6">
+                    <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
+                    <div class="space-y-4">
+                      <div class="flex items-center justify-center">
+                        <span class="text-2xl mr-4">📧</span>
+                        <span class="text-lg">info@ahmedesh.com</span>
+                      </div>
+                      <div class="flex items-center justify-center">
+                        <span class="text-2xl mr-4">🎓</span>
+                        <span class="text-lg">Bennington College, Vermont</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="bg-white/10 rounded-lg p-8">
+                    <h3 class="text-2xl font-semibold mb-6">Social Media</h3>
+                    <div class="space-y-4">
+                      <a href="https://www.instagram.com/ahmed.eshhh/" target="_blank" class="flex items-center justify-center text-purple-300 hover:text-purple-200 transition-colors">
+                        <span class="text-2xl mr-4">📷</span>
+                        <span class="text-lg">@ahmed.eshhh</span>
+                      </a>
+                      <a href="https://www.linkedin.com/in/ahmed-shuwehdi-5130a819b/" target="_blank" class="flex items-center justify-center text-blue-300 hover:text-blue-200 transition-colors">
+                        <span class="text-2xl mr-4">💼</span>
+                        <span class="text-lg">LinkedIn Profile</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `
+          }
+        ];
+
+        if (interactivePage < interactivePages.length - 1) {
+          interactivePage++;
+          const contentDiv = document.getElementById('interactive-content');
+          const titleDiv = document.getElementById('interactive-title');
+          const prevBtn = document.getElementById('prev-interactive');
+          const nextBtn = document.getElementById('next-interactive');
+          
+          if (contentDiv && titleDiv) {
+            contentDiv.innerHTML = interactivePages[interactivePage].content;
+            titleDiv.textContent = interactivePages[interactivePage].title;
+          }
+          
+          if (prevBtn) prevBtn.disabled = false;
+          if (nextBtn && interactivePage === interactivePages.length - 1) {
+            nextBtn.disabled = true;
+          }
+        }
+      });
+    });
+
+    document.querySelectorAll('#prev-interactive').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const interactivePages = [
+          {
+            title: "Welcome to My Interactive Portfolio",
+            content: `
+              <div class="text-center">
+                <h1 class="text-4xl font-bold text-white mb-6">Ahmed Shuwehdi</h1>
+                <p class="text-xl text-gray-300 mb-8">Multimedia Artist & XR Creator</p>
+                <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+                  Explore my journey as a multimedia artist specializing in Extended Reality (XR), 
+                  Virtual Reality (VR), and immersive digital experiences that engage with political 
+                  issues from my home country, Libya.
+                </p>
+              </div>
+            `
+          },
+          {
+            title: "About My Work",
+            content: `
+              <div class="text-center">
+                <h2 class="text-3xl font-bold text-white mb-6">My Artistic Journey</h2>
+                <p class="text-lg text-gray-300 mb-6 max-w-3xl mx-auto">
+                  My work encompasses animations, motion graphics, and captured videos that engage 
+                  with political issues, particularly those from Libya. Through my creations, I strive 
+                  to bring awareness and provoke thought about the complexities and challenges faced by Libyans.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                  <div class="bg-white/10 rounded-lg p-6">
+                    <div class="text-4xl mb-4">🎨</div>
+                    <h3 class="text-xl font-semibold mb-2">Digital Art</h3>
+                    <p class="text-gray-300">Immersive digital experiences</p>
+                  </div>
+                  <div class="bg-white/10 rounded-lg p-6">
+                    <div class="text-4xl mb-4">🌐</div>
+                    <h3 class="text-xl font-semibold mb-2">XR Projects</h3>
+                    <p class="text-gray-300">Virtual Reality experiences</p>
+                  </div>
+                  <div class="bg-white/10 rounded-lg p-6">
+                    <div class="text-4xl mb-4">🎬</div>
+                    <h3 class="text-xl font-semibold mb-2">Video Art</h3>
+                    <p class="text-gray-300">Political narratives</p>
+                  </div>
+                </div>
+              </div>
+            `
+          },
+          {
+            title: "Featured Projects",
+            content: `
+              <div class="text-center">
+                <h2 class="text-3xl font-bold text-white mb-8">My Recent Work</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div class="bg-white/10 rounded-lg p-6">
+                    <div class="h-32 bg-gradient-to-br from-purple-400 to-pink-400 rounded-lg mb-4 flex items-center justify-center">
+                      <span class="text-4xl">🎨</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Robert Frost VR Experience</h3>
+                    <p class="text-gray-300 mb-3">Immersive virtual environment at the Robert Frost House</p>
+                    <span class="inline-block bg-purple-500 text-white px-3 py-1 rounded-full text-sm">VR</span>
+                  </div>
+                  <div class="bg-white/10 rounded-lg p-6">
+                    <div class="h-32 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-lg mb-4 flex items-center justify-center">
+                      <span class="text-4xl">🎬</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Chiedo Asilo</h3>
+                    <p class="text-gray-300 mb-3">Animation following a young boy in a trafficking scene</p>
+                    <span class="inline-block bg-blue-500 text-white px-3 py-1 rounded-full text-sm">Animation</span>
+                  </div>
+                  <div class="bg-white/10 rounded-lg p-6">
+                    <div class="h-32 bg-gradient-to-br from-green-400 to-emerald-400 rounded-lg mb-4 flex items-center justify-center">
+                      <span class="text-4xl">🌐</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">SHAR</h3>
+                    <p class="text-gray-300 mb-3">Personal journey into Libya's colonial past</p>
+                    <span class="inline-block bg-green-500 text-white px-3 py-1 rounded-full text-sm">Digital Drawing</span>
+                  </div>
+                  <div class="bg-white/10 rounded-lg p-6">
+                    <div class="h-32 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-lg mb-4 flex items-center justify-center">
+                      <span class="text-4xl">🎭</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Ciarat AL-hosh</h3>
+                    <p class="text-gray-300 mb-3">Experimental project combining live-action and digital illustration</p>
+                    <span class="inline-block bg-yellow-500 text-white px-3 py-1 rounded-full text-sm">Film</span>
+                  </div>
+                </div>
+              </div>
+            `
+          },
+          {
+            title: "Education & Exhibitions",
+            content: `
+              <div class="text-center">
+                <h2 class="text-3xl font-bold text-white mb-8">My Journey</h2>
+                <div class="max-w-4xl mx-auto">
+                  <div class="bg-white/10 rounded-lg p-8 mb-6">
+                    <h3 class="text-2xl font-semibold mb-4">Education</h3>
+                    <p class="text-lg text-gray-300">Currently studying at Bennington College, Vermont</p>
+                  </div>
+                  <div class="bg-white/10 rounded-lg p-8">
+                    <h3 class="text-2xl font-semibold mb-4">Recent Exhibitions</h3>
+                    <div class="text-left space-y-4">
+                      <div class="flex items-start">
+                        <span class="text-2xl mr-4">🏛️</span>
+                        <div>
+                          <p class="font-semibold text-white">Wild & Newfangled Art Museum</p>
+                          <p class="text-gray-300">Long Island City, NY • October 2024 - January 2025</p>
+                        </div>
+                      </div>
+                      <div class="flex items-start">
+                        <span class="text-2xl mr-4">🏠</span>
+                        <div>
+                          <p class="font-semibold text-white">Robert Frost Stone House VR Experience</p>
+                          <p class="text-gray-300">Bennington, Vermont • May 2024 - October 2024</p>
+                        </div>
+                      </div>
+                      <div class="flex items-start">
+                        <span class="text-2xl mr-4">🎨</span>
+                        <div>
+                          <p class="font-semibold text-white">Hello Brooklyn—Group Exhibition</p>
+                          <p class="text-gray-300">Kingsborough Art Museum, Brooklyn, NY • August 2024</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `
+          },
+          {
+            title: "Get In Touch",
+            content: `
+              <div class="text-center">
+                <h2 class="text-3xl font-bold text-white mb-8">Connect With Me</h2>
+                <div class="max-w-2xl mx-auto">
+                  <div class="bg-white/10 rounded-lg p-8 mb-6">
+                    <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
+                    <div class="space-y-4">
+                      <div class="flex items-center justify-center">
+                        <span class="text-2xl mr-4">📧</span>
+                        <span class="text-lg">info@ahmedesh.com</span>
+                      </div>
+                      <div class="flex items-center justify-center">
+                        <span class="text-2xl mr-4">🎓</span>
+                        <span class="text-lg">Bennington College, Vermont</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="bg-white/10 rounded-lg p-8">
+                    <h3 class="text-2xl font-semibold mb-6">Social Media</h3>
+                    <div class="space-y-4">
+                      <a href="https://www.instagram.com/ahmed.eshhh/" target="_blank" class="flex items-center justify-center text-purple-300 hover:text-purple-200 transition-colors">
+                        <span class="text-2xl mr-4">📷</span>
+                        <span class="text-lg">@ahmed.eshhh</span>
+                      </a>
+                      <a href="https://www.linkedin.com/in/ahmed-shuwehdi-5130a819b/" target="_blank" class="flex items-center justify-center text-blue-300 hover:text-blue-200 transition-colors">
+                        <span class="text-2xl mr-4">💼</span>
+                        <span class="text-lg">LinkedIn Profile</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `
+          }
+        ];
+
+        if (interactivePage > 0) {
+          interactivePage--;
+          const contentDiv = document.getElementById('interactive-content');
+          const titleDiv = document.getElementById('interactive-title');
+          const prevBtn = document.getElementById('prev-interactive');
+          const nextBtn = document.getElementById('next-interactive');
+          
+          if (contentDiv && titleDiv) {
+            contentDiv.innerHTML = interactivePages[interactivePage].content;
+            titleDiv.textContent = interactivePages[interactivePage].title;
+          }
+          
+          if (prevBtn && interactivePage === 0) {
+            prevBtn.disabled = true;
+          }
+          if (nextBtn) nextBtn.disabled = false;
+        }
       });
     });
 
