@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
     { key: "video", label: "Video", emoji: "🎥" },
     { key: "xr", label: "XR", emoji: "🌐" },
     { key: "frames", label: "Frames", emoji: "🖼️" },
-                    { key: "instagram", label: "Socials", emoji: "📷" },
+    { key: "interactives", label: "Interactives", emoji: "🎨" },
+    { key: "instagram", label: "Socials", emoji: "📷" },
     { key: "game", label: "Game", emoji: "🎮" },
     { key: "contact", label: "Contact", emoji: "✉️" },
     { key: "about", label: "About", emoji: "ℹ️" },
@@ -233,6 +234,8 @@ document.addEventListener('DOMContentLoaded', function() {
         return renderXRApp();
       case "frames":
         return renderFramesApp();
+      case "interactives":
+        return renderInteractivesApp();
       case "instagram":
         return renderInstagramApp();
       case "contact":
@@ -341,6 +344,27 @@ document.addEventListener('DOMContentLoaded', function() {
               <div class="text-sm font-semibold">${f.title}</div>
             </div>
           `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderInteractivesApp() {
+    return `
+      <div class="h-full overflow-auto">
+        <div class="flex items-center justify-between mb-3">
+          <button class="back-btn text-sm text-cyan-300">Back</button>
+          <div class="text-xs text-gray-400">Interactives</div>
+          <div></div>
+        </div>
+        <div class="h-full bg-zinc-900 rounded-lg overflow-hidden">
+          <iframe 
+            src="https://ahmedshuwehdi.my.canva.site/" 
+            class="w-full h-full border-0"
+            title="Interactive Portfolio"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
         </div>
       </div>
     `;
