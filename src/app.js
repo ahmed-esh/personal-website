@@ -323,20 +323,214 @@ document.addEventListener('DOMContentLoaded', function() {
   function renderInteractiveModal() {
     return `
       <div class="fixed inset-0 bg-black bg-opacity-95 flex flex-col justify-center items-center z-50 interactive-modal">
-        <div class="w-full h-full bg-white flex items-center justify-center overflow-hidden">
-          <iframe 
-            src="https://ahmedshuwehdi.my.canva.site/" 
-            class="w-full h-full border-0"
-            title="Interactive Portfolio"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-          </iframe>
+        <div class="w-11/12 h-5/6 max-w-6xl max-h-[90vh] bg-white rounded-lg overflow-hidden shadow-2xl">
+          <div class="h-full flex flex-col">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6">
+              <div class="flex justify-between items-center">
+                <h1 class="text-3xl font-bold">Ahmed Shuwehdi</h1>
+                <button class="close-interactive-modal text-white hover:text-gray-200 transition-colors">
+                  <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </button>
+              </div>
+              <p class="text-purple-100 mt-2">Multimedia Artist & XR Creator</p>
+            </div>
+
+            <!-- Navigation -->
+            <div class="bg-gray-50 border-b border-gray-200 px-6 py-4">
+              <nav class="flex space-x-8">
+                <button class="nav-tab active text-purple-600 font-semibold border-b-2 border-purple-600 pb-2" data-tab="home">Home</button>
+                <button class="nav-tab text-gray-600 hover:text-purple-600 transition-colors pb-2" data-tab="about">About</button>
+                <button class="nav-tab text-gray-600 hover:text-purple-600 transition-colors pb-2" data-tab="projects">Projects</button>
+                <button class="nav-tab text-gray-600 hover:text-purple-600 transition-colors pb-2" data-tab="contact">Contact</button>
+              </nav>
+            </div>
+
+            <!-- Content Area -->
+            <div class="flex-1 overflow-y-auto">
+              <!-- Home Tab -->
+              <div id="tab-home" class="tab-content p-8">
+                <div class="text-center mb-12">
+                  <h2 class="text-4xl font-bold text-gray-800 mb-4">Welcome to My Interactive Portfolio</h2>
+                  <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Explore my journey as a multimedia artist specializing in Extended Reality (XR), 
+                    Virtual Reality (VR), and immersive digital experiences.
+                  </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <div class="bg-gradient-to-br from-purple-100 to-pink-100 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                    <div class="text-4xl mb-4">🎨</div>
+                    <h3 class="text-xl font-semibold mb-2">Digital Art</h3>
+                    <p class="text-gray-600">Immersive digital experiences and interactive installations</p>
+                  </div>
+                  
+                  <div class="bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                    <div class="text-4xl mb-4">🌐</div>
+                    <h3 class="text-xl font-semibold mb-2">XR Projects</h3>
+                    <p class="text-gray-600">Virtual and Augmented Reality experiences</p>
+                  </div>
+                  
+                  <div class="bg-gradient-to-br from-green-100 to-emerald-100 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                    <div class="text-4xl mb-4">🎬</div>
+                    <h3 class="text-xl font-semibold mb-2">Video Art</h3>
+                    <p class="text-gray-600">Political narratives through multimedia storytelling</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- About Tab -->
+              <div id="tab-about" class="tab-content p-8 hidden">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">About Me</h2>
+                <div class="prose max-w-none">
+                  <p class="text-lg text-gray-600 mb-6">
+                    Ahmed Shuwehdi is a multimedia artist specializing in Extended Reality (XR), 
+                    Virtual Reality (VR), Augmented Reality (AR), and video art. My work encompasses 
+                    animations, motion graphics, and captured videos that engage with political issues, 
+                    particularly those from my home country, Libya.
+                  </p>
+                  
+                  <p class="text-lg text-gray-600 mb-6">
+                    My artistic journey has been deeply influenced by the political landscape and the 
+                    stories of my homeland. Through my creations, I strive to bring awareness and provoke 
+                    thought about the complexities and challenges faced by Libyans.
+                  </p>
+                  
+                  <div class="bg-gray-50 rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-semibold mb-4">Education</h3>
+                    <p class="text-gray-700">Currently studying at Bennington College, Vermont</p>
+                  </div>
+                  
+                  <div class="bg-gray-50 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Specializations</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                      <div class="flex items-center">
+                        <span class="text-2xl mr-3">🎨</span>
+                        <span>Digital Art</span>
+                      </div>
+                      <div class="flex items-center">
+                        <span class="text-2xl mr-3">🌐</span>
+                        <span>XR/VR/AR</span>
+                      </div>
+                      <div class="flex items-center">
+                        <span class="text-2xl mr-3">🎬</span>
+                        <span>Video Art</span>
+                      </div>
+                      <div class="flex items-center">
+                        <span class="text-2xl mr-3">🎭</span>
+                        <span>Interactive Media</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Projects Tab -->
+              <div id="tab-projects" class="tab-content p-8 hidden">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Featured Projects</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="h-48 bg-gradient-to-br from-purple-200 to-pink-200 flex items-center justify-center">
+                      <span class="text-6xl">🎨</span>
+                    </div>
+                    <div class="p-6">
+                      <h3 class="text-xl font-semibold mb-2">Robert Frost VR Experience</h3>
+                      <p class="text-gray-600 mb-4">Immersive virtual environment at the Robert Frost House</p>
+                      <span class="inline-block bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">VR</span>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="h-48 bg-gradient-to-br from-blue-200 to-cyan-200 flex items-center justify-center">
+                      <span class="text-6xl">🎬</span>
+                    </div>
+                    <div class="p-6">
+                      <h3 class="text-xl font-semibold mb-2">Chiedo Asilo</h3>
+                      <p class="text-gray-600 mb-4">Animation following a young boy in a trafficking scene</p>
+                      <span class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Animation</span>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="h-48 bg-gradient-to-br from-green-200 to-emerald-200 flex items-center justify-center">
+                      <span class="text-6xl">🌐</span>
+                    </div>
+                    <div class="p-6">
+                      <h3 class="text-xl font-semibold mb-2">SHAR</h3>
+                      <p class="text-gray-600 mb-4">Personal journey into Libya's colonial past</p>
+                      <span class="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Digital Drawing</span>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="h-48 bg-gradient-to-br from-yellow-200 to-orange-200 flex items-center justify-center">
+                      <span class="text-6xl">🎭</span>
+                    </div>
+                    <div class="p-6">
+                      <h3 class="text-xl font-semibold mb-2">Ciarat AL-hosh</h3>
+                      <p class="text-gray-600 mb-4">Experimental project combining live-action and digital illustration</p>
+                      <span class="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">Film</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Contact Tab -->
+              <div id="tab-contact" class="tab-content p-8 hidden">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Get In Touch</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div>
+                    <h3 class="text-xl font-semibold mb-4">Contact Information</h3>
+                    <div class="space-y-4">
+                      <div class="flex items-center">
+                        <span class="text-2xl mr-4">📧</span>
+                        <div>
+                          <p class="font-semibold">Email</p>
+                          <p class="text-gray-600">info@ahmedesh.com</p>
+                        </div>
+                      </div>
+                      
+                      <div class="flex items-center">
+                        <span class="text-2xl mr-4">🎓</span>
+                        <div>
+                          <p class="font-semibold">Education</p>
+                          <p class="text-gray-600">Bennington College, Vermont</p>
+                        </div>
+                      </div>
+                      
+                      <div class="flex items-center">
+                        <span class="text-2xl mr-4">🌍</span>
+                        <div>
+                          <p class="font-semibold">Location</p>
+                          <p class="text-gray-600">Vermont, USA</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h3 class="text-xl font-semibold mb-4">Social Media</h3>
+                    <div class="space-y-4">
+                      <a href="https://www.instagram.com/ahmed.eshhh/" target="_blank" class="flex items-center text-purple-600 hover:text-purple-800 transition-colors">
+                        <span class="text-2xl mr-4">📷</span>
+                        <span>@ahmed.eshhh</span>
+                      </a>
+                      
+                      <a href="https://www.linkedin.com/in/ahmed-shuwehdi-5130a819b/" target="_blank" class="flex items-center text-blue-600 hover:text-blue-800 transition-colors">
+                        <span class="text-2xl mr-4">💼</span>
+                        <span>LinkedIn Profile</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <button
-          class="close-interactive-modal absolute top-6 right-6 text-white bg-red-600 rounded-full w-10 h-10 flex justify-center items-center hover:bg-red-700 transition-colors z-60"
-        >
-          ✕
-        </button>
       </div>
     `;
   }
@@ -648,6 +842,34 @@ document.addEventListener('DOMContentLoaded', function() {
           themeAudio.play().catch(() => {});
         }
         render();
+      });
+    });
+
+    // Tab navigation for interactive modal
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        const targetTab = this.dataset.tab;
+        
+        // Remove active class from all tabs
+        document.querySelectorAll('.nav-tab').forEach(t => {
+          t.classList.remove('active', 'text-purple-600', 'font-semibold', 'border-b-2', 'border-purple-600');
+          t.classList.add('text-gray-600');
+        });
+        
+        // Add active class to clicked tab
+        this.classList.add('active', 'text-purple-600', 'font-semibold', 'border-b-2', 'border-purple-600');
+        this.classList.remove('text-gray-600');
+        
+        // Hide all tab contents
+        document.querySelectorAll('.tab-content').forEach(content => {
+          content.classList.add('hidden');
+        });
+        
+        // Show target tab content
+        const targetContent = document.getElementById(`tab-${targetTab}`);
+        if (targetContent) {
+          targetContent.classList.remove('hidden');
+        }
       });
     });
 
