@@ -357,14 +357,24 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="text-xs text-gray-400">Interactives</div>
           <div></div>
         </div>
-        <div class="h-full bg-zinc-900 rounded-lg overflow-hidden">
-          <iframe 
-            src="https://ahmedshuwehdi.my.canva.site/" 
-            class="w-full h-full border-0"
-            title="Interactive Portfolio"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-          </iframe>
+        <div class="h-full flex flex-col items-center justify-center bg-zinc-900 rounded-lg p-6">
+          <div class="text-center">
+            <div class="text-6xl mb-6">🎨</div>
+            <h3 class="text-2xl font-bold text-white mb-4">Interactive Portfolio</h3>
+            <p class="text-gray-400 mb-6 max-w-sm">
+              Explore my interactive portfolio with immersive experiences and multimedia projects.
+            </p>
+            <a 
+              href="https://ahmedshuwehdi.my.canva.site/" 
+              target="_blank" 
+              class="inline-block px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+            >
+              Open Interactive Portfolio
+            </a>
+            <p class="text-xs text-gray-500 mt-4">
+              Opens in a new tab
+            </p>
+          </div>
         </div>
       </div>
     `;
