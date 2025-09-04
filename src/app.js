@@ -3,6 +3,7 @@ import { renderXRApp, initXRScene } from './xr.js';
 document.addEventListener('DOMContentLoaded', function() {
   let openApp = null;
   let galleryModal = null;
+  let interactiveModal = false;
   let themeAudio = null;
   let gameAudio = null;
   let time = new Date();
@@ -157,6 +158,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         galleryModal = null;
       }
+      if (interactiveModal) {
+        if (themeAudio && !openApp) {
+          themeAudio.play().catch(() => {});
+        }
+        interactiveModal = false;
+      }
       openApp = null;
       render();
     }
@@ -199,6 +206,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
 
         ${galleryModal !== null ? renderGalleryModal() : ''}
+        ${interactiveModal ? renderInteractiveModal() : ''}
       </div>
     `;
 
@@ -312,6 +320,27 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
   }
 
+  function renderInteractiveModal() {
+    return `
+      <div class="fixed inset-0 bg-black bg-opacity-95 flex flex-col justify-center items-center z-50 interactive-modal">
+        <div class="w-full h-full bg-white flex items-center justify-center overflow-hidden">
+          <iframe 
+            src="https://ahmedshuwehdi.my.canva.site/" 
+            class="w-full h-full border-0"
+            title="Interactive Portfolio"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <button
+          class="close-interactive-modal absolute top-6 right-6 text-white bg-red-600 rounded-full w-10 h-10 flex justify-center items-center hover:bg-red-700 transition-colors z-60"
+        >
+          ✕
+        </button>
+      </div>
+    `;
+  }
+
 
 
   function renderFramesApp() {
@@ -364,15 +393,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <p class="text-gray-400 mb-6 max-w-sm">
               Explore my interactive portfolio with immersive experiences and multimedia projects.
             </p>
-            <a 
-              href="https://ahmedshuwehdi.my.canva.site/" 
-              target="_blank" 
-              class="inline-block px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+            <button 
+              class="open-interactive-btn inline-block px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
               Open Interactive Portfolio
-            </a>
+            </button>
             <p class="text-xs text-gray-500 mt-4">
-              Opens in a new tab
+              Opens in full-screen overlay
             </p>
           </div>
         </div>
@@ -596,9 +623,27 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
+    document.querySelectorAll('.open-interactive-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        interactiveModal = true;
+        pauseThemeMusic();
+        render();
+      });
+    });
+
     document.querySelectorAll('.close-modal').forEach(btn => {
       btn.addEventListener('click', function() {
         galleryModal = null;
+        if (themeAudio && !openApp) {
+          themeAudio.play().catch(() => {});
+        }
+        render();
+      });
+    });
+
+    document.querySelectorAll('.close-interactive-modal').forEach(btn => {
+      btn.addEventListener('click', function() {
+        interactiveModal = false;
         if (themeAudio && !openApp) {
           themeAudio.play().catch(() => {});
         }
