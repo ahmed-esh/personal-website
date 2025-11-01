@@ -26,6 +26,8 @@ body {
     .phone-outer {
     position: relative;
     display: inline-block;
+    transform: scale(1.3);
+    transform-origin: center center;
   }
   
   .phone-sprite {
@@ -36,8 +38,7 @@ body {
     position: relative;
     z-index: 10;
     pointer-events: none;
-    transform: scale(1.3);
-    transform-origin: center center;
+    object-fit: contain;
   }
   
   .phone-screen {
@@ -107,6 +108,11 @@ body {
 
 /* Desktop styles */
 @media (min-width: 769px) {
+  .phone-outer {
+    transform: scale(1.3);
+    transform-origin: center center;
+  }
+  
   .phone-sprite {
     width: 520px;
     height: auto;
@@ -114,6 +120,7 @@ body {
     position: relative;
     z-index: 10;
     pointer-events: none;
+    object-fit: contain;
   }
   
   .phone-screen {
