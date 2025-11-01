@@ -174,10 +174,10 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="relative z-10 flex flex-col items-center max-w-xs sm:max-w-md overflow-hidden mx-auto">
           <h1 class="mb-6 tracking-widest text-sm text-gray-400">AHMED ESH Phone</h1>
 
-          <div class="phone-outer w-80 md:w-96 bg-black/90 border border-zinc-800 rounded-3xl shadow-2xl p-4" onclick="startThemeMusicIfNeeded()">
-            <div class="notch w-24 h-3 bg-zinc-900 rounded-b-xl mx-auto mb-2"></div>
-
-            <div class="phone-screen bg-[#020202] rounded-2xl p-4 h-96 md:h-[540px] overflow-hidden relative">
+          <div class="phone-container relative" onclick="startThemeMusicIfNeeded()">
+            <img src="src/assets/phone animation/phone 1 open.png" alt="Phone" class="phone-sprite w-full max-w-[400px] h-auto">
+            
+            <div class="phone-screen-content">
               <div class="flex justify-between items-center text-xs text-gray-500 mb-3">
                 <div class="flex items-center gap-2">
                   <div class="w-2 h-2 rounded-full bg-emerald-400/80"></div>
@@ -187,10 +187,6 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
 
               ${!openApp ? renderHomeGrid() : renderAppScreen()}
-            </div>
-
-            <div class="mt-3 flex justify-center">
-              <div class="w-10 h-2 bg-zinc-800 rounded-full"></div>
             </div>
           </div>
 

@@ -23,14 +23,33 @@ body {
     max-width: 100%;
   }
   
-  .phone-outer {
-    width: 90vw !important;
-    max-width: 90vw !important;
-    padding: 0.5rem !important;
-    margin: 0 auto !important;
-    border-radius: 1.5rem !important;
+  .phone-container {
+    position: relative;
+    display: inline-block;
+    width: 90vw;
+    max-width: 90vw;
   }
-  
+
+  .phone-sprite {
+    display: block;
+    user-select: none;
+    pointer-events: none;
+    width: 100%;
+    height: auto;
+  }
+
+  .phone-screen-content {
+    position: absolute;
+    top: 8%;
+    left: 12%;
+    width: 76%;
+    height: 42%;
+    background-color: #020202;
+    padding: 0.5rem;
+    overflow: auto;
+    border-radius: 0.5rem;
+  }
+
   .phone-screen {
     height: 82vh !important;
     padding: 0.5rem !important;
@@ -89,10 +108,18 @@ body {
   }
 }
 
-/* Desktop styles remain unchanged */
+/* Desktop styles */
 @media (min-width: 769px) {
-  .phone-outer {
-    width: 20rem;
+  .phone-sprite {
+    max-width: 500px;
+  }
+  
+  .phone-screen-content {
+    top: 7%;
+    left: 11%;
+    width: 78%;
+    height: 43%;
+    padding: 1rem;
   }
   
   .phone-screen {
@@ -237,6 +264,29 @@ body {
   height: 24rem;
   overflow: hidden;
   position: relative;
+}
+
+.phone-container {
+  position: relative;
+  display: inline-block;
+}
+
+.phone-sprite {
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+.phone-screen-content {
+  position: absolute;
+  top: 8%;
+  left: 12%;
+  width: 76%;
+  height: 42%;
+  background-color: #020202;
+  padding: 0.75rem;
+  overflow: hidden;
+  border-radius: 0.5rem;
 }
 
 .md\:h-\[540px\] {
