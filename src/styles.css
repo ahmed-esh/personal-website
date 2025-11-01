@@ -23,120 +23,29 @@ body {
     max-width: 100%;
   }
   
-  .phone-container {
+    .phone-outer {
     position: relative;
     display: inline-block;
-    width: 95vw;
-    max-width: 95vw;
   }
-
+  
   .phone-sprite {
     display: block;
-    user-select: none;
-    pointer-events: none;
-    width: 100%;
+    width: auto;
     height: auto;
-    position: relative;
-    z-index: 2;
+    max-width: 90vw;
+    max-height: 90vh;
   }
-
-.phone-screen-content {
-  position: absolute;
-  top: 9.5%;
-  left: 9%;
-  width: 82%;
-  height: 36%;
-  background-color: #020202;
-  padding: 0.35rem 0.5rem;
-  overflow-y: auto;
-  overflow-x: hidden;
-  border-radius: 0.2rem;
-  z-index: 1;
-  -webkit-overflow-scrolling: touch;
-}
-
-.phone-status-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.25rem;
-  padding-bottom: 0.15rem;
-  border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
-}
-
-.phone-home-grid {
-  height: calc(100% - 1.5rem);
-  display: flex;
-  flex-direction: column;
-}
-
-.app-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.4rem;
-  padding: 0.25rem 0;
-  place-items: center;
-}
-
-.app-icon-compact {
-  width: 100%;
-  max-width: 3rem;
-  aspect-ratio: 1;
-  background-color: rgba(24, 24, 27, 0.8);
-  border: 0.5px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.4rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.15s ease, background-color 0.15s ease;
-  padding: 0.2rem;
-}
-
-.app-icon-compact:hover {
-  transform: scale(1.05);
-  background-color: rgba(39, 39, 42, 0.9);
-}
-
-.app-icon-compact:active {
-  transform: scale(0.98);
-}
-
-.app-emoji {
-  font-size: 1.1rem;
-  line-height: 1;
-  margin-bottom: 0.15rem;
-}
-
-.app-label {
-  font-size: 0.6rem;
-  color: #d1d5db;
-  text-align: center;
-  line-height: 1;
-}
-
-.phone-screen-content::-webkit-scrollbar {
-  width: 4px;
-}
-
-.phone-screen-content::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.phone-screen-content::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 2px;
-}
-
-.phone-screen-content::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
-
+  
   .phone-screen {
-    height: 82vh !important;
-    padding: 0.5rem !important;
-    border-radius: 1rem !important;
+    position: absolute;
+    top: 8%;
+    left: 10%;
+    width: 80%;
+    height: 38%;
+    background-color: #020202;
+    padding: 0.75rem;
+    overflow: hidden;
+    border-radius: 0.5rem;
   }
   
   .mb-6 {
@@ -193,78 +102,17 @@ body {
 
 /* Desktop styles */
 @media (min-width: 769px) {
-  .phone-container {
-    position: relative;
-    display: inline-block;
-    width: auto;
-  }
-
   .phone-sprite {
-    max-width: 700px;
-    width: 700px;
-    height: auto;
-    position: relative;
-    z-index: 2;
-  }
-  
-  .phone-screen-content {
-    position: absolute;
-    top: 9%;
-    left: 8.5%;
-    width: 83%;
-    height: 36.5%;
-    background-color: #020202;
-    padding: 0.4rem 0.6rem;
-    overflow-y: auto;
-    overflow-x: hidden;
-    border-radius: 0.2rem;
-    z-index: 1;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .phone-status-bar {
-    margin-bottom: 0.3rem;
-    padding-bottom: 0.2rem;
-  }
-
-  .app-grid {
-    gap: 0.5rem;
-    padding: 0.3rem 0;
-  }
-
-  .app-icon-compact {
-    max-width: 3.5rem;
-    padding: 0.25rem;
-  }
-
-  .app-emoji {
-    font-size: 1.25rem;
-    margin-bottom: 0.2rem;
-  }
-
-  .app-label {
-    font-size: 0.65rem;
-  }
-
-  .phone-screen-content::-webkit-scrollbar {
-    width: 3px;
-  }
-
-  .phone-screen-content::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .phone-screen-content::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 2px;
-  }
-
-  .phone-screen-content::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.4);
+    max-width: 400px;
+    max-height: 700px;
   }
   
   .phone-screen {
-    height: 24rem;
+    top: 7%;
+    left: 9%;
+    width: 82%;
+    height: 40%;
+    padding: 1rem;
   }
 }
 
@@ -399,101 +247,10 @@ body {
 }
 
 .phone-screen {
-  background-color: #020202;
-  border-radius: 1rem;
-  padding: 1rem;
-  height: 24rem;
-  overflow: hidden;
-  position: relative;
-}
-
-.phone-container {
-  position: relative;
-  display: inline-block;
-}
-
-.phone-sprite {
-  display: block;
-  user-select: none;
-  pointer-events: none;
-  position: relative;
-  z-index: 2;
-}
-
-.phone-screen-content {
   position: absolute;
-  top: 9.5%;
-  left: 9%;
-  width: 82%;
-  height: 36%;
   background-color: #020202;
-  padding: 0.35rem 0.5rem;
-  overflow-y: auto;
-  overflow-x: hidden;
-  border-radius: 0.2rem;
-  z-index: 1;
-  -webkit-overflow-scrolling: touch;
-}
-
-.phone-status-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.25rem;
-  padding-bottom: 0.15rem;
-  border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
-}
-
-.phone-home-grid {
-  height: calc(100% - 1.5rem);
-  display: flex;
-  flex-direction: column;
-}
-
-.app-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.4rem;
-  padding: 0.25rem 0;
-  place-items: center;
-}
-
-.app-icon-compact {
-  width: 100%;
-  max-width: 3rem;
-  aspect-ratio: 1;
-  background-color: rgba(24, 24, 27, 0.8);
-  border: 0.5px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.4rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.15s ease, background-color 0.15s ease;
-  padding: 0.2rem;
-}
-
-.app-icon-compact:hover {
-  transform: scale(1.05);
-  background-color: rgba(39, 39, 42, 0.9);
-}
-
-.app-icon-compact:active {
-  transform: scale(0.98);
-}
-
-.app-emoji {
-  font-size: 1.1rem;
-  line-height: 1;
-  margin-bottom: 0.15rem;
-}
-
-.app-label {
-  font-size: 0.6rem;
-  color: #d1d5db;
-  text-align: center;
-  line-height: 1;
+  border-radius: 0.5rem;
+  overflow: hidden;
 }
 
 .md\:h-\[540px\] {
@@ -506,18 +263,6 @@ body {
 
 .text-xs {
   font-size: 0.75rem;
-}
-
-.text-\[10px\] {
-  font-size: 10px;
-}
-
-.w-1\.5 {
-  width: 0.375rem;
-}
-
-.h-1\.5 {
-  height: 0.375rem;
 }
 
 .text-gray-500 {
