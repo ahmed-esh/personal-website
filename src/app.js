@@ -1,18 +1,14 @@
-import { renderXRApp, initXRScene } from './xr.js';
-
 document.addEventListener('DOMContentLoaded', function() {
   let openApp = null;
   let galleryModal = null;
   let themeAudio = null;
   let gameAudio = null;
-  let time = new Date();
   let appRefs = [];
 
   const apps = [
     { key: "video", label: "Video", emoji: "🎥" },
-    { key: "xr", label: "XR", emoji: "🌐" },
     { key: "frames", label: "Frames", emoji: "🖼️" },
-                    { key: "instagram", label: "Socials", emoji: "📷" },
+    { key: "instagram", label: "Socials", emoji: "📷" },
     { key: "game", label: "Game", emoji: "🎮" },
     { key: "contact", label: "Contact", emoji: "✉️" },
     { key: "about", label: "About", emoji: "ℹ️" },
@@ -109,13 +105,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  function updateTime() {
-    time = new Date();
-    const timeElement = document.querySelector('.time-display');
-    if (timeElement) {
-      timeElement.textContent = time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    }
-  }
 
   // keybord navigation
   function onAppGridKeyDown(e) {
@@ -165,32 +154,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const root = document.getElementById('root');
     if (!root) return;
 
-    const formattedTime = time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-
     root.innerHTML = `
-      <div class="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black animate-gradient text-white flex items-center justify-center p-6 relative overflow-hidden">
-        <div class="absolute inset-0 pointer-events-none glitch-overlay"></div>
-
-        <div class="relative z-10 flex flex-col items-center max-w-xs sm:max-w-md overflow-hidden mx-auto">
-          <h1 class="mb-6 tracking-widest text-sm text-gray-400">AHMED ESH Phone</h1>
-
-          <div class="phone-outer relative" onclick="startThemeMusicIfNeeded()">
-            <img src="src/assets/phone animation/phone 1 open.png" alt="Phone" class="phone-sprite">
-            
-            <div class="phone-screen">
-              <div class="flex justify-between items-center text-xs text-gray-500 mb-3">
-                <div class="flex items-center gap-2">
-                  <div class="w-2 h-2 rounded-full bg-emerald-400/80"></div>
-                  <span>Libyana network</span>
-                </div>
-                <div class="opacity-60 time-display">${formattedTime}</div>
-              </div>
-
-              ${!openApp ? renderHomeGrid() : renderAppScreen()}
-            </div>
+      <div class="min-h-screen text-white flex items-center justify-center p-6 relative overflow-hidden background-container">
+        <div class="phone-outer relative" onclick="startThemeMusicIfNeeded()">
+          <img src="src/assets/phone animation/phone 1 open.png" alt="Phone" class="phone-sprite">
+          
+          <div class="phone-screen">
+            ${!openApp ? renderHomeGrid() : renderAppScreen()}
           </div>
-
-          <div class="mt-6 text-gray-500 text-xs">Click apps to open. Press ESC to close.</div>
         </div>
 
         ${galleryModal !== null ? renderGalleryModal() : ''}
@@ -201,21 +172,32 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function renderHomeGrid() {
+    // Create a 3x3 grid, filling with apps and empty squares
+    const gridItems = [];
+    for (let i = 0; i < 9; i++) {
+      if (i < apps.length) {
+        const app = apps[i];
+        gridItems.push(`
+          <button
+            class="app-icon bg-zinc-900/70 border border-zinc-800 rounded-lg flex flex-col items-center justify-center hover:scale-105 transition-transform"
+            data-app="${app.key}"
+            tabindex="-1"
+            style="aspect-ratio: 1; width: 100%;"
+          >
+            <div class="text-2xl mb-1">${app.emoji}</div>
+            <div class="text-xs text-gray-300 font-medium">${app.label}</div>
+          </button>
+        `);
+      } else {
+        gridItems.push(`
+          <div class="bg-transparent" style="aspect-ratio: 1; width: 100%;"></div>
+        `);
+      }
+    }
+    
     return `
-      <div class="h-full flex flex-col items-center overflow-y-auto" tabindex="0" style="padding: 0.5rem 0;">
-        <div class="flex flex-col gap-2 w-full px-3">
-          ${apps.map(({ key, label, emoji }, i) => `
-            <button
-              class="app-icon bg-zinc-900/70 border border-zinc-800 rounded-lg flex flex-row items-center justify-start gap-3 hover:scale-105 transition-transform px-3 py-2"
-              style="width: 100%; height: 3rem; min-height: 3rem;"
-              data-app="${key}"
-              tabindex="-1"
-            >
-              <div class="text-xl">${emoji}</div>
-              <div class="text-xs text-gray-300 font-medium">${label}</div>
-            </button>
-          `).join('')}
-        </div>
+      <div class="h-full w-full grid grid-cols-3 gap-2 p-2" tabindex="0">
+        ${gridItems.join('')}
       </div>
     `;
   }
@@ -224,9 +206,6 @@ document.addEventListener('DOMContentLoaded', function() {
     switch (openApp) {
       case "video":
         return renderVideoApp();
-      case "xr":
-        console.log("Rendering XR app with imported function...");
-        return renderXRApp();
       case "frames":
         return renderFramesApp();
       case "instagram":
@@ -371,7 +350,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div class="space-y-4">
           <p>
-            Ahmed Shuwehdi, a multimedia artist specializing in Extended Reality (XR), Virtual Reality (VR), Augmented Reality (AR), and video art. My work encompasses animations, motion graphics, and captured videos that engage with political issues, particularly those from my home country, Libya.
+            Ahmed Shuwehdi, a multimedia artist specializing in Virtual Reality (VR), Augmented Reality (AR), and video art. My work encompasses animations, motion graphics, and captured videos that engage with political issues, particularly those from my home country, Libya.
           </p>
           
           <p>
@@ -433,7 +412,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="bg-zinc-900 rounded-lg p-6 text-center">
           <div class="text-4xl mb-4">📷</div>
           <h4 class="text-lg font-semibold text-white mb-2">@ahmed.eshhh</h4>
-          <p class="text-sm text-gray-400 mb-4">Multimedia Artist & XR Creator</p>
+          <p class="text-sm text-gray-400 mb-4">Multimedia Artist</p>
           <a 
             href="https://www.instagram.com/ahmed.eshhh/" 
             target="_blank" 
@@ -446,7 +425,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="bg-zinc-900 rounded-lg p-6 text-center">
           <div class="text-4xl mb-4">💼</div>
           <h4 class="text-lg font-semibold text-white mb-2">Ahmed Shuwehdi</h4>
-          <p class="text-sm text-gray-400 mb-4">Multimedia Artist & XR Creator</p>
+          <p class="text-sm text-gray-400 mb-4">Multimedia Artist</p>
           <a 
             href="https://www.linkedin.com/in/ahmed-shuwehdi-5130a819b/" 
             target="_blank" 
@@ -488,15 +467,6 @@ document.addEventListener('DOMContentLoaded', function() {
   function attachEventListeners() {
     let musicStarted = false;
     
-    document.addEventListener('xrBackButton', (event) => {
-      console.log("XR back button event received:", event.detail);
-      if (event.detail.action === 'close') {
-        console.log("Closing XR app...");
-        openApp = null;
-        render();
-      }
-    });
-    
     document.querySelectorAll('.app-icon').forEach(btn => {
       btn.addEventListener('click', function() {
         if (!musicStarted && !openApp) {
@@ -513,8 +483,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (appToOpen === 'video') {
           console.log("Video app opened, pausing theme music");
           pauseThemeMusic();
-        } else if (appToOpen === 'xr') {
-          console.log("XR app opened, initializing XR scene");
         }
         
         openApp = appToOpen;
@@ -522,12 +490,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (openApp === 'game') {
           initGame();
-        } else if (openApp === 'xr') {
-          console.log("About to call initXRScene...");
-          setTimeout(() => {
-            console.log("Calling initXRScene now...");
-            initXRScene();
-          }, 100);
         }
       });
     });
@@ -542,13 +504,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
-    document.addEventListener('click', function(event) {
-      if (event.target.classList.contains('back-btn') && openApp === 'xr') {
-        console.log("XR back button clicked, closing XR app");
-        openApp = null;
-        render();
-      }
-    });
 
     document.querySelectorAll('.open-video-btn').forEach(btn => {
       btn.addEventListener('click', function() {
@@ -708,9 +663,6 @@ document.addEventListener('DOMContentLoaded', function() {
   function init() {
     initAudio();
     render();
-    
-    setInterval(updateTime, 1000);
-    
     window.addEventListener('keydown', onKey);
   }
 

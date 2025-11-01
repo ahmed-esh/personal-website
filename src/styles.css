@@ -141,6 +141,14 @@ body {
   min-height: 100vh;
 }
 
+.background-container {
+  background-image: url('src/assets/phone animation/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 .bg-gradient-to-br {
   background: linear-gradient(to bottom right, #000000, #1f2937, #000000);
 }
@@ -325,6 +333,10 @@ body {
 
 .grid-cols-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.gap-2 {
+  gap: 0.5rem;
 }
 
 .gap-4 {
