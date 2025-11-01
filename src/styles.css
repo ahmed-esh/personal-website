@@ -115,11 +115,15 @@ body {
   }
   
   .phone-screen {
+    position: absolute;
     top: 7%;
     left: 9%;
-    width: 10%;
-    height: 10%;
+    width: 75%;
+    height: 35%;
     padding: 1rem;
+    background-color: #020202;
+    border-radius: 0.5rem;
+    overflow: hidden;
     z-index: 1;
   }
 }
@@ -259,6 +263,7 @@ body {
   background-color: #020202;
   border-radius: 0.5rem;
   overflow: hidden;
+  /* Note: width, height, top, left are set in media queries above */
 }
 
 .md\:h-\[540px\] {
