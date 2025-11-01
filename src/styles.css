@@ -117,8 +117,8 @@ body {
   .phone-screen {
     top: 7%;
     left: 9%;
-    width: 50%;
-    height: 30%;
+    width: 10%;
+    height: 10%;
     padding: 1rem;
     z-index: 1;
   }
