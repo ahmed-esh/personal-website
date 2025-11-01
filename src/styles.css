@@ -36,19 +36,41 @@ body {
     pointer-events: none;
     width: 100%;
     height: auto;
+    position: relative;
+    z-index: 2;
   }
 
-  .phone-screen-content {
-    position: absolute;
-    top: 8%;
-    left: 12%;
-    width: 76%;
-    height: 42%;
-    background-color: #020202;
-    padding: 0.5rem;
-    overflow: auto;
-    border-radius: 0.5rem;
-  }
+.phone-screen-content {
+  position: absolute;
+  top: 10%;
+  left: 8%;
+  width: 84%;
+  height: 38%;
+  background-color: #020202;
+  padding: 0.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 0.25rem;
+  z-index: 1;
+  -webkit-overflow-scrolling: touch;
+}
+
+.phone-screen-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.phone-screen-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.phone-screen-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+.phone-screen-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
 
   .phone-screen {
     height: 82vh !important;
@@ -110,16 +132,47 @@ body {
 
 /* Desktop styles */
 @media (min-width: 769px) {
+  .phone-container {
+    position: relative;
+    display: inline-block;
+  }
+
   .phone-sprite {
     max-width: 500px;
+    position: relative;
+    z-index: 2;
   }
   
   .phone-screen-content {
-    top: 7%;
-    left: 11%;
-    width: 78%;
-    height: 43%;
-    padding: 1rem;
+    position: absolute;
+    top: 9%;
+    left: 7%;
+    width: 86%;
+    height: 39%;
+    background-color: #020202;
+    padding: 0.75rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 0.25rem;
+    z-index: 1;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .phone-screen-content::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .phone-screen-content::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .phone-screen-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+  }
+
+  .phone-screen-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
   }
   
   .phone-screen {
@@ -275,18 +328,22 @@ body {
   display: block;
   user-select: none;
   pointer-events: none;
+  position: relative;
+  z-index: 2;
 }
 
 .phone-screen-content {
   position: absolute;
-  top: 8%;
-  left: 12%;
-  width: 76%;
-  height: 42%;
+  top: 10%;
+  left: 8%;
+  width: 84%;
+  height: 38%;
   background-color: #020202;
   padding: 0.75rem;
-  overflow: hidden;
-  border-radius: 0.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 0.25rem;
+  z-index: 1;
 }
 
 .md\:h-\[540px\] {
