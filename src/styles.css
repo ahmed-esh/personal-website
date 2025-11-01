@@ -34,6 +34,9 @@ body {
     height: auto;
     max-width: 90vw;
     max-height: 90vh;
+    position: relative;
+    z-index: 10;
+    pointer-events: none;
   }
   
   .phone-screen {
@@ -46,6 +49,7 @@ body {
     padding: 0.75rem;
     overflow: hidden;
     border-radius: 0.5rem;
+    z-index: 1;
   }
   
   .mb-6 {
@@ -105,14 +109,18 @@ body {
   .phone-sprite {
     max-width: 400px;
     max-height: 700px;
+    position: relative;
+    z-index: 10;
+    pointer-events: none;
   }
   
   .phone-screen {
     top: 7%;
     left: 9%;
-    width: 82%;
-    height: 40%;
+    width: 50%;
+    height: 30%;
     padding: 1rem;
+    z-index: 1;
   }
 }
 
