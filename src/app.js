@@ -175,15 +175,15 @@ document.addEventListener('DOMContentLoaded', function() {
           <h1 class="mb-6 tracking-widest text-sm text-gray-400">AHMED ESH Phone</h1>
 
           <div class="phone-container relative" onclick="startThemeMusicIfNeeded()">
-            <img src="src/assets/phone animation/phone 1 open.png" alt="Phone" class="phone-sprite">
+            <img src="src/assets/phone animation/phone 1 open.png" alt="Phone" class="phone-sprite w-full max-w-[400px] h-auto">
             
             <div class="phone-screen-content">
-              <div class="phone-status-bar">
-                <div class="flex items-center gap-1">
-                  <div class="w-1.5 h-1.5 rounded-full bg-emerald-400/80"></div>
-                  <span class="text-[10px]">Libyana</span>
+              <div class="flex justify-between items-center text-xs text-gray-500 mb-3">
+                <div class="flex items-center gap-2">
+                  <div class="w-2 h-2 rounded-full bg-emerald-400/80"></div>
+                  <span>Libyana network</span>
                 </div>
-                <div class="time-display text-[10px] opacity-80">${formattedTime}</div>
+                <div class="opacity-60 time-display">${formattedTime}</div>
               </div>
 
               ${!openApp ? renderHomeGrid() : renderAppScreen()}
@@ -202,19 +202,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function renderHomeGrid() {
     return `
-      <div class="phone-home-grid" tabindex="0">
-        <div class="app-grid">
+      <div class="h-full flex flex-col items-center justify-center" tabindex="0">
+        <div class="grid grid-cols-3 gap-4 place-items-center">
           ${apps.map(({ key, label, emoji }, i) => `
             <button
-              class="app-icon-compact"
+              class="app-icon w-20 h-20 bg-zinc-900/70 border border-zinc-800 rounded-xl flex flex-col items-center justify-center gap-1 hover:scale-105 transition-transform"
               data-app="${key}"
               tabindex="-1"
             >
-              <div class="app-emoji">${emoji}</div>
-              <div class="app-label">${label}</div>
+              <div class="text-2xl">${emoji}</div>
+              <div class="text-xs text-gray-300">${label}</div>
             </button>
           `).join('')}
         </div>
+        <div class="mt-6 text-gray-500 text-xs">Hover icons • Click or tap to open</div>
       </div>
     `;
   }
