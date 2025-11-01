@@ -202,20 +202,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function renderHomeGrid() {
     return `
-      <div class="h-full flex flex-col items-center justify-center" tabindex="0">
-        <div class="grid grid-cols-3 gap-4 place-items-center">
+      <div class="h-full flex flex-col items-center justify-center overflow-auto" tabindex="0">
+        <div class="flex flex-col gap-3 place-items-center w-full px-2">
           ${apps.map(({ key, label, emoji }, i) => `
             <button
-              class="app-icon w-20 h-20 bg-zinc-900/70 border border-zinc-800 rounded-xl flex flex-col items-center justify-center gap-1 hover:scale-105 transition-transform"
+              class="app-icon w-full h-14 bg-zinc-900/70 border border-zinc-800 rounded-xl flex flex-row items-center justify-start gap-3 hover:scale-105 transition-transform px-3"
+              style="max-width: 85%;"
               data-app="${key}"
               tabindex="-1"
             >
               <div class="text-2xl">${emoji}</div>
-              <div class="text-xs text-gray-300">${label}</div>
+              <div class="text-sm text-gray-300">${label}</div>
             </button>
           `).join('')}
         </div>
-        <div class="mt-6 text-gray-500 text-xs">Hover icons • Click or tap to open</div>
+        <div class="mt-4 text-gray-500 text-xs">Hover icons • Click or tap to open</div>
       </div>
     `;
   }

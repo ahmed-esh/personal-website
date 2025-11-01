@@ -32,8 +32,8 @@ body {
     display: block;
     width: auto;
     height: auto;
-    max-width: 90vw;
-    max-height: 90vh;
+    max-width: 117vw;
+    max-height: 117vh;
     position: relative;
     z-index: 10;
     pointer-events: none;
@@ -107,8 +107,8 @@ body {
 /* Desktop styles */
 @media (min-width: 769px) {
   .phone-sprite {
-    max-width: 400px;
-    max-height: 700px;
+    max-width: 520px;
+    max-height: 910px;
     position: relative;
     z-index: 10;
     pointer-events: none;
@@ -663,4 +663,9 @@ button:focus {
   .w-80 {
     width: 18rem;
   }
+}
+
+/* Vertical app grid layout */
+.h-14 {
+  height: 3.5rem;
 } 
