@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col items-center justify-center px-4 py-4">
+        <div class="video-app-content flex-1 flex flex-col items-center justify-center px-4 py-4">
           <!-- Thumbnail -->
           <div class="video-thumbnail-container mb-2">
             <img src="${currentVideo.thumbnail}" alt="${currentVideo.title} thumbnail" class="video-thumbnail">
