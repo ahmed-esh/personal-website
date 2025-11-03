@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let appRefs = [];
   let animationStarted = false;
   let animationComplete = false;
+  let currentVideoIndex = 0;
 
   const apps = [
     { key: "video", label: "Video", emoji: "🎥", icon: "src/assets/website layout/visuals/video app.png", x: 618, y: 233 },
@@ -277,30 +278,70 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function renderVideoApp() {
-
+    const currentVideo = sampleVideos[currentVideoIndex];
+    
     return `
-      <div class="h-full overflow-auto">
-        <div class="flex items-center justify-between mb-3">
-          <button class="back-btn text-sm text-cyan-300">Back</button>
-          <div class="text-xs text-gray-400">Video Gallery</div>
-          <div></div>
+      <div class="h-full flex flex-col overflow-hidden relative">
+        <!-- Header -->
+        <div class="flex items-center justify-between px-2 py-1 text-xs text-gray-400 border-b border-zinc-800">
+          <div>ESH</div>
+          <div>Libyana network</div>
+          <div>Time</div>
         </div>
-        <div class="space-y-4">
-          ${sampleVideos.map((v, i) => `
-            <div class="bg-zinc-900 rounded-lg p-4 flex gap-4 items-center hover:bg-zinc-800 transition-colors">
-              <img src="${v.thumbnail}" alt="${v.title} thumbnail" class="w-24 h-16 object-cover rounded-lg">
-              <div class="flex-1">
-                <div class="font-semibold text-lg mb-1">${v.title}</div>
-                <div class="text-sm text-gray-400">${v.yearType}</div>
-              </div>
-              <button class="open-video-btn px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg transition-colors" data-index="${i}">
-                Open
-              </button>
-            </div>
-          `).join('')}
+        
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col items-center justify-center px-4 py-4">
+          <!-- Thumbnail -->
+          <div class="video-thumbnail-container mb-2">
+            <img src="${currentVideo.thumbnail}" alt="${currentVideo.title} thumbnail" class="video-thumbnail">
+          </div>
+          
+          <!-- Thumbnail Label -->
+          <div class="text-sm font-bold text-center mb-2">thumbnail</div>
+          
+          <!-- Description Label -->
+          <div class="text-xs text-gray-400 text-center mb-4">describtion</div>
+          
+          <!-- Navigation Controls -->
+          <div class="flex items-center justify-center gap-4">
+            <button class="video-nav-btn video-prev-btn" data-action="prev">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+              </svg>
+            </button>
+            <button class="video-play-btn" data-action="play">
+              <span class="video-play-text">play</span>
+            </button>
+            <button class="video-nav-btn video-next-btn" data-action="next">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Back Button -->
+        <div class="absolute top-2 left-2">
+          <button class="back-btn text-sm text-cyan-300">Back</button>
         </div>
       </div>
     `;
+  }
+  
+  function navigateVideo(direction) {
+    if (direction === 'next') {
+      currentVideoIndex = (currentVideoIndex + 1) % sampleVideos.length;
+    } else if (direction === 'prev') {
+      currentVideoIndex = (currentVideoIndex - 1 + sampleVideos.length) % sampleVideos.length;
+    }
+    render();
+  }
+  
+  function playVideoFullscreen() {
+    const currentVideo = sampleVideos[currentVideoIndex];
+    galleryModal = currentVideoIndex;
+    pauseThemeMusic();
+    render();
   }
 
   function renderGalleryModal() {
@@ -586,11 +627,26 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
+    // Video navigation buttons
+    document.querySelectorAll('.video-nav-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const action = this.dataset.action;
+        navigateVideo(action);
+      });
+    });
+    
+    // Video play button
+    document.querySelectorAll('.video-play-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        playVideoFullscreen();
+      });
+    });
+    
+    // Legacy open-video-btn for compatibility
     document.querySelectorAll('.open-video-btn').forEach(btn => {
       btn.addEventListener('click', function() {
-        galleryModal = parseInt(this.dataset.index);
-        pauseThemeMusic();
-        render();
+        currentVideoIndex = parseInt(this.dataset.index);
+        playVideoFullscreen();
       });
     });
 
