@@ -124,7 +124,7 @@ body {
   height: 1363px; /* Match open phone height */
   z-index: 16;
   pointer-events: auto;
-  overflow: hidden;
+  overflow: visible; /* Changed from hidden to allow apps to be visible */
 }
 
 /* Visibility utilities */

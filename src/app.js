@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <img src="src/assets/phone animation/phone 1 open.png" alt="Open Phone" class="layout-open-phone ${animationComplete ? 'visible' : 'hidden'}" />
         
         <!-- Phone Screen Content (only visible after animation) -->
-        <div class="layout-phone-screen ${animationComplete && !openApp ? 'visible' : 'hidden'}">
+        <div class="layout-phone-screen ${animationComplete ? 'visible' : 'hidden'}">
           ${!openApp ? renderHomeGrid() : renderAppScreen()}
         </div>
         
@@ -233,19 +233,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function renderHomeGrid() {
     // Render app icons at absolute positions (relative to phone screen area)
-    // Phone screen moved 400px left: was at (490, 45), now at (90, 45)
-    // Apps stay at absolute coordinates, so we need to adjust offset
-    const phoneScreenOffsetX = 90; // Updated: 490 - 400
-    const phoneScreenOffsetY = 45;
+    // Phone screen container is at (90, 45) after moving 400px left
+    // Apps are at absolute coordinates (618, 755, etc.) in 1440x1440 space
+    // Calculate relative position within the phone screen container
+    const phoneScreenContainerX = 90; // Container left position
+    const phoneScreenContainerY = 45; // Container top position
     
     return apps.map((app) => `
-      <div class="app-icon-wrapper" style="position: absolute; left: ${app.x - phoneScreenOffsetX}px; top: ${app.y - phoneScreenOffsetY}px;">
+      <div class="app-icon-wrapper" style="position: absolute; left: ${app.x - phoneScreenContainerX}px; top: ${app.y - phoneScreenContainerY}px; z-index: 17;">
         <button
           class="app-icon-button"
           data-app="${app.key}"
           style="position: relative; display: block; border: none; background: none; padding: 0; cursor: pointer;"
         >
-          <img src="${app.icon}" alt="${app.label}" class="app-icon-image" />
+          <img src="${app.icon}" alt="${app.label}" class="app-icon-image" style="display: block;" />
           <div class="app-hover-overlay"></div>
         </button>
       </div>
