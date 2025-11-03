@@ -66,7 +66,7 @@ body {
 /* Initial Text Container */
 .layout-text-container {
   position: absolute;
-  z-index: 35; /* Above phone (20) and open phone (15) */
+  z-index: 25;
   font-family: 'StoryScript-Regular', sans-serif;
   color: #000;
 }
@@ -122,7 +122,7 @@ body {
   left: 90px; /* Match open phone position (490px - 400px) */
   width: 468px; /* Match open phone width */
   height: 1363px; /* Match open phone height */
-  z-index: 35; /* Above phone images */
+  z-index: 16;
   pointer-events: auto;
   overflow: hidden;
 }
@@ -139,7 +139,7 @@ body {
 /* App Icon Styles */
 .app-icon-wrapper {
   position: absolute;
-  z-index: 35; /* Above phone images */
+  z-index: 17;
 }
 
 .app-icon-button {
