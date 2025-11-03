@@ -197,9 +197,10 @@ document.addEventListener('DOMContentLoaded', function() {
   function updateInitialTime() {
     const now = new Date();
     const timeString = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    const amPm = now.getHours() >= 12 ? 'PM' : 'AM';
     const timeElement = document.getElementById('time-text');
     if (timeElement) {
-      timeElement.textContent = timeString;
+      timeElement.textContent = `${timeString} ${amPm}`;
     }
   }
 

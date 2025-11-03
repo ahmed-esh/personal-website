@@ -77,6 +77,8 @@ body {
   left: 595px;
   font-size: 24px;
   font-weight: 400;
+  white-space: nowrap; /* Prevent text from wrapping */
+  width: auto; /* Allow text to extend horizontally */
 }
 
 .layout-location-text {
@@ -85,6 +87,8 @@ body {
   left: 556px;
   font-size: 24px;
   font-weight: 400;
+  white-space: nowrap; /* Prevent text from wrapping */
+  width: auto; /* Allow text to extend horizontally */
 }
 
 /* Animation frames */
