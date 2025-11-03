@@ -4,14 +4,16 @@ document.addEventListener('DOMContentLoaded', function() {
   let themeAudio = null;
   let gameAudio = null;
   let appRefs = [];
+  let animationStarted = false;
+  let animationComplete = false;
 
   const apps = [
-    { key: "video", label: "Video", emoji: "🎥" },
-    { key: "frames", label: "Frames", emoji: "🖼️" },
-    { key: "instagram", label: "Socials", emoji: "📷" },
-    { key: "game", label: "Game", emoji: "🎮" },
-    { key: "contact", label: "Contact", emoji: "✉️" },
-    { key: "about", label: "About", emoji: "ℹ️" },
+    { key: "video", label: "Video", emoji: "🎥", icon: "src/assets/website layout/visuals/video app.png", x: 618, y: 233 },
+    { key: "contact", label: "Contact", emoji: "✉️", icon: "src/assets/website layout/visuals/contact app.png", x: 755, y: 234 },
+    { key: "instagram", label: "Socials", emoji: "📷", icon: "src/assets/website layout/visuals/socails app.png", x: 612, y: 326 },
+    { key: "game", label: "Game", emoji: "🎮", icon: "src/assets/website layout/visuals/game app.png", x: 751, y: 333 },
+    { key: "frames", label: "Frames", emoji: "🖼️", icon: "src/assets/website layout/visuals/frames app.png", x: 610, y: 428 },
+    { key: "about", label: "About", emoji: "ℹ️", icon: "src/assets/website layout/visuals/about app.png", x: 754, y: 426 },
   ];
   const numCols = 3;
 
@@ -155,51 +157,102 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!root) return;
 
     root.innerHTML = `
-      <div class="min-h-screen text-white flex items-center justify-center p-6 relative overflow-hidden background-container">
-        <div class="phone-outer relative" onclick="startThemeMusicIfNeeded()">
-          <img src="src/assets/phone animation/phone 1 open.png" alt="Phone" class="phone-sprite">
-          
-          <div class="phone-screen">
-            ${!openApp ? renderHomeGrid() : renderAppScreen()}
-          </div>
+      <div class="layout-container" id="layout-container">
+        <!-- Background -->
+        <img src="src/assets/website layout/visuals/background.png" alt="Background" class="layout-bg" />
+        
+        <!-- Title Screen (only visible before animation) -->
+        <img src="src/assets/website layout/1- title screen (locked).png" alt="Title Screen" class="layout-title ${animationStarted ? 'hidden' : ''}" />
+        
+        <!-- Closed Phone (only visible before animation) -->
+        <img src="src/assets/phone animation/closed.png" alt="Closed Phone" class="layout-closed-phone ${animationStarted ? 'hidden' : ''}" />
+        
+        <!-- Initial Text (only visible before animation) -->
+        <div class="layout-text-container ${animationStarted ? 'hidden' : ''}">
+          <div class="layout-time-text" id="time-text"></div>
+          <div class="layout-location-text">New York, NY</div>
         </div>
-
+        
+        <!-- Animation frames -->
+        <img src="src/assets/phone animation/animation 1.png" alt="Animation 1" class="layout-animation layout-animation-1" />
+        <img src="src/assets/phone animation/animation 2.png" alt="Animation 2" class="layout-animation layout-animation-2" />
+        
+        <!-- Open Phone (only visible after animation) -->
+        <img src="src/assets/phone animation/phone 1 open.png" alt="Open Phone" class="layout-open-phone ${animationComplete ? 'visible' : 'hidden'}" />
+        
+        <!-- Phone Screen Content (only visible after animation) -->
+        <div class="layout-phone-screen ${animationComplete && !openApp ? 'visible' : 'hidden'}">
+          ${!openApp ? renderHomeGrid() : renderAppScreen()}
+        </div>
+        
         ${galleryModal !== null ? renderGalleryModal() : ''}
       </div>
     `;
 
+    // Update time if not animated yet
+    if (!animationStarted) {
+      updateInitialTime();
+    }
+
     attachEventListeners();
   }
 
-  function renderHomeGrid() {
-    // Create a 3x3 grid, filling with apps and empty squares
-    const gridItems = [];
-    for (let i = 0; i < 9; i++) {
-      if (i < apps.length) {
-        const app = apps[i];
-        gridItems.push(`
-          <button
-            class="app-icon bg-zinc-900/70 border border-zinc-800 rounded-lg flex flex-col items-center justify-center hover:scale-105 transition-transform"
-            data-app="${app.key}"
-            tabindex="-1"
-            style="aspect-ratio: 1; width: 100%;"
-          >
-            <div class="text-2xl mb-1">${app.emoji}</div>
-            <div class="text-xs text-gray-300 font-medium">${app.label}</div>
-          </button>
-        `);
-      } else {
-        gridItems.push(`
-          <div class="bg-transparent" style="aspect-ratio: 1; width: 100%;"></div>
-        `);
-      }
+  function updateInitialTime() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    const timeElement = document.getElementById('time-text');
+    if (timeElement) {
+      timeElement.textContent = timeString;
     }
+  }
+
+  function startAnimation() {
+    if (animationStarted) return;
+    animationStarted = true;
     
-    return `
-      <div class="h-full w-full grid grid-cols-3 gap-2 p-2" tabindex="0">
-        ${gridItems.join('')}
+    // Hide initial elements instantly
+    render();
+    
+    // Step 2: Show animation 1 for 0.3s
+    setTimeout(() => {
+      const anim1 = document.querySelector('.layout-animation-1');
+      if (anim1) anim1.classList.add('visible');
+      
+      // Step 3: Show animation 2 for 0.3s (after 0.3s)
+      setTimeout(() => {
+        if (anim1) anim1.classList.remove('visible');
+        const anim2 = document.querySelector('.layout-animation-2');
+        if (anim2) anim2.classList.add('visible');
+        
+        // Step 4: Show open phone for 0.4s and keep visible (after another 0.3s)
+        setTimeout(() => {
+          if (anim2) anim2.classList.remove('visible');
+          animationComplete = true;
+          render();
+        }, 300);
+      }, 300);
+    }, 0);
+  }
+
+  function renderHomeGrid() {
+    // Render app icons at absolute positions (relative to phone screen area)
+    // Phone screen starts at (490, 45) in the 1440x1440 layout
+    // So we need to offset the app positions
+    const phoneScreenOffsetX = 490;
+    const phoneScreenOffsetY = 45;
+    
+    return apps.map((app) => `
+      <div class="app-icon-wrapper" style="position: absolute; left: ${app.x - phoneScreenOffsetX}px; top: ${app.y - phoneScreenOffsetY}px;">
+        <button
+          class="app-icon-button"
+          data-app="${app.key}"
+          style="position: relative; display: block; border: none; background: none; padding: 0; cursor: pointer;"
+        >
+          <img src="${app.icon}" alt="${app.label}" class="app-icon-image" />
+          <div class="app-hover-overlay"></div>
+        </button>
       </div>
-    `;
+    `).join('');
   }
 
   function renderAppScreen() {
@@ -467,7 +520,33 @@ document.addEventListener('DOMContentLoaded', function() {
   function attachEventListeners() {
     let musicStarted = false;
     
-    document.querySelectorAll('.app-icon').forEach(btn => {
+    // Click anywhere to start animation (only if not started)
+    if (!animationStarted) {
+      const container = document.getElementById('layout-container');
+      if (container) {
+        container.addEventListener('click', function(e) {
+          // Don't trigger if clicking on app icons or other interactive elements
+          if (!e.target.closest('.app-icon-button') && !e.target.closest('.layout-phone-screen')) {
+            startAnimation();
+            startThemeMusicIfNeeded();
+          }
+        }, { once: true });
+      }
+    }
+    
+    // Hover effects for app icons
+    document.querySelectorAll('.app-icon-button').forEach(btn => {
+      btn.addEventListener('mouseenter', function() {
+        const overlay = this.querySelector('.app-hover-overlay');
+        if (overlay) overlay.classList.add('visible');
+      });
+      btn.addEventListener('mouseleave', function() {
+        const overlay = this.querySelector('.app-hover-overlay');
+        if (overlay) overlay.classList.remove('visible');
+      });
+    });
+    
+    document.querySelectorAll('.app-icon-button').forEach(btn => {
       btn.addEventListener('click', function() {
         if (!musicStarted && !openApp) {
           startThemeMusic();
