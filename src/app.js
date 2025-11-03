@@ -233,11 +233,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function renderHomeGrid() {
     // Render app icons at absolute positions (relative to phone screen area)
-    // Phone screen container is at (90, 45) after moving 400px left
+    // Phone screen container is at (-10, -55) after moving 500px left and 100px up
     // Apps are at absolute coordinates (618, 755, etc.) in 1440x1440 space
-    // Calculate relative position within the phone screen container
-    const phoneScreenContainerX = 90; // Container left position
-    const phoneScreenContainerY = 45; // Container top position
+    // Calculate relative position within the phone screen container to keep apps at their absolute positions
+    const phoneScreenContainerX = -10; // Container left position (was 490px, moved 500px left)
+    const phoneScreenContainerY = -55; // Container top position (was 45px, moved 100px up)
     
     return apps.map((app) => `
       <div class="app-icon-wrapper" style="position: absolute; left: ${app.x - phoneScreenContainerX}px; top: ${app.y - phoneScreenContainerY}px; z-index: 17;">

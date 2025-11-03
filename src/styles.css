@@ -55,8 +55,8 @@ body {
 /* Closed Phone */
 .layout-closed-phone {
   position: absolute;
-  top: 167px;
-  left: 13px; /* 413px - 400px */
+  top: 67px; /* 167px - 100px */
+  left: -87px; /* 413px - 500px (400px + 100px more) */
   width: auto;
   height: auto;
   z-index: 20;
@@ -90,8 +90,8 @@ body {
 /* Animation frames */
 .layout-animation {
   position: absolute;
-  top: 490px; /* Final phone position */
-  left: 90px; /* 490px - 400px */
+  top: 390px; /* 490px - 100px */
+  left: -10px; /* 490px - 500px (400px + 100px more) */
   width: auto;
   height: auto;
   z-index: 30;
@@ -107,8 +107,8 @@ body {
 /* Open Phone */
 .layout-open-phone {
   position: absolute;
-  top: 45px;
-  left: 90px; /* 490px - 400px */
+  top: -55px; /* 45px - 100px */
+  left: -10px; /* 490px - 500px (400px + 100px more) */
   width: auto;
   height: auto;
   z-index: 15;
@@ -118,8 +118,8 @@ body {
 /* Phone Screen Content */
 .layout-phone-screen {
   position: absolute;
-  top: 45px; /* Match open phone position */
-  left: 90px; /* Match open phone position (490px - 400px) */
+  top: -55px; /* Match open phone position (45px - 100px) */
+  left: -10px; /* Match open phone position (490px - 500px) */
   width: 468px; /* Match open phone width */
   height: 1363px; /* Match open phone height */
   z-index: 16;
