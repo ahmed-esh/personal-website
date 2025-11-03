@@ -73,7 +73,7 @@ body {
 
 .layout-time-text {
   position: absolute;
-  top: 479px;
+  top: 529px; /* 479px + 50px */
   left: 595px;
   font-size: 24px;
   font-weight: 400;
@@ -83,7 +83,7 @@ body {
 
 .layout-location-text {
   position: absolute;
-  top: 558px;
+  top: 608px; /* 558px + 50px */
   left: 556px;
   font-size: 24px;
   font-weight: 400;

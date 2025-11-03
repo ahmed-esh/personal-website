@@ -196,11 +196,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function updateInitialTime() {
     const now = new Date();
-    const timeString = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    const amPm = now.getHours() >= 12 ? 'PM' : 'AM';
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const amPm = hours >= 12 ? 'PM' : 'AM';
+    const displayHours = hours % 12 || 12;
+    const timeString = `${displayHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${amPm}`;
     const timeElement = document.getElementById('time-text');
     if (timeElement) {
-      timeElement.textContent = `${timeString} ${amPm}`;
+      timeElement.textContent = timeString;
     }
   }
 
