@@ -27,13 +27,28 @@ body {
   transform-origin: top center;
 }
 
+/* Prevent all images from stretching - maintain natural aspect ratio */
+.layout-container img {
+  width: auto !important;
+  height: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: none !important;
+}
+
+/* Prevent canvas stretching */
+.layout-container canvas {
+  width: auto !important;
+  height: auto !important;
+}
+
 /* Background */
 .layout-bg {
   position: absolute;
   top: 0;
   left: 0;
-  width: 1440px;
-  height: 1440px;
+  width: auto;
+  height: auto;
   z-index: 0;
 }
 
@@ -42,8 +57,8 @@ body {
   position: absolute;
   top: 167px;
   left: 413px;
-  width: 625px; /* 1038 - 413 */
-  height: 1109px; /* 1276 - 167 */
+  width: auto;
+  height: auto;
   z-index: 20;
   pointer-events: none;
 }
@@ -77,8 +92,8 @@ body {
   position: absolute;
   top: 490px; /* Final phone position */
   left: 490px;
-  width: 468px; /* 958 - 490 */
-  height: 1363px; /* 1408 - 45 */
+  width: auto;
+  height: auto;
   z-index: 30;
   opacity: 0;
   pointer-events: none;
@@ -94,8 +109,8 @@ body {
   position: absolute;
   top: 45px;
   left: 490px;
-  width: 468px; /* 958 - 490 */
-  height: 1363px; /* 1408 - 45 */
+  width: auto;
+  height: auto;
   z-index: 15;
   pointer-events: none;
 }
