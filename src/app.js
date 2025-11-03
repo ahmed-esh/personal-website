@@ -178,9 +178,12 @@ document.addEventListener('DOMContentLoaded', function() {
         <img src="src/assets/phone animation/phone 1 open.png" alt="Open Phone" class="layout-open-phone ${animationComplete ? 'visible' : 'hidden'}" />
         
         <!-- Phone Screen Content (only visible after animation) -->
-        <div class="layout-phone-screen ${animationComplete && !openApp ? 'visible' : 'hidden'}">
-          ${!openApp ? renderHomeGrid() : renderAppScreen()}
+        <div class="layout-phone-screen ${animationComplete ? 'visible' : 'hidden'}">
+          ${renderAppScreen()}
         </div>
+        
+        <!-- App Icons (positioned absolutely in layout container, not inside phone screen) -->
+        ${animationComplete && !openApp ? renderHomeGrid() : ''}
         
         ${galleryModal !== null ? renderGalleryModal() : ''}
       </div>
@@ -232,14 +235,13 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function renderHomeGrid() {
-    // Render app icons at absolute positions (relative to phone screen area)
-    // Phone screen starts at (90, 45) in the 1440x1440 layout (shifted 400px left from 490)
-    // So we need to offset the app positions
-    const phoneScreenOffsetX = 90;
-    const phoneScreenOffsetY = 45;
-    
-    return apps.map((app) => `
-      <div class="app-icon-wrapper" style="position: absolute; left: ${app.x - phoneScreenOffsetX}px; top: ${app.y - phoneScreenOffsetY}px;">
+    // App coordinates are absolute in the 1440x1440 layout
+    // Since phone moved 400px left, apps also need to move 400px left
+    // App icons should be positioned absolutely relative to the layout container, not the phone screen
+    return apps.map((app) => {
+      const appX = app.x - 400; // Move apps 400px left to match phone movement
+      return `
+      <div class="app-icon-wrapper" style="position: absolute; left: ${appX}px; top: ${app.y}px;">
         <button
           class="app-icon-button"
           data-app="${app.key}"
@@ -249,7 +251,8 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="app-hover-overlay"></div>
         </button>
       </div>
-    `).join('');
+    `;
+    }).join('');
   }
 
   function renderAppScreen() {
