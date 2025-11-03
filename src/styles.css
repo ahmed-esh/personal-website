@@ -56,7 +56,7 @@ body {
 .layout-closed-phone {
   position: absolute;
   top: 167px;
-  left: 413px;
+  left: 13px; /* 413px - 400px */
   width: auto;
   height: auto;
   z-index: 20;
@@ -91,7 +91,7 @@ body {
 .layout-animation {
   position: absolute;
   top: 490px; /* Final phone position */
-  left: 490px;
+  left: 90px; /* 490px - 400px */
   width: auto;
   height: auto;
   z-index: 30;
@@ -108,7 +108,7 @@ body {
 .layout-open-phone {
   position: absolute;
   top: 45px;
-  left: 490px;
+  left: 90px; /* 490px - 400px */
   width: auto;
   height: auto;
   z-index: 15;
@@ -119,7 +119,7 @@ body {
 .layout-phone-screen {
   position: absolute;
   top: 45px; /* Match open phone position */
-  left: 490px; /* Match open phone position */
+  left: 90px; /* Match open phone position (490px - 400px) */
   width: 468px; /* Match open phone width */
   height: 1363px; /* Match open phone height */
   z-index: 16;

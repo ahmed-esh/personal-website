@@ -233,9 +233,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function renderHomeGrid() {
     // Render app icons at absolute positions (relative to phone screen area)
-    // Phone screen starts at (490, 45) in the 1440x1440 layout
+    // Phone screen starts at (90, 45) in the 1440x1440 layout (shifted 400px left from 490)
     // So we need to offset the app positions
-    const phoneScreenOffsetX = 490;
+    const phoneScreenOffsetX = 90;
     const phoneScreenOffsetY = 45;
     
     return apps.map((app) => `
