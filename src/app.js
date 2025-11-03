@@ -161,9 +161,6 @@ document.addEventListener('DOMContentLoaded', function() {
         <!-- Background -->
         <img src="src/assets/website layout/visuals/background.png" alt="Background" class="layout-bg" />
         
-        <!-- Title Screen (only visible before animation) -->
-        <img src="src/assets/website layout/1- title screen (locked).png" alt="Title Screen" class="layout-title ${animationStarted ? 'hidden' : ''}" />
-        
         <!-- Closed Phone (only visible before animation) -->
         <img src="src/assets/phone animation/closed.png" alt="Closed Phone" class="layout-closed-phone ${animationStarted ? 'hidden' : ''}" />
         

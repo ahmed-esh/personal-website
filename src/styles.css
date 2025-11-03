@@ -31,17 +31,6 @@ body {
   z-index: 0;
 }
 
-/* Title Screen */
-.layout-title {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1440px;
-  height: 1440px;
-  z-index: 10;
-  pointer-events: none;
-}
-
 /* Closed Phone */
 .layout-closed-phone {
   position: absolute;
