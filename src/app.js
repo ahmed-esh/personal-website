@@ -279,41 +279,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function renderVideoApp() {
     const currentVideo = sampleVideos[currentVideoIndex];
+    const formattedTime = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     
     return `
-      <div class="h-full flex flex-col overflow-visible relative">
+      <div class="h-full flex flex-col overflow-visible relative" style="padding: 0.5rem;">
         <!-- Header -->
-        <div class="flex items-center justify-between px-2 py-1 text-xs text-gray-400 border-b border-zinc-800">
+        <div class="flex items-center justify-between px-2 py-1 text-xs text-gray-400 border-b border-zinc-800 mb-2">
           <div>ESH</div>
           <div>Libyana network</div>
-          <div>Time</div>
+          <div>${formattedTime}</div>
         </div>
         
         <!-- Main Content -->
-        <div class="flex flex-col items-center justify-center" style="flex: 1; padding: 1rem;">
+        <div class="flex flex-col items-center justify-center" style="flex: 1; padding: 0.5rem;">
           <!-- Thumbnail -->
           <div class="video-thumbnail-container mb-2">
             <img src="${currentVideo.thumbnail}" alt="${currentVideo.title} thumbnail" class="video-thumbnail">
           </div>
           
           <!-- Thumbnail Label -->
-          <div class="text-sm font-bold text-center mb-2">thumbnail</div>
+          <div class="text-sm font-bold text-center mb-1" style="font-size: 0.875rem;">thumbnail</div>
           
           <!-- Description Label -->
-          <div class="text-xs text-gray-400 text-center mb-4">describtion</div>
+          <div class="text-xs text-gray-400 text-center mb-3" style="font-size: 0.75rem;">describtion</div>
           
           <!-- Navigation Controls -->
-          <div class="flex items-center justify-center gap-4">
-            <button class="video-nav-btn video-prev-btn" data-action="prev">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <div class="flex items-center justify-center gap-3">
+            <button class="video-nav-btn video-prev-btn" data-action="prev" style="background: none; border: none; color: #000; cursor: pointer; padding: 0.5rem;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
               </svg>
             </button>
-            <button class="video-play-btn" data-action="play">
-              <span class="video-play-text">play</span>
+            <button class="video-play-btn" data-action="play" style="background: none; border: none; color: #000; cursor: pointer; padding: 0.5rem 1rem; font-size: 0.875rem;">
+              <span>play</span>
             </button>
-            <button class="video-nav-btn video-next-btn" data-action="next">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <button class="video-nav-btn video-next-btn" data-action="next" style="background: none; border: none; color: #000; cursor: pointer; padding: 0.5rem;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
               </svg>
             </button>
@@ -327,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     `;
   }
-  
+
   function navigateVideo(direction) {
     if (direction === 'next') {
       currentVideoIndex = (currentVideoIndex + 1) % sampleVideos.length;
@@ -336,9 +337,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     render();
   }
-  
+
   function playVideoFullscreen() {
-    const currentVideo = sampleVideos[currentVideoIndex];
     galleryModal = currentVideoIndex;
     pauseThemeMusic();
     render();
