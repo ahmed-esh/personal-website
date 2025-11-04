@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
   let openApp = null;
   let galleryModal = null;
+  let videoAppFullscreen = false;
   let themeAudio = null;
   let gameAudio = null;
   let appRefs = [];
   let animationStarted = false;
   let animationComplete = false;
-  let currentVideoIndex = 0;
 
   const apps = [
     { key: "video", label: "Video", emoji: "🎥", icon: "src/assets/website layout/visuals/video app.png", x: 618, y: 233 },
@@ -148,7 +148,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         galleryModal = null;
       }
-      openApp = null;
+      if (videoAppFullscreen) {
+        videoAppFullscreen = false;
+        openApp = null;
+        if (themeAudio && !openApp) {
+          themeAudio.play().catch(() => {});
+        }
+      } else {
+        openApp = null;
+      }
       render();
     }
   }
@@ -184,6 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         
         ${galleryModal !== null ? renderGalleryModal() : ''}
+        ${videoAppFullscreen ? renderVideoAppFullscreen() : ''}
       </div>
     `;
 
@@ -261,7 +270,8 @@ document.addEventListener('DOMContentLoaded', function() {
   function renderAppScreen() {
     switch (openApp) {
       case "video":
-        return renderVideoApp();
+        // Video app opens in fullscreen, so return empty or home grid
+        return renderHomeGrid();
       case "frames":
         return renderFramesApp();
       case "instagram":
@@ -277,71 +287,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  function renderVideoApp() {
-    const currentVideo = sampleVideos[currentVideoIndex];
-    const formattedTime = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    
+  function renderVideoAppFullscreen() {
     return `
-      <div class="h-full flex flex-col overflow-visible relative" style="padding: 0.5rem;">
-        <!-- Header -->
-        <div class="flex items-center justify-between px-2 py-1 text-xs text-gray-400 border-b border-zinc-800 mb-2">
-          <div>ESH</div>
-          <div>Libyana network</div>
-          <div>${formattedTime}</div>
+      <div class="video-app-fullscreen">
+        <div class="video-app-header">
+          <button class="video-app-close-btn text-sm text-cyan-300">Close</button>
+          <div class="text-xs text-gray-400">Video Gallery</div>
+          <div></div>
         </div>
-        
-        <!-- Main Content -->
-        <div class="flex flex-col items-center justify-center" style="flex: 1; padding: 0.5rem;">
-          <!-- Thumbnail -->
-          <div class="video-thumbnail-container mb-2">
-            <img src="${currentVideo.thumbnail}" alt="${currentVideo.title} thumbnail" class="video-thumbnail">
-          </div>
-          
-          <!-- Thumbnail Label -->
-          <div class="text-sm font-bold text-center mb-1" style="font-size: 0.875rem;">thumbnail</div>
-          
-          <!-- Description Label -->
-          <div class="text-xs text-gray-400 text-center mb-3" style="font-size: 0.75rem;">describtion</div>
-          
-          <!-- Navigation Controls -->
-          <div class="flex items-center justify-center gap-3">
-            <button class="video-nav-btn video-prev-btn" data-action="prev" style="background: none; border: none; color: #000; cursor: pointer; padding: 0.5rem;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-              </svg>
-            </button>
-            <button class="video-play-btn" data-action="play" style="background: none; border: none; color: #000; cursor: pointer; padding: 0.5rem 1rem; font-size: 0.875rem;">
-              <span>play</span>
-            </button>
-            <button class="video-nav-btn video-next-btn" data-action="next" style="background: none; border: none; color: #000; cursor: pointer; padding: 0.5rem;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-        
-        <!-- Back Button -->
-        <div class="absolute top-2 left-2">
-          <button class="back-btn text-sm text-cyan-300">Back</button>
+        <div class="video-app-content">
+          ${sampleVideos.map((v, i) => `
+            <div class="bg-zinc-900 rounded-lg p-4 flex gap-4 items-center hover:bg-zinc-800 transition-colors">
+              <img src="${v.thumbnail}" alt="${v.title} thumbnail" class="w-24 h-16 object-cover rounded-lg">
+              <div class="flex-1">
+                <div class="font-semibold text-lg mb-1">${v.title}</div>
+                <div class="text-sm text-gray-400">${v.yearType}</div>
+              </div>
+              <button class="open-video-btn px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg transition-colors" data-index="${i}">
+                Open
+              </button>
+            </div>
+          `).join('')}
         </div>
       </div>
     `;
-  }
-
-  function navigateVideo(direction) {
-    if (direction === 'next') {
-      currentVideoIndex = (currentVideoIndex + 1) % sampleVideos.length;
-    } else if (direction === 'prev') {
-      currentVideoIndex = (currentVideoIndex - 1 + sampleVideos.length) % sampleVideos.length;
-    }
-    render();
-  }
-
-  function playVideoFullscreen() {
-    galleryModal = currentVideoIndex;
-    pauseThemeMusic();
-    render();
   }
 
   function renderGalleryModal() {
@@ -603,8 +572,12 @@ document.addEventListener('DOMContentLoaded', function() {
           console.log("Game app opened, switching music");
           switchToGameMusic();
         } else if (appToOpen === 'video') {
-          console.log("Video app opened, pausing theme music");
+          console.log("Video app opened, opening fullscreen");
           pauseThemeMusic();
+          openApp = 'video';
+          videoAppFullscreen = true;
+          render();
+          return; // Don't continue with normal app opening
         }
         
         openApp = appToOpen;
@@ -626,27 +599,23 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
+    // Video app fullscreen close button
+    document.querySelectorAll('.video-app-close-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        videoAppFullscreen = false;
+        openApp = null;
+        if (themeAudio && !openApp) {
+          themeAudio.play().catch(() => {});
+        }
+        render();
+      });
+    });
 
-    // Video navigation buttons
-    document.querySelectorAll('.video-nav-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const action = this.dataset.action;
-        navigateVideo(action);
-      });
-    });
-    
-    // Video play button
-    document.querySelectorAll('.video-play-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        playVideoFullscreen();
-      });
-    });
-    
-    // Legacy open-video-btn for compatibility
     document.querySelectorAll('.open-video-btn').forEach(btn => {
       btn.addEventListener('click', function() {
-        currentVideoIndex = parseInt(this.dataset.index);
-        playVideoFullscreen();
+        galleryModal = parseInt(this.dataset.index);
+        pauseThemeMusic();
+        render();
       });
     });
 
