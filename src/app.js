@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="video-app-content">
           ${sampleVideos.map((v, i) => `
             <div class="bg-zinc-900 rounded-lg p-4 flex gap-4 items-center hover:bg-zinc-800 transition-colors">
-              <img src="${v.thumbnail}" alt="${v.title} thumbnail" class="w-24 h-16 object-cover rounded-lg">
+              <img src="${v.thumbnail}" alt="${v.title} thumbnail" style="width: 480px; height: 270px; object-fit: cover; border-radius: 0.5rem;">
               <div class="flex-1">
                 <div class="font-semibold text-lg mb-1">${v.title}</div>
                 <div class="text-sm text-gray-400">${v.yearType}</div>
