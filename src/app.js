@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentVideo = sampleVideos[currentVideoIndex];
     
     return `
-      <div class="h-full flex flex-col overflow-hidden relative">
+      <div class="h-full flex flex-col overflow-visible relative">
         <!-- Header -->
         <div class="flex items-center justify-between px-2 py-1 text-xs text-gray-400 border-b border-zinc-800">
           <div>ESH</div>
@@ -290,7 +290,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         
         <!-- Main Content -->
-        <div class="video-app-content flex-1 flex flex-col items-center justify-center px-4 py-4">
+        <div class="flex flex-col items-center justify-center" style="flex: 1; padding: 1rem;">
           <!-- Thumbnail -->
           <div class="video-thumbnail-container mb-2">
             <img src="${currentVideo.thumbnail}" alt="${currentVideo.title} thumbnail" class="video-thumbnail">
