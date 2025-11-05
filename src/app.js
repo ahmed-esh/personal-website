@@ -300,9 +300,9 @@ document.addEventListener('DOMContentLoaded', function() {
       return `
         <div class="app-fullscreen-panel">
           <div class="app-panel-header">
-            <button class="app-panel-back-btn app-panel-text-sm text-cyan-300">Back to Gallery</button>
-            <div class="app-panel-text-xs text-gray-400">${video.title}</div>
-            <button class="app-panel-close-btn app-panel-text-sm text-cyan-300">Close</button>
+            <button class="app-panel-back-btn app-panel-text-sm video-app-orange-text">Back to Gallery</button>
+            <div class="app-panel-text-xs text-white">${video.title}</div>
+            <button class="app-panel-close-btn app-panel-text-sm video-app-orange-text">Close</button>
           </div>
           <div class="app-panel-content">
             <div class="video-player-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
@@ -317,8 +317,8 @@ document.addEventListener('DOMContentLoaded', function() {
     return `
       <div class="app-fullscreen-panel">
         <div class="app-panel-header">
-          <button class="app-panel-close-btn app-panel-text-sm text-cyan-300">Close</button>
-          <div class="app-panel-text-xs text-gray-400">Video Gallery</div>
+          <button class="app-panel-close-btn app-panel-text-sm video-app-orange-text">Close</button>
+          <div class="app-panel-text-xs text-white">Video Gallery</div>
           <div></div>
         </div>
         <div class="app-panel-content">
@@ -327,10 +327,10 @@ document.addEventListener('DOMContentLoaded', function() {
               <div class="bg-zinc-900 rounded-lg p-8 flex gap-8 items-center hover:bg-zinc-800 transition-colors">
                 <img src="${v.thumbnail}" alt="${v.title} thumbnail" style="width: 480px; height: 270px; object-fit: cover; border-radius: 0.5rem;">
                 <div class="flex-1">
-                  <div class="font-semibold app-panel-text-lg mb-2">${v.title}</div>
-                  <div class="app-panel-text-sm text-gray-400">${v.yearType}</div>
+                  <div class="font-semibold app-panel-text-lg mb-2 text-white">${v.title}</div>
+                  <div class="app-panel-text-sm text-white">${v.yearType}</div>
                 </div>
-                <button class="open-video-in-app-btn app-panel-btn bg-sky-600 hover:bg-sky-700 text-white rounded-lg transition-colors" data-index="${i}">
+                <button class="open-video-in-app-btn app-panel-btn video-app-open-btn text-white rounded-lg transition-colors" data-index="${i}" style="margin-left: auto;">
                   Open
                 </button>
               </div>
@@ -363,8 +363,8 @@ document.addEventListener('DOMContentLoaded', function() {
           ></iframe>
           <div class="video-player-info" style="margin-top: 1rem; max-width: 1200px;">
             <h3 class="text-white app-panel-text-xl font-bold mb-2">${video.title}</h3>
-            <p class="text-gray-400 app-panel-text-sm mb-2">${video.yearType}</p>
-            <p class="text-gray-300 app-panel-text-sm">${video.description}</p>
+            <p class="text-white app-panel-text-sm mb-2">${video.yearType}</p>
+            <p class="text-white app-panel-text-sm">${video.description}</p>
           </div>
         </div>
       `;
@@ -384,8 +384,8 @@ document.addEventListener('DOMContentLoaded', function() {
           ></iframe>
           <div class="video-player-info" style="margin-top: 1rem; max-width: 1200px;">
             <h3 class="text-white app-panel-text-xl font-bold mb-2">${video.title}</h3>
-            <p class="text-gray-400 app-panel-text-sm mb-2">${video.yearType}</p>
-            <p class="text-gray-300 app-panel-text-sm">${video.description}</p>
+            <p class="text-white app-panel-text-sm mb-2">${video.yearType}</p>
+            <p class="text-white app-panel-text-sm">${video.description}</p>
               </div>
             </div>
       `;
@@ -393,7 +393,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     return `
       <div class="video-player-container">
-        <p class="text-gray-400">Video format not supported</p>
+        <p class="text-white">Video format not supported</p>
       </div>
     `;
   }

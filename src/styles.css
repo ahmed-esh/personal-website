@@ -274,6 +274,15 @@ body {
   color: #22d3ee;
 }
 
+/* Video app specific styling */
+.video-app-orange-text {
+  color: rgba(255, 165, 0, 0.4);
+}
+
+.video-app-orange-text:hover {
+  color: rgba(255, 165, 0, 0.7); /* Lighter/bright orange on hover */
+}
+
 /* Video app specific styles */
 .video-app-content {
   width: 100%;
@@ -302,6 +311,16 @@ body {
   padding: 1rem 2rem; /* doubled from 0.5rem 1rem */
   font-size: 1.75rem; /* doubled from 0.875rem */
   line-height: 2rem;
+}
+
+/* Video app open button - override default styles */
+.video-app-open-btn {
+  background-color: rgba(255, 165, 0, 0.4) !important;
+  border: none;
+}
+
+.video-app-open-btn:hover {
+  background-color: rgba(255, 165, 0, 0.7) !important; /* Lighter/bright orange on hover */
 }
 
 .app-panel-btn-large {
