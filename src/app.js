@@ -427,8 +427,8 @@ document.addEventListener('DOMContentLoaded', function() {
         </button>
         <div class="text-center mt-6 max-w-3xl">
           <h3 class="text-white text-2xl font-bold mb-2">${video.title}</h3>
-          <p class="text-sky-400 text-lg mb-4">${video.yearType}</p>
-          <p class="text-gray-300 text-base leading-relaxed">${video.description}</p>
+          <p class="app-primary-text text-lg mb-4">${video.yearType}</p>
+          <p class="text-white text-base leading-relaxed">${video.description}</p>
         </div>
       </div>
     `;
@@ -453,8 +453,8 @@ document.addEventListener('DOMContentLoaded', function() {
     return `
       <div class="app-fullscreen-panel">
         <div class="app-panel-header">
-          <button class="app-panel-close-btn app-panel-text-sm text-cyan-300">Close</button>
-          <div class="app-panel-text-xs text-gray-400">Stills / Frames</div>
+          <button class="app-panel-close-btn app-panel-text-sm app-primary-text">Close</button>
+          <div class="app-panel-text-xs text-white">Stills / Frames</div>
           <div></div>
         </div>
         <div class="app-panel-content">
@@ -477,8 +477,8 @@ document.addEventListener('DOMContentLoaded', function() {
     return `
       <div class="app-fullscreen-panel">
         <div class="app-panel-header">
-          <button class="app-panel-close-btn app-panel-text-sm text-cyan-300">Close</button>
-          <div class="app-panel-text-xs text-gray-400">Contact</div>
+          <button class="app-panel-close-btn app-panel-text-sm app-primary-text">Close</button>
+          <div class="app-panel-text-xs text-white">Contact</div>
           <div></div>
         </div>
         <div class="app-panel-content">
@@ -486,7 +486,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="text-center">
               <div class="app-panel-text-4xl mb-8">✉️</div>
               <div class="app-panel-text-lg font-semibold text-white mb-4">Get in Touch</div>
-              <div class="text-cyan-300 app-panel-text-xl font-mono">info@ahmedesh.com</div>
+              <div class="app-primary-text app-panel-text-xl font-mono">info@ahmedesh.com</div>
             </div>
           </div>
         </div>
@@ -498,12 +498,12 @@ document.addEventListener('DOMContentLoaded', function() {
     return `
       <div class="app-fullscreen-panel">
         <div class="app-panel-header">
-          <button class="app-panel-close-btn app-panel-text-sm text-cyan-300">Close</button>
-          <div class="app-panel-text-xs text-gray-400">About</div>
+          <button class="app-panel-close-btn app-panel-text-sm app-primary-text">Close</button>
+          <div class="app-panel-text-xs text-white">About</div>
           <div></div>
         </div>
         <div class="app-panel-content">
-          <div class="space-y-8 app-panel-text-sm text-gray-400">
+          <div class="space-y-8 app-panel-text-sm text-white">
             <p>
               Ahmed Shuwehdi, a multimedia artist specializing in Virtual Reality (VR), Augmented Reality (AR), and video art. My work encompasses animations, motion graphics, and captured videos that engage with political issues, particularly those from my home country, Libya.
             </p>
@@ -521,33 +521,33 @@ document.addEventListener('DOMContentLoaded', function() {
             </p>
             
             <div class="space-y-3">
-              <h3 class="font-semibold app-panel-text-lg text-cyan-300">Exhibitions and interviews:</h3>
+              <h3 class="font-semibold app-panel-text-lg app-primary-text">Exhibitions and interviews:</h3>
               
               <p>
-                Techspressioism | Featured Artist - <a href="https://techspressionism.com/artists/" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a>
+                Techspressioism | Featured Artist - <a href="https://techspressionism.com/artists/" target="_blank" class="app-primary-text underline">Link</a>
               </p>
               
               <p>
-                Bennington banner | Interview - <a href="https://www.benningtonbanner.com/local-news/installation-brings-celebrated-robert-frost-poem-to-virtual-reality/article_6a12b21e-80dc-11ef-b11b-cf55304afe7b.html" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a>
+                Bennington banner | Interview - <a href="https://www.benningtonbanner.com/local-news/installation-brings-celebrated-robert-frost-poem-to-virtual-reality/article_6a12b21e-80dc-11ef-b11b-cf55304afe7b.html" target="_blank" class="app-primary-text underline">Link</a>
               </p>
               
               <p>
-                James Dawson | Interview - <a href="https://techspressionism.com/brooklyn/media/video/" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a>
+                James Dawson | Interview - <a href="https://techspressionism.com/brooklyn/media/video/" target="_blank" class="app-primary-text underline">Link</a>
               </p>
               
               <p>
-                Wild & Newfangled Art Museum - <a href="https://www.mowna.org/museum/techspressionism" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a><br>
-                <span class="app-panel-text-xs text-gray-500">Long Island City, NY<br>October 3, 2024 - January 26, 2025</span>
+                Wild & Newfangled Art Museum - <a href="https://www.mowna.org/museum/techspressionism" target="_blank" class="app-primary-text underline">Link</a><br>
+                <span class="app-panel-text-xs text-white">Long Island City, NY<br>October 3, 2024 - January 26, 2025</span>
               </p>
               
               <p>
-                Robert Frost Stone House Virtual Reality Experience | Solo Exhibition - <a href="https://www.bennington.edu/news-and-features/landscape-and-literature" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a><br>
-                <span class="text-xs text-gray-500">Bennington, Vermont<br>May 2024 – October 2024</span>
+                Robert Frost Stone House Virtual Reality Experience | Solo Exhibition - <a href="https://www.bennington.edu/news-and-features/landscape-and-literature" target="_blank" class="app-primary-text underline">Link</a><br>
+                <span class="app-panel-text-xs text-white">Bennington, Vermont<br>May 2024 – October 2024</span>
               </p>
               
               <p>
-                Hello Brooklyn—Group Exhibition - <a href="https://techspressionism.com/brooklyn/" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a><br>
-                <span class="text-xs text-gray-500">Kingsborough Art Museum, Brooklyn, NY<br>August 7 – September 25, 2024</span>
+                Hello Brooklyn—Group Exhibition - <a href="https://techspressionism.com/brooklyn/" target="_blank" class="app-primary-text underline">Link</a><br>
+                <span class="app-panel-text-xs text-white">Kingsborough Art Museum, Brooklyn, NY<br>August 7 – September 25, 2024</span>
               </p>
             </div>
           </div>
@@ -560,20 +560,20 @@ document.addEventListener('DOMContentLoaded', function() {
     return `
       <div class="app-fullscreen-panel">
         <div class="app-panel-header">
-          <button class="app-panel-close-btn app-panel-text-sm text-cyan-300">Close</button>
-          <div class="app-panel-text-xs text-gray-400">Socials</div>
+          <button class="app-panel-close-btn app-panel-text-sm app-primary-text">Close</button>
+          <div class="app-panel-text-xs text-white">Socials</div>
           <div></div>
         </div>
         <div class="app-panel-content">
-          <div class="space-y-8 app-panel-text-sm text-gray-400">
+          <div class="space-y-8 app-panel-text-sm text-white">
             <div class="bg-zinc-900 rounded-lg p-12 text-center">
               <div class="app-panel-text-4xl mb-8">📷</div>
               <h4 class="app-panel-text-lg font-semibold text-white mb-4">@ahmed.eshhh</h4>
-              <p class="app-panel-text-sm text-gray-400 mb-8">Multimedia Artist</p>
+              <p class="app-panel-text-sm text-white mb-8">Multimedia Artist</p>
               <a 
                 href="https://www.instagram.com/ahmed.eshhh/" 
                 target="_blank" 
-                class="inline-block app-panel-btn-large bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+                class="inline-block app-panel-btn-large app-primary-btn-bg text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
               >
                 View Instagram Profile
               </a>
@@ -582,11 +582,11 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="bg-zinc-900 rounded-lg p-12 text-center">
               <div class="app-panel-text-4xl mb-8">💼</div>
               <h4 class="app-panel-text-lg font-semibold text-white mb-4">Ahmed Shuwehdi</h4>
-              <p class="app-panel-text-sm text-gray-400 mb-8">Multimedia Artist</p>
+              <p class="app-panel-text-sm text-white mb-8">Multimedia Artist</p>
               <a 
                 href="https://www.linkedin.com/in/ahmed-shuwehdi-5130a819b/" 
                 target="_blank" 
-                class="inline-block app-panel-btn-large bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+                class="inline-block app-panel-btn-large app-primary-btn-bg text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
               >
                 View LinkedIn Profile
               </a>
@@ -601,8 +601,8 @@ document.addEventListener('DOMContentLoaded', function() {
     return `
       <div class="app-fullscreen-panel">
         <div class="app-panel-header">
-          <button class="app-panel-close-btn app-panel-text-sm text-cyan-300">Close</button>
-          <div class="app-panel-text-xs text-gray-400">Snake Game</div>
+          <button class="app-panel-close-btn app-panel-text-sm app-primary-text">Close</button>
+          <div class="app-panel-text-xs text-white">Snake Game</div>
           <div></div>
         </div>
         <div class="app-panel-content">
