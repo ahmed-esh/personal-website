@@ -247,7 +247,7 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
-  padding-bottom: 1rem;
+  padding-bottom: 2rem; /* doubled from 1rem */
   border-bottom: 1px solid #27272a;
   flex-shrink: 0;
 }
@@ -261,11 +261,12 @@ body {
 .app-panel-close-btn,
 .app-panel-back-btn {
   color: #67e8f9;
-  font-size: 0.875rem;
+  font-size: 1.75rem; /* doubled from 0.875rem */
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 1rem; /* doubled from 0.5rem */
+  line-height: 2rem;
 }
 
 .app-panel-close-btn:hover,
@@ -296,6 +297,19 @@ body {
   width: 100%;
 }
 
+/* App panel button sizes - doubled */
+.app-panel-btn {
+  padding: 1rem 2rem; /* doubled from 0.5rem 1rem */
+  font-size: 1.75rem; /* doubled from 0.875rem */
+  line-height: 2rem;
+}
+
+.app-panel-btn-large {
+  padding: 1.5rem 3rem; /* doubled from 0.75rem 1.5rem */
+  font-size: 2rem; /* doubled from 1rem */
+  line-height: 2.5rem;
+}
+
 /* No responsive scaling - fixed 1440x1440 container */
 /* Scrollbars will appear if viewport is smaller than 1440x1440 */
 
@@ -322,6 +336,42 @@ body {
 
 .text-xs {
   font-size: 0.75rem;
+}
+
+/* App panel text sizes - doubled from base sizes */
+.app-panel-text-xs {
+  font-size: 1.5rem; /* was 0.75rem */
+  line-height: 1.75rem;
+}
+
+.app-panel-text-sm {
+  font-size: 1.75rem; /* was 0.875rem */
+  line-height: 2rem;
+}
+
+.app-panel-text-base {
+  font-size: 2rem; /* was 1rem */
+  line-height: 2.25rem;
+}
+
+.app-panel-text-lg {
+  font-size: 2.25rem; /* was 1.125rem */
+  line-height: 2.5rem;
+}
+
+.app-panel-text-xl {
+  font-size: 2.5rem; /* was 1.25rem */
+  line-height: 2.75rem;
+}
+
+.app-panel-text-2xl {
+  font-size: 3rem; /* was 1.5rem */
+  line-height: 3.5rem;
+}
+
+.app-panel-text-4xl {
+  font-size: 4.5rem; /* was 2.25rem */
+  line-height: 5rem;
 }
 
 .flex {
@@ -395,6 +445,22 @@ body {
 #gameControls {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
-  gap: 10px;
+  margin-top: 20px; /* doubled from 10px */
+  gap: 20px; /* doubled from 10px */
+}
+
+.game-btn {
+  font-size: 3rem; /* doubled - emoji buttons should be larger */
+  padding: 1rem; /* doubled from 0.5rem */
+  min-width: 4rem; /* doubled from 2rem */
+  min-height: 4rem; /* doubled from 2rem */
+  cursor: pointer;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  transition: background 0.2s;
+}
+
+.game-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
 }

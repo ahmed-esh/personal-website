@@ -300,9 +300,9 @@ document.addEventListener('DOMContentLoaded', function() {
       return `
         <div class="app-fullscreen-panel">
           <div class="app-panel-header">
-            <button class="app-panel-back-btn text-sm text-cyan-300">Back to Gallery</button>
-            <div class="text-xs text-gray-400">${video.title}</div>
-            <button class="app-panel-close-btn text-sm text-cyan-300">Close</button>
+            <button class="app-panel-back-btn app-panel-text-sm text-cyan-300">Back to Gallery</button>
+            <div class="app-panel-text-xs text-gray-400">${video.title}</div>
+            <button class="app-panel-close-btn app-panel-text-sm text-cyan-300">Close</button>
           </div>
           <div class="app-panel-content">
             <div class="video-player-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
@@ -317,20 +317,20 @@ document.addEventListener('DOMContentLoaded', function() {
     return `
       <div class="app-fullscreen-panel">
         <div class="app-panel-header">
-          <button class="app-panel-close-btn text-sm text-cyan-300">Close</button>
-          <div class="text-xs text-gray-400">Video Gallery</div>
+          <button class="app-panel-close-btn app-panel-text-sm text-cyan-300">Close</button>
+          <div class="app-panel-text-xs text-gray-400">Video Gallery</div>
           <div></div>
         </div>
         <div class="app-panel-content">
           <div class="video-app-content">
             ${sampleVideos.map((v, i) => `
-              <div class="bg-zinc-900 rounded-lg p-4 flex gap-4 items-center hover:bg-zinc-800 transition-colors">
+              <div class="bg-zinc-900 rounded-lg p-8 flex gap-8 items-center hover:bg-zinc-800 transition-colors">
                 <img src="${v.thumbnail}" alt="${v.title} thumbnail" style="width: 480px; height: 270px; object-fit: cover; border-radius: 0.5rem;">
                 <div class="flex-1">
-                  <div class="font-semibold text-lg mb-1">${v.title}</div>
-                  <div class="text-sm text-gray-400">${v.yearType}</div>
+                  <div class="font-semibold app-panel-text-lg mb-2">${v.title}</div>
+                  <div class="app-panel-text-sm text-gray-400">${v.yearType}</div>
                 </div>
-                <button class="open-video-in-app-btn px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg transition-colors" data-index="${i}">
+                <button class="open-video-in-app-btn app-panel-btn bg-sky-600 hover:bg-sky-700 text-white rounded-lg transition-colors" data-index="${i}">
                   Open
                 </button>
               </div>
@@ -362,9 +362,9 @@ document.addEventListener('DOMContentLoaded', function() {
             style="width: 100%; max-width: 1200px; height: 675px; border-radius: 0.5rem;"
           ></iframe>
           <div class="video-player-info" style="margin-top: 1rem; max-width: 1200px;">
-            <h3 class="text-white text-xl font-bold mb-2">${video.title}</h3>
-            <p class="text-gray-400 text-sm mb-2">${video.yearType}</p>
-            <p class="text-gray-300 text-sm">${video.description}</p>
+            <h3 class="text-white app-panel-text-xl font-bold mb-2">${video.title}</h3>
+            <p class="text-gray-400 app-panel-text-sm mb-2">${video.yearType}</p>
+            <p class="text-gray-300 app-panel-text-sm">${video.description}</p>
           </div>
         </div>
       `;
@@ -383,9 +383,9 @@ document.addEventListener('DOMContentLoaded', function() {
             style="width: 100%; max-width: 1200px; height: 675px; border-radius: 0.5rem;"
           ></iframe>
           <div class="video-player-info" style="margin-top: 1rem; max-width: 1200px;">
-            <h3 class="text-white text-xl font-bold mb-2">${video.title}</h3>
-            <p class="text-gray-400 text-sm mb-2">${video.yearType}</p>
-            <p class="text-gray-300 text-sm">${video.description}</p>
+            <h3 class="text-white app-panel-text-xl font-bold mb-2">${video.title}</h3>
+            <p class="text-gray-400 app-panel-text-sm mb-2">${video.yearType}</p>
+            <p class="text-gray-300 app-panel-text-sm">${video.description}</p>
               </div>
             </div>
       `;
@@ -453,18 +453,18 @@ document.addEventListener('DOMContentLoaded', function() {
     return `
       <div class="app-fullscreen-panel">
         <div class="app-panel-header">
-          <button class="app-panel-close-btn text-sm text-cyan-300">Close</button>
-          <div class="text-xs text-gray-400">Stills / Frames</div>
+          <button class="app-panel-close-btn app-panel-text-sm text-cyan-300">Close</button>
+          <div class="app-panel-text-xs text-gray-400">Stills / Frames</div>
           <div></div>
         </div>
         <div class="app-panel-content">
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-2 gap-6">
             ${frames.map((f, i) => `
-              <div class="bg-zinc-900 rounded p-2">
+              <div class="bg-zinc-900 rounded p-4">
                 <a href="${f.src}" target="_blank" class="block">
-                  <img src="${f.src}" alt="${f.title}" class="w-full h-32 object-cover rounded mb-2 cursor-pointer hover:opacity-80 transition-opacity">
+                  <img src="${f.src}" alt="${f.title}" class="w-full h-32 object-cover rounded mb-4 cursor-pointer hover:opacity-80 transition-opacity">
                 </a>
-                <div class="text-sm font-semibold">${f.title}</div>
+                <div class="app-panel-text-sm font-semibold">${f.title}</div>
               </div>
             `).join('')}
           </div>
@@ -477,16 +477,16 @@ document.addEventListener('DOMContentLoaded', function() {
     return `
       <div class="app-fullscreen-panel">
         <div class="app-panel-header">
-          <button class="app-panel-close-btn text-sm text-cyan-300">Close</button>
-          <div class="text-xs text-gray-400">Contact</div>
+          <button class="app-panel-close-btn app-panel-text-sm text-cyan-300">Close</button>
+          <div class="app-panel-text-xs text-gray-400">Contact</div>
           <div></div>
         </div>
         <div class="app-panel-content">
           <div class="flex items-center justify-center h-full">
             <div class="text-center">
-              <div class="text-4xl mb-4">✉️</div>
-              <div class="text-lg font-semibold text-white mb-2">Get in Touch</div>
-              <div class="text-cyan-300 text-xl font-mono">info@ahmedesh.com</div>
+              <div class="app-panel-text-4xl mb-8">✉️</div>
+              <div class="app-panel-text-lg font-semibold text-white mb-4">Get in Touch</div>
+              <div class="text-cyan-300 app-panel-text-xl font-mono">info@ahmedesh.com</div>
             </div>
           </div>
         </div>
@@ -498,12 +498,12 @@ document.addEventListener('DOMContentLoaded', function() {
     return `
       <div class="app-fullscreen-panel">
         <div class="app-panel-header">
-          <button class="app-panel-close-btn text-sm text-cyan-300">Close</button>
-          <div class="text-xs text-gray-400">About</div>
+          <button class="app-panel-close-btn app-panel-text-sm text-cyan-300">Close</button>
+          <div class="app-panel-text-xs text-gray-400">About</div>
           <div></div>
         </div>
         <div class="app-panel-content">
-          <div class="space-y-4 text-sm text-gray-400">
+          <div class="space-y-8 app-panel-text-sm text-gray-400">
             <p>
               Ahmed Shuwehdi, a multimedia artist specializing in Virtual Reality (VR), Augmented Reality (AR), and video art. My work encompasses animations, motion graphics, and captured videos that engage with political issues, particularly those from my home country, Libya.
             </p>
@@ -521,7 +521,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </p>
             
             <div class="space-y-3">
-              <h3 class="font-semibold text-cyan-300">Exhibitions and interviews:</h3>
+              <h3 class="font-semibold app-panel-text-lg text-cyan-300">Exhibitions and interviews:</h3>
               
               <p>
                 Techspressioism | Featured Artist - <a href="https://techspressionism.com/artists/" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a>
@@ -537,7 +537,7 @@ document.addEventListener('DOMContentLoaded', function() {
               
               <p>
                 Wild & Newfangled Art Museum - <a href="https://www.mowna.org/museum/techspressionism" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a><br>
-                <span class="text-xs text-gray-500">Long Island City, NY<br>October 3, 2024 - January 26, 2025</span>
+                <span class="app-panel-text-xs text-gray-500">Long Island City, NY<br>October 3, 2024 - January 26, 2025</span>
               </p>
               
               <p>
@@ -560,33 +560,33 @@ document.addEventListener('DOMContentLoaded', function() {
     return `
       <div class="app-fullscreen-panel">
         <div class="app-panel-header">
-          <button class="app-panel-close-btn text-sm text-cyan-300">Close</button>
-          <div class="text-xs text-gray-400">Socials</div>
+          <button class="app-panel-close-btn app-panel-text-sm text-cyan-300">Close</button>
+          <div class="app-panel-text-xs text-gray-400">Socials</div>
           <div></div>
         </div>
         <div class="app-panel-content">
-          <div class="space-y-4 text-sm text-gray-400">
-            <div class="bg-zinc-900 rounded-lg p-6 text-center">
-              <div class="text-4xl mb-4">📷</div>
-              <h4 class="text-lg font-semibold text-white mb-2">@ahmed.eshhh</h4>
-              <p class="text-sm text-gray-400 mb-4">Multimedia Artist</p>
+          <div class="space-y-8 app-panel-text-sm text-gray-400">
+            <div class="bg-zinc-900 rounded-lg p-12 text-center">
+              <div class="app-panel-text-4xl mb-8">📷</div>
+              <h4 class="app-panel-text-lg font-semibold text-white mb-4">@ahmed.eshhh</h4>
+              <p class="app-panel-text-sm text-gray-400 mb-8">Multimedia Artist</p>
               <a 
                 href="https://www.instagram.com/ahmed.eshhh/" 
                 target="_blank" 
-                class="inline-block px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+                class="inline-block app-panel-btn-large bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
               >
                 View Instagram Profile
               </a>
             </div>
             
-            <div class="bg-zinc-900 rounded-lg p-6 text-center">
-              <div class="text-4xl mb-4">💼</div>
-              <h4 class="text-lg font-semibold text-white mb-2">Ahmed Shuwehdi</h4>
-              <p class="text-sm text-gray-400 mb-4">Multimedia Artist</p>
+            <div class="bg-zinc-900 rounded-lg p-12 text-center">
+              <div class="app-panel-text-4xl mb-8">💼</div>
+              <h4 class="app-panel-text-lg font-semibold text-white mb-4">Ahmed Shuwehdi</h4>
+              <p class="app-panel-text-sm text-gray-400 mb-8">Multimedia Artist</p>
               <a 
                 href="https://www.linkedin.com/in/ahmed-shuwehdi-5130a819b/" 
                 target="_blank" 
-                class="inline-block px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+                class="inline-block app-panel-btn-large bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
               >
                 View LinkedIn Profile
               </a>
@@ -601,8 +601,8 @@ document.addEventListener('DOMContentLoaded', function() {
     return `
       <div class="app-fullscreen-panel">
         <div class="app-panel-header">
-          <button class="app-panel-close-btn text-sm text-cyan-300">Close</button>
-          <div class="text-xs text-gray-400">Snake Game</div>
+          <button class="app-panel-close-btn app-panel-text-sm text-cyan-300">Close</button>
+          <div class="app-panel-text-xs text-gray-400">Snake Game</div>
           <div></div>
         </div>
         <div class="app-panel-content">
