@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   let openApp = null;
   let galleryModal = null;
-  let videoAppFullscreen = false;
+  let currentVideoIndex = null; // Track which video is playing in video app
   let themeAudio = null;
   let gameAudio = null;
   let appRefs = [];
@@ -139,25 +139,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function onKey(e) {
     if (e.key === "Escape") {
-      if (openApp === "game") {
-        switchToThemeMusic();
-      }
       if (galleryModal !== null) {
-        if (themeAudio && !openApp) {
-          themeAudio.play().catch(() => {});
-        }
         galleryModal = null;
-      }
-      if (videoAppFullscreen) {
-        videoAppFullscreen = false;
+        render();
+      } else if (currentVideoIndex !== null && openApp === 'video') {
+        // If video is playing, go back to gallery
+        currentVideoIndex = null;
+        render();
+      } else if (openApp) {
+        // Close any open app panel
+        if (openApp === "game") {
+          switchToThemeMusic();
+        }
         openApp = null;
+        currentVideoIndex = null;
         if (themeAudio && !openApp) {
           themeAudio.play().catch(() => {});
         }
-      } else {
-        openApp = null;
+        render();
       }
-      render();
     }
   }
 
@@ -177,8 +177,8 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="layout-text-container ${animationStarted ? 'hidden' : ''}">
           <div class="layout-time-text" id="time-text"></div>
           <div class="layout-location-text">New York, NY</div>
-        </div>
-        
+              </div>
+
         <!-- Animation frames -->
         <img src="src/assets/phone animation/animation 1.png" alt="Animation 1" class="layout-animation layout-animation-1" />
         <img src="src/assets/phone animation/animation 2.png" alt="Animation 2" class="layout-animation layout-animation-2" />
@@ -190,9 +190,9 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="layout-phone-screen ${animationComplete ? 'visible' : 'hidden'}">
           ${!openApp ? renderHomeGrid() : renderAppScreen()}
         </div>
-        
+
         ${galleryModal !== null ? renderGalleryModal() : ''}
-        ${videoAppFullscreen ? renderVideoAppFullscreen() : ''}
+        ${renderAppFullscreenPanels()}
       </div>
     `;
 
@@ -255,60 +255,145 @@ document.addEventListener('DOMContentLoaded', function() {
     
     return apps.map((app) => `
       <div class="app-icon-wrapper" style="position: absolute; left: ${app.x - phoneScreenContainerX}px; top: ${app.y - phoneScreenContainerY}px; z-index: 17;">
-        <button
+            <button
           class="app-icon-button"
           data-app="${app.key}"
           style="position: relative; display: block; border: none; background: none; padding: 0; cursor: pointer;"
         >
           <img src="${app.icon}" alt="${app.label}" class="app-icon-image" style="display: block;" />
           <div class="app-hover-overlay"></div>
-        </button>
+            </button>
       </div>
     `).join('');
   }
 
   function renderAppScreen() {
+    // All apps now render in fullscreen panels, not in phone screen
+    return renderHomeGrid();
+  }
+
+  function renderAppFullscreenPanels() {
+    if (!openApp) return '';
+    
     switch (openApp) {
       case "video":
-        // Video app opens in fullscreen, so return empty or home grid
-        return renderHomeGrid();
+        return renderVideoAppFullscreen();
       case "frames":
-        return renderFramesApp();
+        return renderFramesAppFullscreen();
       case "instagram":
-        return renderInstagramApp();
+        return renderInstagramAppFullscreen();
       case "contact":
-        return renderContactApp();
+        return renderContactAppFullscreen();
       case "game":
-        return renderGameApp();
+        return renderGameAppFullscreen();
       case "about":
-        return renderAboutApp();
+        return renderAboutAppFullscreen();
       default:
-        return renderHomeGrid();
+        return '';
     }
   }
 
   function renderVideoAppFullscreen() {
+    // If a video is playing, show the video player instead of gallery
+    if (currentVideoIndex !== null) {
+      const video = sampleVideos[currentVideoIndex];
+      return `
+        <div class="app-fullscreen-panel">
+          <div class="app-panel-header">
+            <button class="app-panel-back-btn text-sm text-cyan-300">Back to Gallery</button>
+            <div class="text-xs text-gray-400">${video.title}</div>
+            <button class="app-panel-close-btn text-sm text-cyan-300">Close</button>
+          </div>
+          <div class="app-panel-content">
+            <div class="video-player-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+              ${renderVideoPlayer(video)}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    
+    // Otherwise show the gallery
     return `
-      <div class="video-app-fullscreen">
-        <div class="video-app-header">
-          <button class="video-app-close-btn text-sm text-cyan-300">Close</button>
+      <div class="app-fullscreen-panel">
+        <div class="app-panel-header">
+          <button class="app-panel-close-btn text-sm text-cyan-300">Close</button>
           <div class="text-xs text-gray-400">Video Gallery</div>
           <div></div>
         </div>
-        <div class="video-app-content">
-          ${sampleVideos.map((v, i) => `
-            <div class="bg-zinc-900 rounded-lg p-4 flex gap-4 items-center hover:bg-zinc-800 transition-colors">
-              <img src="${v.thumbnail}" alt="${v.title} thumbnail" style="width: 480px; height: 270px; object-fit: cover; border-radius: 0.5rem;">
-              <div class="flex-1">
-                <div class="font-semibold text-lg mb-1">${v.title}</div>
-                <div class="text-sm text-gray-400">${v.yearType}</div>
+        <div class="app-panel-content">
+          <div class="video-app-content">
+            ${sampleVideos.map((v, i) => `
+              <div class="bg-zinc-900 rounded-lg p-4 flex gap-4 items-center hover:bg-zinc-800 transition-colors">
+                <img src="${v.thumbnail}" alt="${v.title} thumbnail" style="width: 480px; height: 270px; object-fit: cover; border-radius: 0.5rem;">
+                <div class="flex-1">
+                  <div class="font-semibold text-lg mb-1">${v.title}</div>
+                  <div class="text-sm text-gray-400">${v.yearType}</div>
+                </div>
+                <button class="open-video-in-app-btn px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg transition-colors" data-index="${i}">
+                  Open
+                </button>
               </div>
-              <button class="open-video-btn px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-lg transition-colors" data-index="${i}">
-                Open
-              </button>
-            </div>
-          `).join('')}
+            `).join('')}
+          </div>
         </div>
+      </div>
+    `;
+  }
+
+  function renderVideoPlayer(video) {
+    // Check if it's a YouTube URL
+    const isYouTube = video.src.includes('youtube.com');
+    const isGoogleDrive = video.src.includes('drive.google.com');
+    
+    if (isYouTube) {
+      // Extract video ID from YouTube URL
+      const videoIdMatch = video.src.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
+      const videoId = videoIdMatch ? videoIdMatch[1] : '';
+      const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+
+    return `
+        <div class="video-player-container">
+          <iframe 
+            src="${embedUrl}" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen
+            style="width: 100%; max-width: 1200px; height: 675px; border-radius: 0.5rem;"
+          ></iframe>
+          <div class="video-player-info" style="margin-top: 1rem; max-width: 1200px;">
+            <h3 class="text-white text-xl font-bold mb-2">${video.title}</h3>
+            <p class="text-gray-400 text-sm mb-2">${video.yearType}</p>
+            <p class="text-gray-300 text-sm">${video.description}</p>
+          </div>
+        </div>
+      `;
+    } else if (isGoogleDrive) {
+      // For Google Drive, use the file ID to create an embed URL
+      const fileIdMatch = video.src.match(/\/d\/([a-zA-Z0-9_-]+)/);
+      const fileId = fileIdMatch ? fileIdMatch[1] : '';
+      const embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+      
+      return `
+        <div class="video-player-container">
+          <iframe 
+            src="${embedUrl}" 
+            frameborder="0" 
+            allow="autoplay"
+            style="width: 100%; max-width: 1200px; height: 675px; border-radius: 0.5rem;"
+          ></iframe>
+          <div class="video-player-info" style="margin-top: 1rem; max-width: 1200px;">
+            <h3 class="text-white text-xl font-bold mb-2">${video.title}</h3>
+            <p class="text-gray-400 text-sm mb-2">${video.yearType}</p>
+            <p class="text-gray-300 text-sm">${video.description}</p>
+              </div>
+            </div>
+      `;
+    }
+    
+    return `
+      <div class="video-player-container">
+        <p class="text-gray-400">Video format not supported</p>
       </div>
     `;
   }
@@ -351,7 +436,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-  function renderFramesApp() {
+  function renderFramesAppFullscreen() {
     const frames = [
       { title: "Shas", src: "src/assets/picsforstils/Shas.png" },
       { title: "Italian Kids", src: "src/assets/picsforstils/Italian Kids.png" },
@@ -366,160 +451,170 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
 
     return `
-      <div class="h-full overflow-auto">
-        <div class="flex items-center justify-between mb-3">
-          <button class="back-btn text-sm text-cyan-300">Back</button>
+      <div class="app-fullscreen-panel">
+        <div class="app-panel-header">
+          <button class="app-panel-close-btn text-sm text-cyan-300">Close</button>
           <div class="text-xs text-gray-400">Stills / Frames</div>
           <div></div>
         </div>
-        <div class="grid grid-cols-2 gap-3">
-          ${frames.map((f, i) => `
-            <div class="bg-zinc-900 rounded p-2">
-              <a href="${f.src}" target="_blank" class="block">
-                <img src="${f.src}" alt="${f.title}" class="w-full h-32 object-cover rounded mb-2 cursor-pointer hover:opacity-80 transition-opacity">
-              </a>
-              <div class="text-sm font-semibold">${f.title}</div>
-            </div>
-          `).join('')}
+        <div class="app-panel-content">
+          <div class="grid grid-cols-2 gap-3">
+            ${frames.map((f, i) => `
+              <div class="bg-zinc-900 rounded p-2">
+                <a href="${f.src}" target="_blank" class="block">
+                  <img src="${f.src}" alt="${f.title}" class="w-full h-32 object-cover rounded mb-2 cursor-pointer hover:opacity-80 transition-opacity">
+                </a>
+                <div class="text-sm font-semibold">${f.title}</div>
+              </div>
+            `).join('')}
+          </div>
         </div>
       </div>
     `;
   }
 
-  function renderContactApp() {
+  function renderContactAppFullscreen() {
     return `
-      <div class="h-full overflow-auto px-1">
-        <div class="flex items-center justify-between mb-3">
-          <button class="back-btn text-sm text-cyan-300">Back</button>
+      <div class="app-fullscreen-panel">
+        <div class="app-panel-header">
+          <button class="app-panel-close-btn text-sm text-cyan-300">Close</button>
           <div class="text-xs text-gray-400">Contact</div>
           <div></div>
         </div>
-        <div class="flex items-center justify-center h-full">
-          <div class="text-center">
-            <div class="text-4xl mb-4">✉️</div>
-            <div class="text-lg font-semibold text-white mb-2">Get in Touch</div>
-            <div class="text-cyan-300 text-xl font-mono">info@ahmedesh.com</div>
+        <div class="app-panel-content">
+          <div class="flex items-center justify-center h-full">
+            <div class="text-center">
+              <div class="text-4xl mb-4">✉️</div>
+              <div class="text-lg font-semibold text-white mb-2">Get in Touch</div>
+              <div class="text-cyan-300 text-xl font-mono">info@ahmedesh.com</div>
+            </div>
           </div>
         </div>
       </div>
     `;
   }
 
-  function renderAboutApp() {
+  function renderAboutAppFullscreen() {
     return `
-      <div class="h-full overflow-auto px-1 text-sm text-gray-400">
-        <div class="flex items-center justify-between mb-3">
-          <button class="back-btn text-sm text-cyan-300">Back</button>
+      <div class="app-fullscreen-panel">
+        <div class="app-panel-header">
+          <button class="app-panel-close-btn text-sm text-cyan-300">Close</button>
           <div class="text-xs text-gray-400">About</div>
           <div></div>
         </div>
-        <div class="space-y-4">
-          <p>
-            Ahmed Shuwehdi, a multimedia artist specializing in Virtual Reality (VR), Augmented Reality (AR), and video art. My work encompasses animations, motion graphics, and captured videos that engage with political issues, particularly those from my home country, Libya.
-          </p>
-          
-          <p>
-            My artistic journey has been deeply influenced by the political landscape and the stories of my homeland. Through my creations, I strive to bring awareness and provoke thought about the complexities and challenges faced by Libyans.
-          </p>
-          
-          <p>
-            In addition to my video work, I create immersive VR art experiences. These experiences are not traditional video games but rather artistic explorations in virtual environments. One of my recent projects involved a VR experience at the Robert Frost House, where I designed an immersive environment that allows visitors to live in the house and experience the atmosphere and era when Frost penned his poems.
-          </p>
-          
-          <p>
-            Currently, I am a student at Bennington College in Vermont, where I continue to expand my skills and artistic vision. My roots in Libya and my experiences in the United States profoundly shape my artistic perspective, driving me to create work that bridges cultural divides and fosters understanding.
-          </p>
-          
-          <div class="space-y-3">
-            <h3 class="font-semibold text-cyan-300">Exhibitions and interviews:</h3>
-            
+        <div class="app-panel-content">
+          <div class="space-y-4 text-sm text-gray-400">
             <p>
-              Techspressioism | Featured Artist - <a href="https://techspressionism.com/artists/" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a>
+              Ahmed Shuwehdi, a multimedia artist specializing in Virtual Reality (VR), Augmented Reality (AR), and video art. My work encompasses animations, motion graphics, and captured videos that engage with political issues, particularly those from my home country, Libya.
             </p>
             
             <p>
-              Bennington banner | Interview - <a href="https://www.benningtonbanner.com/local-news/installation-brings-celebrated-robert-frost-poem-to-virtual-reality/article_6a12b21e-80dc-11ef-b11b-cf55304afe7b.html" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a>
+              My artistic journey has been deeply influenced by the political landscape and the stories of my homeland. Through my creations, I strive to bring awareness and provoke thought about the complexities and challenges faced by Libyans.
             </p>
             
             <p>
-              James Dawson | Interview - <a href="https://techspressionism.com/brooklyn/media/video/" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a>
+              In addition to my video work, I create immersive VR art experiences. These experiences are not traditional video games but rather artistic explorations in virtual environments. One of my recent projects involved a VR experience at the Robert Frost House, where I designed an immersive environment that allows visitors to live in the house and experience the atmosphere and era when Frost penned his poems.
             </p>
             
             <p>
-              Wild & Newfangled Art Museum - <a href="https://www.mowna.org/museum/techspressionism" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a><br>
-              <span class="text-xs text-gray-500">Long Island City, NY<br>October 3, 2024 - January 26, 2025</span>
+              Currently, I am a student at Bennington College in Vermont, where I continue to expand my skills and artistic vision. My roots in Libya and my experiences in the United States profoundly shape my artistic perspective, driving me to create work that bridges cultural divides and fosters understanding.
             </p>
             
-            <p>
-              Robert Frost Stone House Virtual Reality Experience | Solo Exhibition - <a href="https://www.bennington.edu/news-and-features/landscape-and-literature" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a><br>
-              <span class="text-xs text-gray-500">Bennington, Vermont<br>May 2024 – October 2024</span>
-            </p>
-            
-            <p>
-              Hello Brooklyn—Group Exhibition - <a href="https://techspressionism.com/brooklyn/" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a><br>
-              <span class="text-xs text-gray-500">Kingsborough Art Museum, Brooklyn, NY<br>August 7 – September 25, 2024</span>
-            </p>
+            <div class="space-y-3">
+              <h3 class="font-semibold text-cyan-300">Exhibitions and interviews:</h3>
+              
+              <p>
+                Techspressioism | Featured Artist - <a href="https://techspressionism.com/artists/" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a>
+              </p>
+              
+              <p>
+                Bennington banner | Interview - <a href="https://www.benningtonbanner.com/local-news/installation-brings-celebrated-robert-frost-poem-to-virtual-reality/article_6a12b21e-80dc-11ef-b11b-cf55304afe7b.html" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a>
+              </p>
+              
+              <p>
+                James Dawson | Interview - <a href="https://techspressionism.com/brooklyn/media/video/" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a>
+              </p>
+              
+              <p>
+                Wild & Newfangled Art Museum - <a href="https://www.mowna.org/museum/techspressionism" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a><br>
+                <span class="text-xs text-gray-500">Long Island City, NY<br>October 3, 2024 - January 26, 2025</span>
+              </p>
+              
+              <p>
+                Robert Frost Stone House Virtual Reality Experience | Solo Exhibition - <a href="https://www.bennington.edu/news-and-features/landscape-and-literature" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a><br>
+                <span class="text-xs text-gray-500">Bennington, Vermont<br>May 2024 – October 2024</span>
+              </p>
+              
+              <p>
+                Hello Brooklyn—Group Exhibition - <a href="https://techspressionism.com/brooklyn/" target="_blank" class="text-cyan-400 hover:text-cyan-300 underline">Link</a><br>
+                <span class="text-xs text-gray-500">Kingsborough Art Museum, Brooklyn, NY<br>August 7 – September 25, 2024</span>
+              </p>
+            </div>
           </div>
         </div>
       </div>
     `;
   }
 
-  function renderInstagramApp() {
-  return `
-    <div class="h-full overflow-auto px-1 text-sm text-gray-400">
-      <div class="flex items-center justify-between mb-3">
-        <button class="back-btn text-sm text-cyan-300">Back</button>
-        <div class="text-xs text-gray-400">Socials</div>
-        <div></div>
-      </div>
-      <div class="space-y-4">
-        <div class="bg-zinc-900 rounded-lg p-6 text-center">
-          <div class="text-4xl mb-4">📷</div>
-          <h4 class="text-lg font-semibold text-white mb-2">@ahmed.eshhh</h4>
-          <p class="text-sm text-gray-400 mb-4">Multimedia Artist</p>
-          <a 
-            href="https://www.instagram.com/ahmed.eshhh/" 
-            target="_blank" 
-            class="inline-block px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
-          >
-            View Instagram Profile
-          </a>
+  function renderInstagramAppFullscreen() {
+    return `
+      <div class="app-fullscreen-panel">
+        <div class="app-panel-header">
+          <button class="app-panel-close-btn text-sm text-cyan-300">Close</button>
+          <div class="text-xs text-gray-400">Socials</div>
+          <div></div>
         </div>
-        
-        <div class="bg-zinc-900 rounded-lg p-6 text-center">
-          <div class="text-4xl mb-4">💼</div>
-          <h4 class="text-lg font-semibold text-white mb-2">Ahmed Shuwehdi</h4>
-          <p class="text-sm text-gray-400 mb-4">Multimedia Artist</p>
-          <a 
-            href="https://www.linkedin.com/in/ahmed-shuwehdi-5130a819b/" 
-            target="_blank" 
-            class="inline-block px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
-          >
-            View LinkedIn Profile
-          </a>
+        <div class="app-panel-content">
+          <div class="space-y-4 text-sm text-gray-400">
+            <div class="bg-zinc-900 rounded-lg p-6 text-center">
+              <div class="text-4xl mb-4">📷</div>
+              <h4 class="text-lg font-semibold text-white mb-2">@ahmed.eshhh</h4>
+              <p class="text-sm text-gray-400 mb-4">Multimedia Artist</p>
+              <a 
+                href="https://www.instagram.com/ahmed.eshhh/" 
+                target="_blank" 
+                class="inline-block px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+              >
+                View Instagram Profile
+              </a>
+            </div>
+            
+            <div class="bg-zinc-900 rounded-lg p-6 text-center">
+              <div class="text-4xl mb-4">💼</div>
+              <h4 class="text-lg font-semibold text-white mb-2">Ahmed Shuwehdi</h4>
+              <p class="text-sm text-gray-400 mb-4">Multimedia Artist</p>
+              <a 
+                href="https://www.linkedin.com/in/ahmed-shuwehdi-5130a819b/" 
+                target="_blank" 
+                class="inline-block px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+              >
+                View LinkedIn Profile
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
       </div>
     `;
   }
 
-  function renderGameApp() {
+  function renderGameAppFullscreen() {
     return `
-      <div class="h-full flex flex-col justify-between">
-        <div class="flex items-center justify-between mb-3">
-          <button class="back-btn text-sm text-cyan-300">Back</button>
+      <div class="app-fullscreen-panel">
+        <div class="app-panel-header">
+          <button class="app-panel-close-btn text-sm text-cyan-300">Close</button>
           <div class="text-xs text-gray-400">Snake Game</div>
           <div></div>
         </div>
-        <div class="flex justify-center">
-          <div class="game-container">
-            <canvas id="gameCanvas" width="260" height="220" style="border-radius: 8px; background: #000;"></canvas>
-            <div id="gameControls" style="display: flex; justify-content: center; margin-top: 10px; gap: 10px;">
-              <button class="game-btn" data-direction="up">⬆️</button>
-              <button class="game-btn" data-direction="left">⬅️</button>
-              <button class="game-btn" data-direction="down">⬇️</button>
-              <button class="game-btn" data-direction="right">➡️</button>
+        <div class="app-panel-content">
+          <div class="flex justify-center">
+            <div class="game-container">
+              <canvas id="gameCanvas" width="260" height="220" style="border-radius: 8px; background: #000;"></canvas>
+              <div id="gameControls" style="display: flex; justify-content: center; margin-top: 10px; gap: 10px;">
+                <button class="game-btn" data-direction="up">⬆️</button>
+                <button class="game-btn" data-direction="left">⬅️</button>
+                <button class="game-btn" data-direction="down">⬇️</button>
+                <button class="game-btn" data-direction="right">➡️</button>
+              </div>
             </div>
           </div>
         </div>
@@ -574,13 +669,10 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (appToOpen === 'video') {
           console.log("Video app opened, opening fullscreen");
           pauseThemeMusic();
-          openApp = 'video';
-          videoAppFullscreen = true;
-          render();
-          return; // Don't continue with normal app opening
         }
         
         openApp = appToOpen;
+        currentVideoIndex = null; // Reset video when opening app
         render();
         
         if (openApp === 'game') {
@@ -599,11 +691,14 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
-    // Video app fullscreen close button
-    document.querySelectorAll('.video-app-close-btn').forEach(btn => {
+    // App panel close buttons
+    document.querySelectorAll('.app-panel-close-btn').forEach(btn => {
       btn.addEventListener('click', function() {
-        videoAppFullscreen = false;
+        if (openApp === "game") {
+          switchToThemeMusic();
+        }
         openApp = null;
+        currentVideoIndex = null;
         if (themeAudio && !openApp) {
           themeAudio.play().catch(() => {});
         }
@@ -611,6 +706,24 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
+    // Video app: back to gallery button
+    document.querySelectorAll('.app-panel-back-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        currentVideoIndex = null;
+        render();
+      });
+    });
+
+    // Video app: open video in panel (replaces gallery)
+    document.querySelectorAll('.open-video-in-app-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const index = parseInt(this.dataset.index);
+        currentVideoIndex = index;
+        render();
+      });
+    });
+
+    // Keep old open-video-btn for gallery modal (if still used elsewhere)
     document.querySelectorAll('.open-video-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         galleryModal = parseInt(this.dataset.index);

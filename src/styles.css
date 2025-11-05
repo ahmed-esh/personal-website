@@ -226,8 +226,8 @@ body {
   border-radius: 0.25rem;
 }
 
-/* Video App Fullscreen */
-.video-app-fullscreen {
+/* App Fullscreen Panels - All apps use this */
+.app-fullscreen-panel {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -242,16 +242,24 @@ body {
   overflow-y: auto;
 }
 
-.video-app-header {
+.app-panel-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid #27272a;
+  flex-shrink: 0;
 }
 
-.video-app-close-btn {
+.app-panel-content {
+  flex: 1;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.app-panel-close-btn,
+.app-panel-back-btn {
   color: #67e8f9;
   font-size: 0.875rem;
   background: none;
@@ -260,10 +268,12 @@ body {
   padding: 0.5rem;
 }
 
-.video-app-close-btn:hover {
+.app-panel-close-btn:hover,
+.app-panel-back-btn:hover {
   color: #22d3ee;
 }
 
+/* Video app specific styles */
 .video-app-content {
   width: 100%;
   margin: 0 auto;
@@ -276,6 +286,14 @@ body {
   width: 480px !important;
   height: 270px !important;
   object-fit: cover;
+}
+
+.video-player-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 /* No responsive scaling - fixed 1440x1440 container */
