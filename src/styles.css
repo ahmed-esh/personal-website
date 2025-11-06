@@ -274,6 +274,118 @@ body {
   color: rgba(255, 165, 0, 0.7); /* Lighter/bright orange on hover */
 }
 
+/* Game app carousel styles */
+.game-app-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding: 0;
+}
+
+.game-carousel-container {
+  position: relative;
+  width: 1440px;
+  height: 1440px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.game-carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  height: 100%;
+  width: 100%;
+}
+
+.game-project-panel {
+  flex: 0 0 1440px;
+  width: 1440px;
+  height: 1440px;
+  aspect-ratio: 1 / 1;
+  padding: 4rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow-y: auto;
+  background-color: transparent;
+  color: white;
+  gap: 3rem;
+}
+
+.game-project-visuals-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 50%;
+  flex-shrink: 0;
+}
+
+.game-project-visual {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.game-project-info {
+  width: 50%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  color: rgba(255, 165, 0, 0.7);
+  font-size: 4rem;
+  padding: 1.5rem 2rem;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0.8;
+  transition: opacity 0.3s ease, background-color 0.3s ease;
+  border-radius: 8px;
+}
+
+.game-carousel-arrow:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 165, 0, 1);
+}
+
+.game-carousel-arrow.left-arrow {
+  left: 1rem;
+}
+
+.game-carousel-arrow.right-arrow {
+  right: 1rem;
+}
+
+.game-project-panel .app-panel-text-base {
+  line-height: 1.8;
+}
+
+.game-project-panel .app-primary-text {
+  color: rgba(255, 165, 0, 0.7);
+}
+
+.game-project-panel .app-primary-text:hover {
+  color: rgba(255, 165, 0, 1);
+}
+
+.game-project-panel .app-primary-text.underline {
+  text-decoration: underline;
+}
+
 /* App-wide primary color styling */
 .app-primary-text {
   color: rgba(255, 165, 0, 0.4);

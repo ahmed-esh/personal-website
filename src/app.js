@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let appRefs = [];
   let animationStarted = false;
   let animationComplete = false;
+  let gameCarouselIndex = 0; // Track current carousel panel index
 
   const apps = [
     { key: "video", label: "Video", emoji: "🎥", icon: "src/assets/website layout/visuals/video app.png", x: 618, y: 233 },
@@ -514,8 +515,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
             <p style="margin-bottom: 3rem;">
              MFA Game Design, NYU Tisch Game Center 2027
+            </p>
+
+             <p>
              Bennington College, Bachelors of Arts, 2025
             </p>
+
 
             <p style="margin-bottom: 3rem;">
              I create games that revolve around systems, tension, and play that doesn't quite behave the way it should. I'm drawn to weird mechanics the kind that make players question what a "game" is supposed to feel like. Sometimes my work exists on a screen; sometimes it lives in the real world through physical games and shared play.
@@ -616,27 +621,212 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
   }
 
+  // Game projects data
+  const gameProjects = [
+    {
+      title: "Robert Frost Stone House VR Experience",
+      visuals: [
+        "src/assets/gamesapp/Robert Frost Stone House VR Experience 1.png",
+        "src/assets/gamesapp/Robert Frost Stone House VR Experience 2.HEIC",
+        "src/assets/gamesapp/Robert Frost Stone House VR Experience 3.png",
+      ],
+      link: {
+        text: "More Information",
+        url: "https://www.benningtonbanner.com/local-news/installation-brings-celebrated-robert-frost-poem-to-virtual-reality/article_6a12b21e-80dc-11ef-b11b-cf55304afe7b.html",
+      },
+      description: `The Robert Frost Stone House VR Experience is an immersive project created for children in the local area, inviting them to virtually explore the home of poet Robert Frost. Through VR, children can engage with the world of Frost, connecting with the environment that inspired much of his work. This project was developed with the belief that VR can offer a unique and engaging way for young users to experience history and poetry, making Frost's life and writings accessible and meaningful.
+
+Through VR, children aren't just hearing or reading about Frost—they're stepping into his environment, seeing firsthand the inspiration behind his work. I interviewed the director of the Robert Frost House Stone House Museum to understand how Frost lived, referencing his writings about the farm, the horse, the bonfire, and the hut—all key design elements.`,
+      exhibition: "May 2024 - October 2024",
+      medium: "VR | Unity 3D",
+      press: [{ text: "YouTube", url: "https://youtu.be/4N4h6-egdr8" }],
+    },
+    {
+      title: "Dream Garden",
+      visuals: [
+        "src/assets/gamesapp/Dream Garden 1.png",
+        "src/assets/gamesapp/Dream Garden 2.png",
+        "src/assets/gamesapp/Dream Garden 3.png",
+      ],
+      link: {
+        text: "More Information",
+        url: "https://www.youtube.com/watch?v=Hy7jHhNJ7sU",
+      },
+      description: `Dream Garden was an imaginative outdoor installation of light, sound, and movement in Hiland Hall Garden, North Bennington. The event invited audiences of all ages to experience a multi-sensory transformation of the garden at night.
+
+My contribution focused on projection mapping, where I used MadMapper to bring dynamic visuals to life across natural surfaces and sculptural forms. Through light and projection, I created immersive textures that responded to the environment, weaving together organic imagery with abstract movement.
+
+Working closely with the lead artists, I aligned my visuals with the soundscapes and installations so the audience felt fully enveloped by the experience. It was both a technical and artistic challenge—mapping across irregular outdoor surfaces while enhancing the garden's natural beauty.`,
+      exhibition: "November 2023",
+      medium: "Projection Mapping",
+      video: [{ text: "YouTube", url: "https://www.youtube.com/watch?v=Hy7jHhNJ7sU" }],
+    },
+    {
+      title: "NICK Mayer Under the Water Gallery",
+      visuals: [
+        "src/assets/gamesapp/NICK Mayer under the water gallery 1.png",
+        "src/assets/gamesapp/NICK Mayer under the water gallery 2.png",
+      ],
+      link: {
+        text: "More Information",
+        url: "https://ahmed-esh.github.io/BLKWTRGallery/",
+      },
+      description: `"BLKWTR Gallery" is a digital exhibition space designed to immerse visitors in an underwater art experience.
+Created for artist Nick Mayer, this interactive gallery showcases his work in a setting that mirrors the fluidity and depth of the ocean.
+The project blends web-based interactivity with artistic storytelling, offering a unique way to engage with Mayer's marine-inspired pieces in a visually captivating digital environment—literally where his art comes from: the water.`,
+      medium: "Website | Javascript three.js",
+      year: "2025",
+      visitGallery: { text: "Visit Gallery", url: "https://ahmed-esh.github.io/BLKWTRGallery/" },
+    },
+    {
+      title: "Roshen Al-Hosh",
+      visuals: [
+        "src/assets/gamesapp/Roshen AL-Hosh 1.jpg",
+        "src/assets/gamesapp/Roshen AL-Hosh 2 .jpg",
+      ],
+      description: `Roshen Al-Hosh is an immersive installation that uses an Xbox 360 camera to track participants' movements in real life, mirrored in the digital space of the installation. On-screen, users look through a window, with their movement enabling navigation in a 2m x 1m confined space.
+
+This piece captures the nostalgic essence of childhood moments spent gazing out a window, curious about the world outside—a reflection of my own memories. By blending technology with introspection, it invites viewers to reconnect with their sense of wonder.`,
+      medium: "Installation",
+      year: "2024",
+      link: {
+        text: "Project Folder",
+        url: "https://drive.google.com/drive/folders/15Dt543Cwvgh6aNEAu5bn5EAElJ6wmkaH?usp=sharing",
+      },
+    },
+    {
+      title: "Shug Life",
+      visuals: [
+        "src/assets/gamesapp/Shug Life 1.jpg",
+        "src/assets/gamesapp/Shug Life 2.jpg",
+      ],
+      link: {
+        text: "Video",
+        url: "https://youtu.be/thAZV2Km4b4",
+      },
+      description: `Shug Life is a VR music video experience created for the track "Шуг Скриптонит" by Skryptonite, a prominent Kazakh rapper. It reimagines the concept of a music video by placing it inside an unconventional VR space, challenging how music and visuals interact.
+
+When I was young, I always imagined what a music video scene might feel like if the environment itself became a character. This project explores that question through immersive space and user perspective.`,
+      medium: "VR | Unity 3D",
+      year: "2024",
+    },
+    {
+      title: "Flappy Bird Interactive Game",
+      visuals: [
+        "src/assets/gamesapp/Flappy Bird Interactive Game 1 .jpg",
+        "src/assets/gamesapp/Flappy Bird Interactive Game 2.jpg",
+        "src/assets/gamesapp/Flappy Bird Interactive Game 3.jpg",
+      ],
+      link: {
+        text: "More Information",
+        url: "https://drive.google.com/drive/folders/1MRodq0rNDg6rJIsDcVdoHe6I1quaorTB?usp=sharing",
+      },
+      description: `A reimagining of the classic *Flappy Bird*, this interactive game focuses on playful engagement and highlights how tactile, physical feedback can deepen digital experiences.`,
+      medium: "Haptic Media",
+      year: "2023",
+    },
+  ];
+
   function renderGameAppFullscreen() {
-    return `
-      <div class="app-fullscreen-panel">
-        <div class="app-panel-header">
-          <button class="app-panel-close-btn app-panel-text-sm app-primary-text">Close</button>
-          <div class="app-panel-text-xs text-white">Snake Game</div>
-          <div></div>
-        </div>
-        <div class="app-panel-content">
-          <div class="flex justify-center">
-            <div class="game-container">
-              <canvas id="gameCanvas" width="260" height="220" style="border-radius: 8px; background: #000;"></canvas>
-              <div id="gameControls" style="display: flex; justify-content: center; margin-top: 10px; gap: 10px;">
-                <button class="game-btn" data-direction="up">⬆️</button>
-                <button class="game-btn" data-direction="left">⬅️</button>
-                <button class="game-btn" data-direction="down">⬇️</button>
-                <button class="game-btn" data-direction="right">➡️</button>
-              </div>
+    let currentProjectIndex = 0;
+
+    const renderProjectPanel = (project, index) => {
+      const visualsHtml = project.visuals
+        .map(
+          (src) =>
+            `<img src="${src}" alt="${project.title}" class="game-project-visual" style="width: 100%; max-height: 400px; object-fit: contain; margin-bottom: 2rem;">`
+        )
+        .join("");
+
+      const linkHtml = project.link
+        ? `<p class="app-panel-text-base text-white" style="margin-bottom: 1rem;"><span class="font-semibold app-primary-text">Link:</span> <a href="${project.link.url}" target="_blank" class="app-primary-text underline">${project.link.text}</a></p>`
+        : "";
+
+      const descriptionHtml = project.description
+        .split("\n\n")
+        .map(
+          (paragraph) =>
+            `<p class="app-panel-text-base text-white" style="margin-bottom: 1.5rem; line-height: 1.8;">${paragraph}</p>`
+        )
+        .join("");
+
+      const exhibitionHtml = project.exhibition
+        ? `<p class="app-panel-text-base text-white" style="margin-bottom: 1rem;"><span class="font-semibold app-primary-text">Exhibition:</span> <span class="text-white">${project.exhibition}</span></p>`
+        : "";
+
+      const mediumHtml = project.medium
+        ? `<p class="app-panel-text-base text-white" style="margin-bottom: 1rem;"><span class="font-semibold app-primary-text">Medium:</span> <span class="text-white">${project.medium}</span></p>`
+        : "";
+
+      const yearHtml = project.year
+        ? `<p class="app-panel-text-base text-white" style="margin-bottom: 1rem;"><span class="font-semibold app-primary-text">Year:</span> <span class="text-white">${project.year}</span></p>`
+        : "";
+
+      const pressHtml = project.press
+        ? `<p class="app-panel-text-base text-white" style="margin-bottom: 1rem;"><span class="font-semibold app-primary-text">Press:</span> ${project.press
+            .map(
+              (item) =>
+                `<a href="${item.url}" target="_blank" class="app-primary-text underline">${item.text}</a>`
+            )
+            .join(", ")}</p>`
+        : "";
+
+      const videoHtml = project.video
+        ? `<p class="app-panel-text-base text-white" style="margin-bottom: 1rem;"><span class="font-semibold app-primary-text">Video:</span> ${project.video
+            .map(
+              (item) =>
+                `<a href="${item.url}" target="_blank" class="app-primary-text underline">${item.text}</a>`
+            )
+            .join(", ")}</p>`
+        : "";
+
+      const visitGalleryHtml = project.visitGallery
+        ? `<p class="app-panel-text-base text-white" style="margin-bottom: 1rem;"><span class="font-semibold app-primary-text">Link:</span> <a href="${project.visitGallery.url}" target="_blank" class="app-primary-text underline">${project.visitGallery.text}</a></p>`
+        : "";
+
+      return `
+        <div class="game-project-panel">
+          <div class="game-project-visuals-container">
+            ${visualsHtml}
+          </div>
+          <div class="game-project-info">
+            <h2 class="font-bold app-panel-text-4xl app-primary-text" style="margin-bottom: 2rem;">${project.title}</h2>
+            ${linkHtml}
+            ${exhibitionHtml}
+            ${mediumHtml}
+            ${yearHtml}
+            <div class="game-project-description">
+              <h3 class="font-semibold app-panel-text-lg app-primary-text" style="margin-bottom: 1rem;">Description:</h3>
+              ${descriptionHtml}
             </div>
+            ${pressHtml}
+            ${videoHtml}
+            ${visitGalleryHtml}
           </div>
         </div>
+      `;
+    };
+
+    const gameAppContent = `
+      <div class="app-panel-header">
+        <button class="app-panel-back-btn app-panel-btn app-primary-text">Back</button>
+        <h2 class="app-panel-title app-panel-text-2xl app-primary-text">Digital and Physical Games</h2>
+        <button class="app-panel-close-btn app-panel-btn app-primary-text">Close</button>
+      </div>
+      <div class="app-panel-content game-app-content">
+        <div class="game-carousel-container">
+          <button class="game-carousel-arrow left-arrow" id="game-left-arrow">←</button>
+          <div class="game-carousel-track" id="game-carousel-track">
+            ${gameProjects.map((project, index) => renderProjectPanel(project, index)).join("")}
+          </div>
+          <button class="game-carousel-arrow right-arrow" id="game-right-arrow">→</button>
+        </div>
+      </div>
+    `;
+
+    return `
+      <div class="app-fullscreen-panel game-app-fullscreen">
+        ${gameAppContent}
       </div>
     `;
   }
@@ -692,11 +882,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         openApp = appToOpen;
         currentVideoIndex = null; // Reset video when opening app
-        render();
-        
-        if (openApp === 'game') {
-          initGame();
+        if (appToOpen === 'game') {
+          gameCarouselIndex = 0; // Reset carousel to first project
         }
+        render();
       });
     });
 
@@ -741,6 +930,53 @@ document.addEventListener('DOMContentLoaded', function() {
         render();
       });
     });
+
+    // Game app: carousel navigation
+    const gameCarouselTrack = document.querySelector('#game-carousel-track');
+    const gameLeftArrow = document.querySelector('#game-left-arrow');
+    const gameRightArrow = document.querySelector('#game-right-arrow');
+    
+    if (gameCarouselTrack && gameLeftArrow && gameRightArrow && openApp === 'game') {
+      const maxIndex = gameProjects.length - 1;
+
+      const updateCarousel = () => {
+        const panelWidth = 1440; // Fixed width for each panel
+        gameCarouselTrack.style.transform = `translateX(-${gameCarouselIndex * panelWidth}px)`;
+        
+        // Get fresh references after potential re-renders
+        const leftArrow = document.querySelector('#game-left-arrow');
+        const rightArrow = document.querySelector('#game-right-arrow');
+        if (leftArrow && rightArrow) {
+          leftArrow.style.opacity = gameCarouselIndex === 0 ? "0.3" : "1";
+          rightArrow.style.opacity = gameCarouselIndex === maxIndex ? "0.3" : "1";
+          leftArrow.style.pointerEvents = gameCarouselIndex === 0 ? "none" : "auto";
+          rightArrow.style.pointerEvents = gameCarouselIndex === maxIndex ? "none" : "auto";
+        }
+      };
+
+      // Remove existing listeners by cloning
+      const newLeftArrow = gameLeftArrow.cloneNode(true);
+      const newRightArrow = gameRightArrow.cloneNode(true);
+      gameLeftArrow.parentNode.replaceChild(newLeftArrow, gameLeftArrow);
+      gameRightArrow.parentNode.replaceChild(newRightArrow, gameRightArrow);
+
+      newLeftArrow.addEventListener("click", () => {
+        if (gameCarouselIndex > 0) {
+          gameCarouselIndex--;
+          updateCarousel();
+        }
+      });
+
+      newRightArrow.addEventListener("click", () => {
+        if (gameCarouselIndex < maxIndex) {
+          gameCarouselIndex++;
+          updateCarousel();
+        }
+      });
+
+      // Initialize
+      updateCarousel();
+    }
 
     // Keep old open-video-btn for gallery modal (if still used elsewhere)
     document.querySelectorAll('.open-video-btn').forEach(btn => {
