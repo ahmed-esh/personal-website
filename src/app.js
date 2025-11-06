@@ -505,47 +505,51 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="app-panel-content">
           <div class="space-y-8 app-panel-text-sm text-white">
             <p>
-              Ahmed Shuwehdi, a multimedia artist specializing in Virtual Reality (VR), Augmented Reality (AR), and video art. My work encompasses animations, motion graphics, and captured videos that engage with political issues, particularly those from my home country, Libya.
+              Ahmed Shuwehdi
             </p>
             
             <p>
-              My artistic journey has been deeply influenced by the political landscape and the stories of my homeland. Through my creations, I strive to bring awareness and provoke thought about the complexities and challenges faced by Libyans.
+             Game Designer & Multimedia Artist
             </p>
             
             <p>
-              In addition to my video work, I create immersive VR art experiences. These experiences are not traditional video games but rather artistic explorations in virtual environments. One of my recent projects involved a VR experience at the Robert Frost House, where I designed an immersive environment that allows visitors to live in the house and experience the atmosphere and era when Frost penned his poems.
+             I create games that revolve around systems, tension, and play that doesn't quite behave the way it should. I'm drawn to weird mechanics the kind that make players question what a "game" is supposed to feel like. Sometimes my work exists on a screen; sometimes it lives in the real world through physical games and shared play.
             </p>
             
             <p>
-              Currently, I am a student at Bennington College in Vermont, where I continue to expand my skills and artistic vision. My roots in Libya and my experiences in the United States profoundly shape my artistic perspective, driving me to create work that bridges cultural divides and fosters understanding.
+             Beyond games, my multimedia work blends animation, motion graphics, and found or captured footage. Much of it traces back to Libya, the place that shaped my sense of storytelling and contradiction. I use moving images as a way to hold memory, politics, and emotion in the same frame to turn the everyday chaos of a country in flux into something human, something that lingers.
             </p>
             
-            <div class="space-y-3">
-              <h3 class="font-semibold app-panel-text-lg app-primary-text">Exhibitions and interviews:</h3>
+            <p>
+             In much of my work, I explore the world through the lens of childhood, presenting these issues as if narrating them to children or having a child tell the story. This approach helps me make sense of these themes for audiences unfamiliar with them, distilling them in ways that resonate universally. If a child can understand the message, I believe, then so can adults.
+            </p>
+            
+            <div class="space-y-8">
+              <h3 class="font-semibold app-panel-text-lg app-primary-text mb-8">Exhibitions and interviews:</h3>
               
-              <p>
+              <p class="mb-8">
                 Techspressioism | Featured Artist - <a href="https://techspressionism.com/artists/" target="_blank" class="app-primary-text underline">Link</a>
               </p>
               
-              <p>
+              <p class="mb-8">
                 Bennington banner | Interview - <a href="https://www.benningtonbanner.com/local-news/installation-brings-celebrated-robert-frost-poem-to-virtual-reality/article_6a12b21e-80dc-11ef-b11b-cf55304afe7b.html" target="_blank" class="app-primary-text underline">Link</a>
               </p>
               
-              <p>
+              <p class="mb-8">
                 James Dawson | Interview - <a href="https://techspressionism.com/brooklyn/media/video/" target="_blank" class="app-primary-text underline">Link</a>
               </p>
               
-              <p>
+              <p class="mb-8">
                 Wild & Newfangled Art Museum - <a href="https://www.mowna.org/museum/techspressionism" target="_blank" class="app-primary-text underline">Link</a><br>
                 <span class="app-panel-text-xs text-white">Long Island City, NY<br>October 3, 2024 - January 26, 2025</span>
               </p>
               
-              <p>
+              <p class="mb-8">
                 Robert Frost Stone House Virtual Reality Experience | Solo Exhibition - <a href="https://www.bennington.edu/news-and-features/landscape-and-literature" target="_blank" class="app-primary-text underline">Link</a><br>
                 <span class="app-panel-text-xs text-white">Bennington, Vermont<br>May 2024 – October 2024</span>
               </p>
               
-              <p>
+              <p class="mb-8">
                 Hello Brooklyn—Group Exhibition - <a href="https://techspressionism.com/brooklyn/" target="_blank" class="app-primary-text underline">Link</a><br>
                 <span class="app-panel-text-xs text-white">Kingsborough Art Museum, Brooklyn, NY<br>August 7 – September 25, 2024</span>
               </p>
@@ -568,8 +572,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="space-y-8 app-panel-text-sm text-white">
             <div class="bg-zinc-900 rounded-lg p-12 text-center">
               <div class="app-panel-text-4xl mb-8">📷</div>
-              <h4 class="app-panel-text-lg font-semibold text-white mb-4">@ahmed.eshhh</h4>
-              <p class="app-panel-text-sm text-white mb-8">Multimedia Artist</p>
+              <h4 class="app-panel-text-lg font-semibold text-white mb-8">@ahmed.eshhh</h4>
               <a 
                 href="https://www.instagram.com/ahmed.eshhh/" 
                 target="_blank" 
@@ -581,14 +584,25 @@ document.addEventListener('DOMContentLoaded', function() {
             
             <div class="bg-zinc-900 rounded-lg p-12 text-center">
               <div class="app-panel-text-4xl mb-8">💼</div>
-              <h4 class="app-panel-text-lg font-semibold text-white mb-4">Ahmed Shuwehdi</h4>
-              <p class="app-panel-text-sm text-white mb-8">Multimedia Artist</p>
+              <h4 class="app-panel-text-lg font-semibold text-white mb-8">Ahmed Shuwehdi</h4>
               <a 
                 href="https://www.linkedin.com/in/ahmed-shuwehdi-5130a819b/" 
                 target="_blank" 
                 class="inline-block app-panel-btn-large app-primary-btn-bg text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
               >
                 View LinkedIn Profile
+              </a>
+            </div>
+            
+            <div class="bg-zinc-900 rounded-lg p-12 text-center">
+              <div class="app-panel-text-4xl mb-8">🎮</div>
+              <h4 class="app-panel-text-lg font-semibold text-white mb-8">Ahmedesh</h4>
+              <a 
+                href="https://ahmedesh.itch.io/" 
+                target="_blank" 
+                class="inline-block app-panel-btn-large app-primary-btn-bg text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+              >
+                View itch.io Profile
               </a>
             </div>
           </div>
