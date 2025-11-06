@@ -790,7 +790,7 @@ When I was young, I always imagined what a music video scene might feel like if 
             ${visualsHtml}
           </div>
           <div class="game-project-info">
-            <h2 class="font-bold app-panel-text-4xl app-primary-text" style="margin-bottom: 2rem;">${project.title}</h2>
+            <h2 class="font-bold app-panel-text-4xl app-primary-text" style="margin-top: 3rem; margin-bottom: 2rem;">${project.title}</h2>
             ${linkHtml}
             ${exhibitionHtml}
             ${mediumHtml}
@@ -947,10 +947,26 @@ When I was young, I always imagined what a music video scene might feel like if 
         const leftArrow = document.querySelector('#game-left-arrow');
         const rightArrow = document.querySelector('#game-right-arrow');
         if (leftArrow && rightArrow) {
-          leftArrow.style.opacity = gameCarouselIndex === 0 ? "0.3" : "1";
-          rightArrow.style.opacity = gameCarouselIndex === maxIndex ? "0.3" : "1";
-          leftArrow.style.pointerEvents = gameCarouselIndex === 0 ? "none" : "auto";
-          rightArrow.style.pointerEvents = gameCarouselIndex === maxIndex ? "none" : "auto";
+          // Update opacity and pointer events for disabled state
+          if (gameCarouselIndex === 0) {
+            leftArrow.style.opacity = "0.5";
+            leftArrow.style.pointerEvents = "none";
+            leftArrow.style.cursor = "not-allowed";
+          } else {
+            leftArrow.style.opacity = "1";
+            leftArrow.style.pointerEvents = "auto";
+            leftArrow.style.cursor = "pointer";
+          }
+          
+          if (gameCarouselIndex === maxIndex) {
+            rightArrow.style.opacity = "0.5";
+            rightArrow.style.pointerEvents = "none";
+            rightArrow.style.cursor = "not-allowed";
+          } else {
+            rightArrow.style.opacity = "1";
+            rightArrow.style.pointerEvents = "auto";
+            rightArrow.style.cursor = "pointer";
+          }
         }
       };
 
