@@ -260,7 +260,7 @@ body {
 
 .app-panel-close-btn,
 .app-panel-back-btn {
-  color: #67e8f9;
+  color: rgba(255, 165, 0, 0.4); /* Orange color instead of cyan */
   font-size: 1.75rem; /* doubled from 0.875rem */
   background: none;
   border: none;
@@ -271,7 +271,7 @@ body {
 
 .app-panel-close-btn:hover,
 .app-panel-back-btn:hover {
-  color: #22d3ee;
+  color: rgba(255, 165, 0, 0.7); /* Lighter/bright orange on hover */
 }
 
 /* App-wide primary color styling */
