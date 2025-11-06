@@ -508,15 +508,20 @@ document.addEventListener('DOMContentLoaded', function() {
               Ahmed Shuwehdi
             </p>
             
-            <p>
+            <p style="margin-bottom: 3rem;">
              Game Designer & Multimedia Artist
             </p>
             
-            <p>
+            <p style="margin-bottom: 3rem;">
+             MFA Game Design, NYU Tisch Game Center 2027
+             Bennington College, Bachelors of Arts, 2025
+            </p>
+
+            <p style="margin-bottom: 3rem;">
              I create games that revolve around systems, tension, and play that doesn't quite behave the way it should. I'm drawn to weird mechanics the kind that make players question what a "game" is supposed to feel like. Sometimes my work exists on a screen; sometimes it lives in the real world through physical games and shared play.
             </p>
             
-            <p>
+            <p style="margin-bottom: 3rem;">
              Beyond games, my multimedia work blends animation, motion graphics, and found or captured footage. Much of it traces back to Libya, the place that shaped my sense of storytelling and contradiction. I use moving images as a way to hold memory, politics, and emotion in the same frame to turn the everyday chaos of a country in flux into something human, something that lingers.
             </p>
             
