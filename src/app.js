@@ -524,32 +524,32 @@ document.addEventListener('DOMContentLoaded', function() {
              In much of my work, I explore the world through the lens of childhood, presenting these issues as if narrating them to children or having a child tell the story. This approach helps me make sense of these themes for audiences unfamiliar with them, distilling them in ways that resonate universally. If a child can understand the message, I believe, then so can adults.
             </p>
             
-            <div class="space-y-8">
-              <h3 class="font-semibold app-panel-text-lg app-primary-text mb-8">Exhibitions and interviews:</h3>
+            <div>
+              <h3 class="font-semibold app-panel-text-lg app-primary-text" style="margin-bottom: 3rem; margin-top: 2rem;">Exhibitions and interviews:</h3>
               
-              <p class="mb-8">
+              <p style="margin-bottom: 3rem;">
                 Techspressioism | Featured Artist - <a href="https://techspressionism.com/artists/" target="_blank" class="app-primary-text underline">Link</a>
               </p>
               
-              <p class="mb-8">
+              <p style="margin-bottom: 3rem;">
                 Bennington banner | Interview - <a href="https://www.benningtonbanner.com/local-news/installation-brings-celebrated-robert-frost-poem-to-virtual-reality/article_6a12b21e-80dc-11ef-b11b-cf55304afe7b.html" target="_blank" class="app-primary-text underline">Link</a>
               </p>
               
-              <p class="mb-8">
+              <p style="margin-bottom: 3rem;">
                 James Dawson | Interview - <a href="https://techspressionism.com/brooklyn/media/video/" target="_blank" class="app-primary-text underline">Link</a>
               </p>
               
-              <p class="mb-8">
+              <p style="margin-bottom: 3rem;">
                 Wild & Newfangled Art Museum - <a href="https://www.mowna.org/museum/techspressionism" target="_blank" class="app-primary-text underline">Link</a><br>
                 <span class="app-panel-text-xs text-white">Long Island City, NY<br>October 3, 2024 - January 26, 2025</span>
               </p>
               
-              <p class="mb-8">
+              <p style="margin-bottom: 3rem;">
                 Robert Frost Stone House Virtual Reality Experience | Solo Exhibition - <a href="https://www.bennington.edu/news-and-features/landscape-and-literature" target="_blank" class="app-primary-text underline">Link</a><br>
                 <span class="app-panel-text-xs text-white">Bennington, Vermont<br>May 2024 – October 2024</span>
               </p>
               
-              <p class="mb-8">
+              <p style="margin-bottom: 3rem;">
                 Hello Brooklyn—Group Exhibition - <a href="https://techspressionism.com/brooklyn/" target="_blank" class="app-primary-text underline">Link</a><br>
                 <span class="app-panel-text-xs text-white">Kingsborough Art Museum, Brooklyn, NY<br>August 7 – September 25, 2024</span>
               </p>
