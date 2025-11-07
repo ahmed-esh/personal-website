@@ -624,6 +624,38 @@ document.addEventListener('DOMContentLoaded', function() {
   // Game projects data
   const gameProjects = [
     {
+      title: "Cadman Plaza Playful Intervention",
+      visuals: [
+        "src/assets/gamesapp/cadmen.png",
+        "src/assets/gamesapp/cadmen2.png",
+        "src/assets/gamesapp/cadmen 3.png",
+      ],
+      medium: "Physical Game / Public Play Installation",
+      description: `Cadman Plaza Playful Intervention is a public installation game designed to reconnect people with their environment through play. Participants use newspaper-style "windows" that frame scenes in the park and respond to playful prompts written as headlines. The goal is to make the invisible visible—encouraging curiosity, laughter, and new forms of social interaction in a familiar public space. The project was designed through site observations, prototyping, and public playtesting at Cadman Plaza Park. It emphasizes accessibility, lightness, and humor, inviting visitors to reimagine the ordinary through play.`,
+    },
+    {
+      title: "Scare Traffic Control",
+      visuals: [
+        "src/assets/gamesapp/Scaretrafficcontrol1.png",
+        "src/assets/gamesapp/Scaretrafficcontrol2.png",
+        "src/assets/gamesapp/Scaretrafficcontrol3.png",
+      ],
+      medium: "Digital / Hybrid Board Game",
+      description: `Scare Traffic Control is a two-player cooperative board game where teams of witches and dispatchers coordinate broomstick deliveries across a haunted airspace. Each player takes on a unique role: Couriers navigate a maze of magical curses, while Dispatchers use sigil cards to break those curses through communication and pattern recognition. The team that completes the most deliveries before time runs out wins. The game mixes chaotic teamwork, quick thinking, and Halloween humor to create an energetic, replayable experience.`,
+    },
+    {
+      title: "Sweet and Sour Reunion",
+      visuals: [
+        "src/assets/gamesapp/sweetandsour1.png",
+        "src/assets/gamesapp/sweetandsour2.png",
+        "src/assets/gamesapp/sweetandsour3.png",
+        "src/assets/gamesapp/sweetandsour4.png",
+        "src/assets/gamesapp/sweetandsour5.png",
+      ],
+      medium: "Narrative Social Game",
+      description: `Sweet and Sour Reunion is a narrative roleplaying game set at a chaotic family dinner in a fictional Chinese restaurant. Players embody family members reuniting after years apart, each with hidden objectives, personal constraints, and emotional baggage. Through timed "courses" representing different dishes, players must navigate secrets, alliances, and awkward conversations to meet as many goals as possible before dessert. The game balances humor and tension, using improvisation and empathy to explore family dynamics, miscommunication, and love.`,
+    },
+    {
       title: "Robert Frost Stone House VR Experience",
       visuals: [
         "src/assets/gamesapp/Robert Frost Stone House VR Experience 1.png",
