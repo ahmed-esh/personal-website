@@ -627,7 +627,7 @@ document.addEventListener('DOMContentLoaded', function() {
       title: "Robert Frost Stone House VR Experience",
       visuals: [
         "src/assets/gamesapp/Robert Frost Stone House VR Experience 1.png",
-        "src/assets/gamesapp/Robert Frost Stone House VR Experience 2.HEIC",
+        "src/assets/gamesapp/Robert Frost Stone House VR Experience 2.png",
         "src/assets/gamesapp/Robert Frost Stone House VR Experience 3.png",
       ],
       link: {
