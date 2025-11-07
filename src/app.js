@@ -152,12 +152,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (openApp === "game") {
           switchToThemeMusic();
         }
-        openApp = null;
+      openApp = null;
         currentVideoIndex = null;
         if (themeAudio && !openApp) {
           themeAudio.play().catch(() => {});
         }
-        render();
+      render();
       }
     }
   }
@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <img src="${app.icon}" alt="${app.label}" class="app-icon-image" style="display: block;" />
           <div class="app-hover-overlay"></div>
             </button>
-      </div>
+        </div>
     `).join('');
   }
 
@@ -324,18 +324,18 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div class="app-panel-content">
           <div class="video-app-content">
-            ${sampleVideos.map((v, i) => `
+          ${sampleVideos.map((v, i) => `
               <div class="bg-zinc-900 rounded-lg p-8 flex gap-8 items-center hover:bg-zinc-800 transition-colors">
                 <img src="${v.thumbnail}" alt="${v.title} thumbnail" style="width: 480px; height: 270px; object-fit: cover; border-radius: 0.5rem;">
-                <div class="flex-1">
+              <div class="flex-1">
                   <div class="font-semibold app-panel-text-lg mb-2 text-white">${v.title}</div>
                   <div class="app-panel-text-sm text-white">${v.yearType}</div>
                 </div>
                 <button class="open-video-in-app-btn app-panel-btn video-app-open-btn text-white rounded-lg transition-colors" data-index="${i}" style="margin-left: auto;">
-                  Open
-                </button>
-              </div>
-            `).join('')}
+                Open
+              </button>
+            </div>
+          `).join('')}
           </div>
         </div>
       </div>
@@ -366,8 +366,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <h3 class="text-white app-panel-text-xl font-bold mb-2">${video.title}</h3>
             <p class="text-white app-panel-text-sm mb-2">${video.yearType}</p>
             <p class="text-white app-panel-text-sm">${video.description}</p>
-          </div>
         </div>
+              </div>
       `;
     } else if (isGoogleDrive) {
       // For Google Drive, use the file ID to create an embed URL
@@ -387,8 +387,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <h3 class="text-white app-panel-text-xl font-bold mb-2">${video.title}</h3>
             <p class="text-white app-panel-text-sm mb-2">${video.yearType}</p>
             <p class="text-white app-panel-text-sm">${video.description}</p>
-              </div>
             </div>
+        </div>
       `;
     }
     
@@ -460,14 +460,14 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div class="app-panel-content">
           <div class="grid grid-cols-2 gap-6">
-            ${frames.map((f, i) => `
+          ${frames.map((f, i) => `
               <div class="bg-zinc-900 rounded p-4">
                 <a href="${f.src}" target="_blank" class="block">
                   <img src="${f.src}" alt="${f.title}" class="w-full h-32 object-cover rounded mb-4 cursor-pointer hover:opacity-80 transition-opacity">
                 </a>
                 <div class="app-panel-text-sm font-semibold">${f.title}</div>
-              </div>
-            `).join('')}
+            </div>
+          `).join('')}
           </div>
         </div>
       </div>
@@ -488,7 +488,7 @@ document.addEventListener('DOMContentLoaded', function() {
               <div class="app-panel-text-4xl mb-8">✉️</div>
               <div class="app-panel-text-lg font-semibold text-white mb-4">Get in Touch</div>
               <div class="app-primary-text app-panel-text-xl font-mono">info@ahmedesh.com</div>
-            </div>
+          </div>
           </div>
         </div>
       </div>
@@ -734,7 +734,7 @@ When I was young, I always imagined what a music video scene might feel like if 
       const visualsHtml = project.visuals
         .map(
           (src) =>
-            `<img src="${src}" alt="${project.title}" class="game-project-visual" style="width: 100%; max-height: 400px; object-fit: contain; margin-bottom: 2rem;">`
+            `<img src="${src}" alt="${project.title}" class="game-project-visual" style="max-height: 400px; object-fit: contain; margin-bottom: 2rem;">`
         )
         .join("");
 
@@ -784,7 +784,7 @@ When I was young, I always imagined what a music video scene might feel like if 
         ? `<p class="app-panel-text-base text-white" style="margin-bottom: 1rem;"><span class="font-semibold app-primary-text">Link:</span> <a href="${project.visitGallery.url}" target="_blank" class="app-primary-text underline">${project.visitGallery.text}</a></p>`
         : "";
 
-      return `
+    return `
         <div class="game-project-panel">
           <div class="game-project-visuals-container">
             ${visualsHtml}
@@ -829,6 +829,14 @@ When I was young, I always imagined what a music video scene might feel like if 
         ${gameAppContent}
       </div>
     `;
+  }
+
+  function resizeGameProjectImages(targetWidth = 350) {
+    const images = document.querySelectorAll('.game-project-visual');
+    images.forEach((img) => {
+      img.style.width = `${targetWidth}px`;
+      img.style.height = 'auto';
+    });
   }
 
 
@@ -968,6 +976,8 @@ When I was young, I always imagined what a music video scene might feel like if 
             rightArrow.style.cursor = "pointer";
           }
         }
+
+        resizeGameProjectImages();
       };
 
       // Remove existing listeners by cloning
