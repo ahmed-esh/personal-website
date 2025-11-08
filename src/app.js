@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let animationStarted = false;
   let animationComplete = false;
   let gameCarouselIndex = 0; // Track current carousel panel index
+  let framesCarouselIndex = 0; // Track current frame index
 
   const apps = [
     { key: "video", label: "Video", emoji: "🎥", icon: "src/assets/website layout/visuals/video app.png", x: 618, y: 233 },
@@ -48,6 +49,19 @@ document.addEventListener('DOMContentLoaded', function() {
       src: "https://www.youtube.com/watch?v=UjZEar7cqBo&t=5s",
       thumbnail: "src/assets/images/Benghazi.png"
     },
+  ];
+
+  const framesProjects = [
+    { title: "Shas", src: "src/assets/picsforstils/Shas.png" },
+    { title: "Italian Kids", src: "src/assets/picsforstils/Italian Kids.png" },
+    { title: "SHAR 4", src: "src/assets/picsforstils/SHAR 4.png" },
+    { title: "Soldiers", src: "src/assets/picsforstils/soilders.png" },
+    { title: "Woke Up Like This", src: "src/assets/picsforstils/Woke up like this.png" },
+    { title: "For Instagram 2", src: "src/assets/picsforstils/for instgram 2.png" },
+    { title: "Dodge 1", src: "src/assets/picsforstils/Dodge 1.png" },
+    { title: "The Fight After Prayer", src: "src/assets/picsforstils/the fight after prayer.png" },
+    { title: "Friday", src: "src/assets/picsforstils/Friday.png" },
+    { title: "Bozaid", src: "src/assets/picsforstils/Bozaid.png" },
   ];
 
   function initAudio() {
@@ -438,18 +452,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   function renderFramesAppFullscreen() {
-    const frames = [
-      { title: "Shas", src: "src/assets/picsforstils/Shas.png" },
-      { title: "Italian Kids", src: "src/assets/picsforstils/Italian Kids.png" },
-      { title: "SHAR 4", src: "src/assets/picsforstils/SHAR 4.png" },
-      { title: "Soldiers", src: "src/assets/picsforstils/soilders.png" },
-      { title: "Woke Up Like This", src: "src/assets/picsforstils/Woke up like this.png" },
-      { title: "For Instagram 2", src: "src/assets/picsforstils/for instgram 2.png" },
-      { title: "Dodge 1", src: "src/assets/picsforstils/Dodge 1.png" },
-      { title: "The Fight After Prayer", src: "src/assets/picsforstils/the fight after prayer.png" },
-      { title: "Friday", src: "src/assets/picsforstils/Friday.png" },
-      { title: "Bozaid", src: "src/assets/picsforstils/Bozaid.png" },
-    ];
+    const framesPanelsHtml = framesProjects
+      .map(
+        (frame) => `
+          <div class="frames-project-panel">
+            <a href="${frame.src}" target="_blank" class="frames-project-image-link">
+              <img src="${frame.src}" alt="${frame.title}" class="frames-project-image" />
+            </a>
+            <div class="frames-project-info">
+              <h3 class="frames-project-title app-panel-text-lg text-white">${frame.title}</h3>
+              <p class="app-panel-text-sm app-primary-text">Click image to view full resolution</p>
+            </div>
+          </div>
+        `
+      )
+      .join("");
 
     return `
       <div class="app-fullscreen-panel">
@@ -458,16 +475,13 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="app-panel-text-xs text-white">Stills / Frames</div>
           <div></div>
         </div>
-        <div class="app-panel-content">
-          <div class="grid grid-cols-2 gap-6">
-          ${frames.map((f, i) => `
-              <div class="bg-zinc-900 rounded p-4">
-                <a href="${f.src}" target="_blank" class="block">
-                  <img src="${f.src}" alt="${f.title}" class="w-full h-32 object-cover rounded mb-4 cursor-pointer hover:opacity-80 transition-opacity">
-                </a>
-                <div class="app-panel-text-sm font-semibold">${f.title}</div>
+        <div class="app-panel-content frames-app-content">
+          <div class="frames-carousel-container">
+            <button class="game-carousel-arrow left-arrow" id="frames-left-arrow">←</button>
+            <div class="frames-carousel-track" id="frames-carousel-track">
+              ${framesPanelsHtml}
             </div>
-          `).join('')}
+            <button class="game-carousel-arrow right-arrow" id="frames-right-arrow">→</button>
           </div>
         </div>
       </div>
@@ -925,6 +939,9 @@ When I was young, I always imagined what a music video scene might feel like if 
         if (appToOpen === 'game') {
           gameCarouselIndex = 0; // Reset carousel to first project
         }
+        if (appToOpen === 'frames') {
+          framesCarouselIndex = 0; // Reset frames carousel
+        }
         render();
       });
     });
@@ -1034,6 +1051,65 @@ When I was young, I always imagined what a music video scene might feel like if 
 
       // Initialize
       updateCarousel();
+    }
+
+    // Frames app: carousel navigation
+    const framesCarouselTrack = document.querySelector('#frames-carousel-track');
+    const framesLeftArrow = document.querySelector('#frames-left-arrow');
+    const framesRightArrow = document.querySelector('#frames-right-arrow');
+
+    if (framesCarouselTrack && framesLeftArrow && framesRightArrow && openApp === 'frames') {
+      const maxIndex = framesProjects.length - 1;
+
+      const updateFramesCarousel = () => {
+        const panelWidth = 1440; // Fixed width for each panel
+        framesCarouselTrack.style.transform = `translateX(-${framesCarouselIndex * panelWidth}px)`;
+
+        const leftArrow = document.querySelector('#frames-left-arrow');
+        const rightArrow = document.querySelector('#frames-right-arrow');
+        if (leftArrow && rightArrow) {
+          if (framesCarouselIndex === 0) {
+            leftArrow.style.opacity = "0.5";
+            leftArrow.style.pointerEvents = "none";
+            leftArrow.style.cursor = "not-allowed";
+          } else {
+            leftArrow.style.opacity = "1";
+            leftArrow.style.pointerEvents = "auto";
+            leftArrow.style.cursor = "pointer";
+          }
+
+          if (framesCarouselIndex === maxIndex) {
+            rightArrow.style.opacity = "0.5";
+            rightArrow.style.pointerEvents = "none";
+            rightArrow.style.cursor = "not-allowed";
+          } else {
+            rightArrow.style.opacity = "1";
+            rightArrow.style.pointerEvents = "auto";
+            rightArrow.style.cursor = "pointer";
+          }
+        }
+      };
+
+      const newFramesLeftArrow = framesLeftArrow.cloneNode(true);
+      const newFramesRightArrow = framesRightArrow.cloneNode(true);
+      framesLeftArrow.parentNode.replaceChild(newFramesLeftArrow, framesLeftArrow);
+      framesRightArrow.parentNode.replaceChild(newFramesRightArrow, framesRightArrow);
+
+      newFramesLeftArrow.addEventListener('click', () => {
+        if (framesCarouselIndex > 0) {
+          framesCarouselIndex--;
+          updateFramesCarousel();
+        }
+      });
+
+      newFramesRightArrow.addEventListener('click', () => {
+        if (framesCarouselIndex < maxIndex) {
+          framesCarouselIndex++;
+          updateFramesCarousel();
+        }
+      });
+
+      updateFramesCarousel();
     }
 
     // Keep old open-video-btn for gallery modal (if still used elsewhere)
