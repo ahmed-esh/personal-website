@@ -274,6 +274,13 @@ body {
   color: rgba(255, 165, 0, 0.7); /* Lighter/bright orange on hover */
 }
 
+/* Ensure social app cards have comfortable vertical spacing */
+.socials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
 /* Game app carousel styles */
 .game-app-content {
   display: flex;

@@ -593,7 +593,8 @@ document.addEventListener('DOMContentLoaded', function() {
           <div></div>
         </div>
         <div class="app-panel-content">
-          <div class="space-y-8 app-panel-text-sm text-white">
+          <div class="socials-list app-panel-text-sm text-white">
+            <!-- Social cards list with generous vertical spacing -->
             <div class="bg-zinc-900 rounded-lg p-12 text-center">
               <div class="app-panel-text-4xl mb-8">📷</div>
               <h4 class="app-panel-text-lg font-semibold text-white mb-8">@ahmed.eshhh</h4>
