@@ -858,7 +858,7 @@ When I was young, I always imagined what a music video scene might feel like if 
       <div class="app-panel-header">
         <button class="app-panel-back-btn app-panel-btn app-primary-text">Back</button>
         <h2 class="app-panel-title app-panel-text-2xl app-primary-text">Digital and Physical Games</h2>
-        <button class="app-panel-close-btn app-panel-btn app-primary-text">Close</button>
+        <div></div>
       </div>
       <div class="app-panel-content game-app-content">
         <div class="game-carousel-container">
@@ -972,11 +972,25 @@ When I was young, I always imagined what a music video scene might feel like if 
       });
     });
 
-    // Video app: back to gallery button
+    // App panel back buttons
     document.querySelectorAll('.app-panel-back-btn').forEach(btn => {
       btn.addEventListener('click', function() {
-        currentVideoIndex = null;
-        render();
+        // For video app: go back to gallery
+        if (openApp === 'video' && currentVideoIndex !== null) {
+          currentVideoIndex = null;
+          render();
+        } 
+        // For game app: close the app (same as close button)
+        else if (openApp === 'game') {
+          switchToThemeMusic();
+          openApp = null;
+          currentVideoIndex = null;
+          gameCarouselIndex = 0; // Reset carousel index
+          if (themeAudio && !openApp) {
+            themeAudio.play().catch(() => {});
+          }
+          render();
+        }
       });
     });
 
