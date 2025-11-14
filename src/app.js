@@ -652,7 +652,7 @@ document.addEventListener('DOMContentLoaded', function() {
       title: "Scare Traffic Control",
       visuals: [
         "src/assets/gamesapp/Scaretrafficcontrol1.png",
-        "src/assets/gamesapp/cursecard.png",
+        "src/assets/gamesapp/curse cards.png",
         "src/assets/gamesapp/Scaretrafficcontrol2.png",
         "src/assets/gamesapp/Scaretrafficcontrol3.png",
       ],
