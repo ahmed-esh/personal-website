@@ -593,8 +593,8 @@ document.addEventListener('DOMContentLoaded', function() {
           <div></div>
         </div>
         <div class="app-panel-content">
-          <div class="socials-list app-panel-text-sm text-white">
-            <!-- Social cards list with generous vertical spacing -->
+          <div class="socials-list app-panel-text-sm text-white space-y-12">
+            
             <div class="bg-zinc-900 rounded-lg p-12 text-center">
               <div class="app-panel-text-4xl mb-8">📷</div>
               <h4 class="app-panel-text-lg font-semibold text-white mb-8">@ahmed.eshhh</h4>
@@ -606,7 +606,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 View Instagram Profile
               </a>
             </div>
-            
+
             <div class="bg-zinc-900 rounded-lg p-12 text-center">
               <div class="app-panel-text-4xl mb-8">💼</div>
               <h4 class="app-panel-text-lg font-semibold text-white mb-8">Ahmed Shuwehdi</h4>
@@ -618,7 +618,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 View LinkedIn Profile
               </a>
             </div>
-            
+
             <div class="bg-zinc-900 rounded-lg p-12 text-center">
               <div class="app-panel-text-4xl mb-8">🎮</div>
               <h4 class="app-panel-text-lg font-semibold text-white mb-8">Ahmedesh</h4>
@@ -630,11 +630,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 View itch.io Profile
               </a>
             </div>
+
           </div>
         </div>
       </div>
     `;
-  }
+}
 
   // Game projects data
   const gameProjects = [
