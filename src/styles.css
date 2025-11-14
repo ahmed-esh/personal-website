@@ -278,7 +278,7 @@ body {
 .socials-list {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 8rem;
 }
 
 /* Game app carousel styles */
