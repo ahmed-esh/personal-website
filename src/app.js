@@ -531,7 +531,7 @@ document.addEventListener('DOMContentLoaded', function() {
              MFA Game Design, NYU Tisch Game Center 2027
             </p>
 
-             <p>
+             <pstyle="margin-bottom: 3rem;">
              Bennington College, Bachelors of Arts, 2025
             </p>
 
@@ -652,6 +652,7 @@ document.addEventListener('DOMContentLoaded', function() {
       title: "Scare Traffic Control",
       visuals: [
         "src/assets/gamesapp/Scaretrafficcontrol1.png",
+        "src/assets/gamesapp/cursecard.png",
         "src/assets/gamesapp/Scaretrafficcontrol2.png",
         "src/assets/gamesapp/Scaretrafficcontrol3.png",
       ],
@@ -661,14 +662,16 @@ document.addEventListener('DOMContentLoaded', function() {
     {
       title: "Sweet and Sour Reunion",
       visuals: [
-        "src/assets/gamesapp/sweetandsour1.png",
-        "src/assets/gamesapp/sweetandsour2.png",
         "src/assets/gamesapp/sweetandsour3.png",
+        "src/assets/gamesapp/menusideup.png",
         "src/assets/gamesapp/sweetandsour4.png",
         "src/assets/gamesapp/sweetandsour5.png",
+        "src/assets/gamesapp/sweetandsour1.png",
+        "src/assets/gamesapp/sweetandsour2.png",
+       
       ],
       medium: "Narrative Social Game",
-      description: `Sweet and Sour Reunion is a narrative roleplaying game set at a chaotic family dinner in a fictional Chinese restaurant. Players embody family members reuniting after years apart, each with hidden objectives, personal constraints, and emotional baggage. Through timed "courses" representing different dishes, players must navigate secrets, alliances, and awkward conversations to meet as many goals as possible before dessert. The game balances humor and tension, using improvisation and empathy to explore family dynamics, miscommunication, and love.`,
+      description: ` Work In Progress: Sweet and Sour Reunion is a narrative roleplaying game set at a chaotic family dinner in a fictional Chinese restaurant. Players embody family members reuniting after years apart, each with hidden objectives, personal constraints, and emotional baggage. Through timed "courses" representing different dishes, players must navigate secrets, alliances, and awkward conversations to meet as many goals as possible before dessert. The game balances humor and tension, using improvisation and empathy to explore family dynamics, miscommunication, and love.`,
     },
     {
       title: "Robert Frost Stone House VR Experience",
@@ -728,8 +731,8 @@ The project blends web-based interactivity with artistic storytelling, offering 
     {
       title: "Roshen Al-Hosh",
       visuals: [
-        "src/assets/gamesapp/Roshen AL-Hosh 1.jpg",
-        "src/assets/gamesapp/Roshen AL-Hosh 2 .jpg",
+        "src/assets/gamesapp/Roshen AL-Hosh 1.png",
+        "src/assets/gamesapp/Roshen AL-Hosh 2 .png",
       ],
       description: `Roshen Al-Hosh is an immersive installation that uses an Xbox 360 camera to track participants' movements in real life, mirrored in the digital space of the installation. On-screen, users look through a window, with their movement enabling navigation in a 2m x 1m confined space.
 
@@ -760,9 +763,10 @@ When I was young, I always imagined what a music video scene might feel like if 
     {
       title: "Flappy Bird Interactive Game",
       visuals: [
-        "src/assets/gamesapp/Flappy Bird Interactive Game 1 .jpg",
         "src/assets/gamesapp/Flappy Bird Interactive Game 2.jpg",
         "src/assets/gamesapp/Flappy Bird Interactive Game 3.jpg",
+        "src/assets/gamesapp/Flappy Bird Interactive Game 1 .jpg",
+        
       ],
       link: {
         text: "More Information",
