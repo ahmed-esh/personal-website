@@ -295,6 +295,28 @@ body {
   flex-shrink: 0;
 }
 
+/* Scale down emojis and text in socials app to 40% */
+.socials-list .app-panel-text-4xl {
+  font-size: 1.8rem !important; /* 40% of 4.5rem */
+  line-height: 2rem !important; /* 40% of 5rem */
+}
+
+.socials-list .app-panel-text-lg {
+  font-size: 0.9rem !important; /* 40% of 2.25rem */
+  line-height: 1rem !important; /* 40% of 2.5rem */
+}
+
+.socials-list .app-panel-btn-large {
+  padding: 0.6rem 1.2rem !important; /* 40% of 1.5rem 3rem */
+  font-size: 0.8rem !important; /* 40% of 2rem */
+  line-height: 1rem !important; /* 40% of 2.5rem */
+}
+
+/* Scale down card padding to 40% */
+.socials-list .social-card {
+  padding: 4.8rem !important; /* 40% of 12rem (p-12) */
+}
+
 /* Game app carousel styles */
 .game-app-content {
   display: flex;
