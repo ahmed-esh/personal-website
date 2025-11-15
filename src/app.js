@@ -592,8 +592,8 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="app-panel-text-xs text-white">Socials</div>
           <div></div>
         </div>
-        <div class="app-panel-content">
-          <div class="socials-list app-panel-text-sm text-white space-y-12">
+        <div class="app-panel-content socials-app-content">
+          <div class="socials-list app-panel-text-sm text-white">
             
             <div class="bg-zinc-900 rounded-lg p-12 text-center">
               <div class="app-panel-text-4xl mb-8">📷</div>

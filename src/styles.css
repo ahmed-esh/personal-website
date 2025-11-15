@@ -256,6 +256,12 @@ body {
   flex: 1;
   overflow-y: auto;
   width: 100%;
+  padding: 2rem 0;
+}
+
+/* Extra padding for socials app content */
+.socials-app-content {
+  padding: 4rem 0 !important;
 }
 
 .app-panel-close-btn,
@@ -278,7 +284,9 @@ body {
 .socials-list {
   display: flex;
   flex-direction: column;
-  gap: 8rem;
+  gap: 10rem;
+  padding: 2rem 0;
+  width: 100%;
 }
 
 /* Game app carousel styles */
