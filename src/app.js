@@ -531,7 +531,7 @@ document.addEventListener('DOMContentLoaded', function() {
              MFA Game Design, NYU Tisch Game Center 2027
             </p>
 
-            <p style="margin-bottom: 3rem;">
+             <pstyle="margin-bottom: 3rem;">
              Bennington College, Bachelors of Arts, 2025
             </p>
 
@@ -606,8 +606,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 View Instagram Profile
               </a>
             </div>
-            
-            <div class="social-spacer"></div>
 
             <div class="social-card bg-zinc-900 rounded-lg p-12 text-center">
               <div class="app-panel-text-4xl mb-8">💼</div>
@@ -620,8 +618,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 View LinkedIn Profile
               </a>
             </div>
-            
-            <div class="social-spacer"></div>
 
             <div class="social-card bg-zinc-900 rounded-lg p-12 text-center">
               <div class="app-panel-text-4xl mb-8">🎮</div>
