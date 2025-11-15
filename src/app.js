@@ -637,6 +637,7 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
 }
 
+
   // Game projects data
   const gameProjects = [
     {
