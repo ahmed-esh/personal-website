@@ -284,9 +284,18 @@ body {
 .socials-list {
   display: flex;
   flex-direction: column;
-  gap: 10rem;
   padding: 2rem 0;
   width: 100%;
+}
+
+/* Add large margin-bottom to each social card for spacing */
+.social-card {
+  margin-bottom: 12rem !important;
+}
+
+/* Remove margin from last card */
+.social-card:last-child {
+  margin-bottom: 0 !important;
 }
 
 /* Game app carousel styles */

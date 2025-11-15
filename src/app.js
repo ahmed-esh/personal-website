@@ -595,7 +595,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="app-panel-content socials-app-content">
           <div class="socials-list app-panel-text-sm text-white">
             
-            <div class="bg-zinc-900 rounded-lg p-12 text-center">
+            <div class="social-card bg-zinc-900 rounded-lg p-12 text-center">
               <div class="app-panel-text-4xl mb-8">📷</div>
               <h4 class="app-panel-text-lg font-semibold text-white mb-8">@ahmed.eshhh</h4>
               <a 
@@ -607,7 +607,7 @@ document.addEventListener('DOMContentLoaded', function() {
               </a>
             </div>
 
-            <div class="bg-zinc-900 rounded-lg p-12 text-center">
+            <div class="social-card bg-zinc-900 rounded-lg p-12 text-center">
               <div class="app-panel-text-4xl mb-8">💼</div>
               <h4 class="app-panel-text-lg font-semibold text-white mb-8">Ahmed Shuwehdi</h4>
               <a 
@@ -619,7 +619,7 @@ document.addEventListener('DOMContentLoaded', function() {
               </a>
             </div>
 
-            <div class="bg-zinc-900 rounded-lg p-12 text-center">
+            <div class="social-card bg-zinc-900 rounded-lg p-12 text-center">
               <div class="app-panel-text-4xl mb-8">🎮</div>
               <h4 class="app-panel-text-lg font-semibold text-white mb-8">Ahmedesh</h4>
               <a 
