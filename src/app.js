@@ -606,6 +606,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 View Instagram Profile
               </a>
             </div>
+            
+            <div class="social-spacer"></div>
 
             <div class="social-card bg-zinc-900 rounded-lg p-12 text-center">
               <div class="app-panel-text-4xl mb-8">💼</div>
@@ -618,6 +620,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 View LinkedIn Profile
               </a>
             </div>
+            
+            <div class="social-spacer"></div>
 
             <div class="social-card bg-zinc-900 rounded-lg p-12 text-center">
               <div class="app-panel-text-4xl mb-8">🎮</div>

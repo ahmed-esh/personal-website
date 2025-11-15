@@ -288,14 +288,11 @@ body {
   width: 100%;
 }
 
-/* Add large margin-bottom to each social card for spacing */
-.social-card {
-  margin-bottom: 12rem !important;
-}
-
-/* Remove margin from last card */
-.social-card:last-child {
-  margin-bottom: 0 !important;
+/* Spacer divs between social cards - most reliable method */
+.social-spacer {
+  height: 10rem;
+  width: 100%;
+  flex-shrink: 0;
 }
 
 /* Game app carousel styles */
