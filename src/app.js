@@ -10,6 +10,77 @@ document.addEventListener('DOMContentLoaded', function() {
   let gameCarouselIndex = 0; // Track current carousel panel index
   let framesCarouselIndex = 0; // Track current frame index
 
+  // ---- Simple hash-based deep linking (minimal, non-breaking) ----
+  /**
+   * Parse the current URL hash into a plain object.
+   * Example: #app=video&video=2 -> { app: 'video', video: 2 }
+   */
+  function parseHash() {
+    const raw = window.location.hash.startsWith('#')
+      ? window.location.hash.slice(1)
+      : window.location.hash;
+    const params = new URLSearchParams(raw);
+    const getInt = (key) => {
+      const v = params.get(key);
+      return v === null ? null : Number.parseInt(v, 10);
+    };
+    return {
+      app: params.get('app'),
+      video: getInt('video'),
+      panel: getInt('panel'),
+      index: getInt('index'),
+      modal: getInt('modal'),
+    };
+  }
+
+  /**
+   * Write a new hash reflecting the current UI state.
+   * Uses replaceState to avoid polluting history on every interaction.
+   */
+  function updateHashFromState() {
+    const params = new URLSearchParams();
+    if (openApp) {
+      params.set('app', openApp);
+      if (openApp === 'video') {
+        if (currentVideoIndex !== null) params.set('video', String(currentVideoIndex));
+      } else if (openApp === 'game') {
+        params.set('panel', String(gameCarouselIndex));
+      } else if (openApp === 'frames') {
+        params.set('index', String(framesCarouselIndex));
+        if (galleryModal !== null) params.set('modal', '1');
+      }
+    }
+    const hash = params.toString();
+    const url = hash ? `#${hash}` : ' ';
+    try {
+      window.history.replaceState(null, '', url);
+    } catch (_) {
+      // Fallback if replaceState is blocked
+      window.location.hash = hash;
+    }
+  }
+
+  /**
+   * Apply the current hash values to internal state before rendering.
+   */
+  function applyHashToState() {
+    const { app, video, panel, index, modal } = parseHash();
+    if (!app) {
+      openApp = null;
+      currentVideoIndex = null;
+      return;
+    }
+    openApp = app;
+    if (app === 'video') {
+      currentVideoIndex = Number.isFinite(video) ? video : null;
+    } else if (app === 'game') {
+      gameCarouselIndex = Number.isFinite(panel) ? panel : 0;
+    } else if (app === 'frames') {
+      framesCarouselIndex = Number.isFinite(index) ? index : 0;
+      galleryModal = modal ? framesCarouselIndex : null;
+    }
+  }
+
   const apps = [
     { key: "video", label: "Video", emoji: "🎥", icon: "src/assets/website layout/visuals/video app.png", x: 618, y: 233 },
     { key: "contact", label: "Contact", emoji: "✉️", icon: "src/assets/website layout/visuals/contact app.png", x: 755, y: 234 },
@@ -949,6 +1020,7 @@ When I was young, I always imagined what a music video scene might feel like if 
         if (appToOpen === 'frames') {
           framesCarouselIndex = 0; // Reset frames carousel
         }
+        updateHashFromState();
         render();
       });
     });
@@ -974,6 +1046,7 @@ When I was young, I always imagined what a music video scene might feel like if 
         if (themeAudio && !openApp) {
           themeAudio.play().catch(() => {});
         }
+        updateHashFromState();
         render();
       });
     });
@@ -984,6 +1057,7 @@ When I was young, I always imagined what a music video scene might feel like if 
         // For video app: go back to gallery
         if (openApp === 'video' && currentVideoIndex !== null) {
           currentVideoIndex = null;
+          updateHashFromState();
           render();
         } 
         // For game app: close the app (same as close button)
@@ -995,6 +1069,7 @@ When I was young, I always imagined what a music video scene might feel like if 
           if (themeAudio && !openApp) {
             themeAudio.play().catch(() => {});
           }
+          updateHashFromState();
           render();
         }
       });
@@ -1005,6 +1080,7 @@ When I was young, I always imagined what a music video scene might feel like if 
       btn.addEventListener('click', function() {
         const index = parseInt(this.dataset.index);
         currentVideoIndex = index;
+        updateHashFromState();
         render();
       });
     });
@@ -1060,6 +1136,7 @@ When I was young, I always imagined what a music video scene might feel like if 
         if (gameCarouselIndex > 0) {
           gameCarouselIndex--;
           updateCarousel();
+          updateHashFromState();
         }
       });
 
@@ -1067,6 +1144,7 @@ When I was young, I always imagined what a music video scene might feel like if 
         if (gameCarouselIndex < maxIndex) {
           gameCarouselIndex++;
           updateCarousel();
+          updateHashFromState();
         }
       });
 
@@ -1120,6 +1198,7 @@ When I was young, I always imagined what a music video scene might feel like if 
         if (framesCarouselIndex > 0) {
           framesCarouselIndex--;
           updateFramesCarousel();
+          updateHashFromState();
         }
       });
 
@@ -1127,6 +1206,7 @@ When I was young, I always imagined what a music video scene might feel like if 
         if (framesCarouselIndex < maxIndex) {
           framesCarouselIndex++;
           updateFramesCarousel();
+          updateHashFromState();
         }
       });
 
@@ -1138,6 +1218,7 @@ When I was young, I always imagined what a music video scene might feel like if 
       btn.addEventListener('click', function() {
         galleryModal = parseInt(this.dataset.index);
         pauseThemeMusic();
+        updateHashFromState();
         render();
       });
     });
@@ -1148,6 +1229,7 @@ When I was young, I always imagined what a music video scene might feel like if 
         if (themeAudio && !openApp) {
           themeAudio.play().catch(() => {});
         }
+        updateHashFromState();
         render();
       });
     });
@@ -1291,8 +1373,15 @@ When I was young, I always imagined what a music video scene might feel like if 
 
   function init() {
     initAudio();
+    // Apply hash on initial load so deep links open the right place
+    applyHashToState();
     render();
     window.addEventListener('keydown', onKey);
+    // Support back/forward navigation by listening to hash changes
+    window.addEventListener('hashchange', () => {
+      applyHashToState();
+      render();
+    });
   }
 
 
