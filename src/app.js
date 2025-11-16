@@ -531,7 +531,7 @@ document.addEventListener('DOMContentLoaded', function() {
              MFA Game Design, NYU Tisch Game Center 2027
             </p>
 
-             <pstyle="margin-bottom: 3rem;">
+            <p style="margin-bottom: 3rem;">
              Bennington College, Bachelors of Arts, 2025
             </p>
 
