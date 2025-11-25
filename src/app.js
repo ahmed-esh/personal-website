@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let animationComplete = false;
   let gameCarouselIndex = 0; // Track current carousel panel index
   let framesCarouselIndex = 0; // Track current frame index
+  let audioMuted = false; // Track audio mute state
 
   // ---- Simple hash-based deep linking (minimal, non-breaking) ----
   /**
@@ -160,6 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function startThemeMusic() {
+    if (audioMuted) return; // Don't play if muted
     if (themeAudio && themeAudio.paused) {
       themeAudio.play().catch((e) => {
         console.log("Theme audio failed to play:", e);
@@ -169,6 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function switchToGameMusic() {
     console.log("Switching to game music");
+    if (audioMuted) return; // Don't play if muted
     if (themeAudio && gameAudio) {
       themeAudio.pause();
       gameAudio.play().catch((e) => {
@@ -179,6 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function switchToThemeMusic() {
     console.log("Switching back to theme music");
+    if (audioMuted) return; // Don't play if muted
     if (themeAudio && gameAudio) {
       gameAudio.pause();
       themeAudio.play().catch((e) => {
@@ -192,6 +196,63 @@ document.addEventListener('DOMContentLoaded', function() {
     if (themeAudio && !themeAudio.paused) {
       themeAudio.pause();
     }
+  }
+
+  /**
+   * Toggle audio on/off for both theme and game audio
+   */
+  function toggleAudio() {
+    audioMuted = !audioMuted;
+    
+    if (audioMuted) {
+      // Mute all audio
+      if (themeAudio && !themeAudio.paused) {
+        themeAudio.pause();
+      }
+      if (gameAudio && !gameAudio.paused) {
+        gameAudio.pause();
+      }
+    } else {
+      // Unmute - resume appropriate audio based on current state
+      if (openApp === 'game') {
+        // Resume game music if in game app
+        if (gameAudio && gameAudio.paused) {
+          gameAudio.play().catch((e) => {
+            console.log("Game audio failed to play:", e);
+          });
+        }
+      } else if (!openApp) {
+        // Resume theme music if on home screen
+        if (themeAudio && themeAudio.paused) {
+          themeAudio.play().catch((e) => {
+            console.log("Theme audio failed to play:", e);
+          });
+        }
+      }
+      // If in other apps (video, frames, etc.), don't auto-play
+    }
+    
+    render(); // Re-render to update button icon
+  }
+
+  /**
+   * Render the audio toggle button for app panels
+   */
+  function renderAudioToggle() {
+    const iconSrc = audioMuted 
+      ? "src/assets/iconsinapp/no audio.png"
+      : "src/assets/iconsinapp/audio on .png";
+    const altText = audioMuted ? "Audio Off - Click to turn on" : "Audio On - Click to turn off";
+    
+    return `
+      <button 
+        class="audio-toggle-btn" 
+        title="${altText}"
+        aria-label="${altText}"
+      >
+        <img src="${iconSrc}" alt="${altText}" class="audio-toggle-icon" />
+      </button>
+    `;
   }
 
 
@@ -239,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       openApp = null;
         currentVideoIndex = null;
-        if (themeAudio && !openApp) {
+        if (themeAudio && !openApp && !audioMuted) {
           themeAudio.play().catch(() => {});
         }
       render();
@@ -388,7 +449,10 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="app-panel-header">
             <button class="app-panel-back-btn app-panel-text-sm video-app-orange-text">Back to Gallery</button>
             <div class="app-panel-text-xs text-white">${video.title}</div>
-            <button class="app-panel-close-btn app-panel-text-sm video-app-orange-text">Close</button>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              ${renderAudioToggle()}
+              <button class="app-panel-close-btn app-panel-text-sm video-app-orange-text">Close</button>
+            </div>
           </div>
           <div class="app-panel-content">
             <div class="video-player-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
@@ -405,7 +469,9 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="app-panel-header">
           <button class="app-panel-close-btn app-panel-text-sm video-app-orange-text">Close</button>
           <div class="app-panel-text-xs text-white">Video Gallery</div>
-          <div></div>
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            ${renderAudioToggle()}
+          </div>
         </div>
         <div class="app-panel-content">
           <div class="video-app-content">
@@ -544,7 +610,9 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="app-panel-header">
           <button class="app-panel-close-btn app-panel-text-sm app-primary-text">Close</button>
           <div class="app-panel-text-xs text-white">Stills / Frames</div>
-          <div></div>
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            ${renderAudioToggle()}
+          </div>
         </div>
         <div class="app-panel-content frames-app-content">
           <div class="frames-carousel-container">
@@ -565,7 +633,9 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="app-panel-header">
           <button class="app-panel-close-btn app-panel-text-sm app-primary-text">Close</button>
           <div class="app-panel-text-xs text-white">Contact</div>
-          <div></div>
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            ${renderAudioToggle()}
+          </div>
         </div>
         <div class="app-panel-content">
           <div class="flex items-center justify-center h-full">
@@ -586,7 +656,9 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="app-panel-header">
           <button class="app-panel-close-btn app-panel-text-sm app-primary-text">Close</button>
           <div class="app-panel-text-xs text-white">About</div>
-          <div></div>
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            ${renderAudioToggle()}
+          </div>
         </div>
         <div class="app-panel-content">
           <div class="space-y-8 app-panel-text-sm text-white">
@@ -661,7 +733,9 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="app-panel-header">
           <button class="app-panel-close-btn app-panel-text-sm app-primary-text">Close</button>
           <div class="app-panel-text-xs text-white">Socials</div>
-          <div></div>
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            ${renderAudioToggle()}
+          </div>
         </div>
         <div class="app-panel-content socials-app-content">
           <div class="socials-list app-panel-text-sm text-white">
@@ -935,7 +1009,9 @@ When I was young, I always imagined what a music video scene might feel like if 
       <div class="app-panel-header">
         <button class="app-panel-back-btn app-panel-btn app-primary-text">Back</button>
         <h2 class="app-panel-title app-panel-text-2xl app-primary-text">Digital and Physical Games</h2>
-        <div></div>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          ${renderAudioToggle()}
+        </div>
       </div>
       <div class="app-panel-content game-app-content">
         <div class="game-carousel-container">
@@ -1043,11 +1119,18 @@ When I was young, I always imagined what a music video scene might feel like if 
         }
         openApp = null;
         currentVideoIndex = null;
-        if (themeAudio && !openApp) {
+        if (themeAudio && !openApp && !audioMuted) {
           themeAudio.play().catch(() => {});
         }
         updateHashFromState();
         render();
+      });
+    });
+
+    // Audio toggle button
+    document.querySelectorAll('.audio-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        toggleAudio();
       });
     });
 
@@ -1066,7 +1149,7 @@ When I was young, I always imagined what a music video scene might feel like if 
           openApp = null;
           currentVideoIndex = null;
           gameCarouselIndex = 0; // Reset carousel index
-          if (themeAudio && !openApp) {
+          if (themeAudio && !openApp && !audioMuted) {
             themeAudio.play().catch(() => {});
           }
           updateHashFromState();
@@ -1226,7 +1309,7 @@ When I was young, I always imagined what a music video scene might feel like if 
     document.querySelectorAll('.close-modal').forEach(btn => {
       btn.addEventListener('click', function() {
         galleryModal = null;
-        if (themeAudio && !openApp) {
+        if (themeAudio && !openApp && !audioMuted) {
           themeAudio.play().catch(() => {});
         }
         updateHashFromState();

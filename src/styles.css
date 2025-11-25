@@ -280,6 +280,31 @@ body {
   color: rgba(255, 165, 0, 0.7); /* Lighter/bright orange on hover */
 }
 
+/* Audio toggle button */
+.audio-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+  opacity: 0.8;
+}
+
+.audio-toggle-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.audio-toggle-icon {
+  width: 3rem;
+  height: 3rem;
+  display: block;
+  object-fit: contain;
+}
+
 /* Ensure social app cards have comfortable vertical spacing */
 .socials-list {
   display: flex;
