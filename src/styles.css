@@ -302,8 +302,8 @@ body {
 }
 
 .audio-toggle-icon {
-  width: 0.12rem;
-  height: 0.12rem;
+  width: 0.06rem;
+  height: 0.06rem;
   display: block;
   object-fit: contain;
 }
