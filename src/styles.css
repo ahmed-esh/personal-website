@@ -545,36 +545,29 @@ a.app-primary-text:hover {
   line-height: 2.5rem;
 }
 
-/* Audio Toggle Button - Always visible on the side */
+/* Audio Toggle Button - Inside app panel headers */
 .audio-toggle-btn {
-  position: fixed;
-  top: 50%;
-  right: 2rem;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.7);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  border: none;
   border-radius: 50%;
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 1000;
   transition: all 0.3s ease;
   padding: 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  flex-shrink: 0;
 }
 
 .audio-toggle-btn:hover {
-  background: rgba(0, 0, 0, 0.9);
-  border-color: rgba(255, 255, 255, 0.6);
-  transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
+  transform: scale(1.1);
+  opacity: 0.8;
 }
 
 .audio-toggle-btn:active {
-  transform: translateY(-50%) scale(0.95);
+  transform: scale(0.95);
 }
 
 .audio-toggle-icon {

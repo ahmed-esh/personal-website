@@ -267,6 +267,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  /**
+   * Render the audio toggle button for app panel headers
+   */
+  function renderAudioToggleButton() {
+    return `
+      <button 
+        class="audio-toggle-btn" 
+        aria-label="${isAudioMuted ? 'Unmute audio' : 'Mute audio'}"
+        title="${isAudioMuted ? 'Click to turn audio on' : 'Click to turn audio off'}"
+      >
+        <img 
+          src="${isAudioMuted ? 'src/assets/iconsinapp/no audio.png' : 'src/assets/iconsinapp/audio on .png'}" 
+          alt="${isAudioMuted ? 'Audio off' : 'Audio on'}"
+          class="audio-toggle-icon"
+        />
+      </button>
+    `;
+  }
+
   function render() {
     const root = document.getElementById('root');
     if (!root) return;
@@ -275,20 +294,6 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="layout-container" id="layout-container">
         <!-- Background -->
         <img src="src/assets/website layout/visuals/background.png" alt="Background" class="layout-bg" />
-        
-        <!-- Audio Toggle Button (always visible) -->
-        <button 
-          id="audio-toggle-btn" 
-          class="audio-toggle-btn" 
-          aria-label="${isAudioMuted ? 'Unmute audio' : 'Mute audio'}"
-          title="${isAudioMuted ? 'Click to turn audio on' : 'Click to turn audio off'}"
-        >
-          <img 
-            src="${isAudioMuted ? 'src/assets/iconsinapp/no audio.png' : 'src/assets/iconsinapp/audio on .png'}" 
-            alt="${isAudioMuted ? 'Audio off' : 'Audio on'}"
-            class="audio-toggle-icon"
-          />
-        </button>
         
         <!-- Closed Phone (only visible before animation) -->
         <img src="src/assets/phone animation/closed.png" alt="Closed Phone" class="layout-closed-phone ${animationStarted ? 'hidden' : ''}" />
@@ -422,7 +427,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="app-panel-header">
             <button class="app-panel-back-btn app-panel-text-sm video-app-orange-text">Back to Gallery</button>
             <div class="app-panel-text-xs text-white">${video.title}</div>
-            <button class="app-panel-close-btn app-panel-text-sm video-app-orange-text">Close</button>
+            ${renderAudioToggleButton()}
           </div>
           <div class="app-panel-content">
             <div class="video-player-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
@@ -439,7 +444,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="app-panel-header">
           <button class="app-panel-close-btn app-panel-text-sm video-app-orange-text">Close</button>
           <div class="app-panel-text-xs text-white">Video Gallery</div>
-          <div></div>
+          ${renderAudioToggleButton()}
         </div>
         <div class="app-panel-content">
           <div class="video-app-content">
@@ -578,7 +583,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="app-panel-header">
           <button class="app-panel-close-btn app-panel-text-sm app-primary-text">Close</button>
           <div class="app-panel-text-xs text-white">Stills / Frames</div>
-          <div></div>
+          ${renderAudioToggleButton()}
         </div>
         <div class="app-panel-content frames-app-content">
           <div class="frames-carousel-container">
@@ -599,7 +604,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="app-panel-header">
           <button class="app-panel-close-btn app-panel-text-sm app-primary-text">Close</button>
           <div class="app-panel-text-xs text-white">Contact</div>
-          <div></div>
+          ${renderAudioToggleButton()}
         </div>
         <div class="app-panel-content">
           <div class="flex items-center justify-center h-full">
@@ -620,7 +625,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="app-panel-header">
           <button class="app-panel-close-btn app-panel-text-sm app-primary-text">Close</button>
           <div class="app-panel-text-xs text-white">About</div>
-          <div></div>
+          ${renderAudioToggleButton()}
         </div>
         <div class="app-panel-content">
           <div class="space-y-8 app-panel-text-sm text-white">
@@ -695,7 +700,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="app-panel-header">
           <button class="app-panel-close-btn app-panel-text-sm app-primary-text">Close</button>
           <div class="app-panel-text-xs text-white">Socials</div>
-          <div></div>
+          ${renderAudioToggleButton()}
         </div>
         <div class="app-panel-content socials-app-content">
           <div class="socials-list app-panel-text-sm text-white">
@@ -969,7 +974,7 @@ When I was young, I always imagined what a music video scene might feel like if 
       <div class="app-panel-header">
         <button class="app-panel-back-btn app-panel-btn app-primary-text">Back</button>
         <h2 class="app-panel-title app-panel-text-2xl app-primary-text">Digital and Physical Games</h2>
-        <div></div>
+        ${renderAudioToggleButton()}
       </div>
       <div class="app-panel-content game-app-content">
         <div class="game-carousel-container">
@@ -1002,11 +1007,10 @@ When I was young, I always imagined what a music video scene might feel like if 
   function attachEventListeners() {
     let musicStarted = false;
     
-    // Audio toggle button
-    const audioToggleBtn = document.getElementById('audio-toggle-btn');
-    if (audioToggleBtn) {
-      audioToggleBtn.addEventListener('click', toggleAudio);
-    }
+    // Audio toggle buttons (one in each app panel)
+    document.querySelectorAll('.audio-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', toggleAudio);
+    });
     
     // Click anywhere to start animation (only if not started)
     if (!animationStarted) {
