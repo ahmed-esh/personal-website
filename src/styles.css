@@ -285,13 +285,13 @@ body {
   background: white;
   border: none;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: opacity 0.3s ease, transform 0.2s ease;
   opacity: 0.9;
-  border-radius: 0.5rem;
+  border-radius: 0.2rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
