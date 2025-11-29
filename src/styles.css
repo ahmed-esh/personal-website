@@ -280,40 +280,6 @@ body {
   color: rgba(255, 165, 0, 0.7); /* Lighter/bright orange on hover */
 }
 
-/* Audio toggle button */
-.audio-toggle-btn {
-  background: white;
-  border: none;
-  cursor: pointer;
-  padding: 0.05rem;
-  width: 0.16rem;
-  height: 0.16rem;
-  min-width: 0.16rem;
-  min-height: 0.16rem;
-  max-width: 0.16rem;
-  max-height: 0.16rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.3s ease, transform 0.2s ease;
-  opacity: 0.9;
-  border-radius: 0.1rem;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-}
-
-.audio-toggle-btn:hover {
-  opacity: 1;
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.audio-toggle-icon {
-  width: 0.12rem;
-  height: 0.12rem;
-  display: block;
-  object-fit: contain;
-}
-
 /* Ensure social app cards have comfortable vertical spacing */
 .socials-list {
   display: flex;
@@ -577,6 +543,45 @@ a.app-primary-text:hover {
   padding: 1.5rem 3rem; /* doubled from 0.75rem 1.5rem */
   font-size: 2rem; /* doubled from 1rem */
   line-height: 2.5rem;
+}
+
+/* Audio Toggle Button - Always visible on the side */
+.audio-toggle-btn {
+  position: fixed;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  padding: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.audio-toggle-btn:hover {
+  background: rgba(0, 0, 0, 0.9);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
+}
+
+.audio-toggle-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.audio-toggle-icon {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  pointer-events: none;
 }
 
 /* No responsive scaling - fixed 1440x1440 container */
