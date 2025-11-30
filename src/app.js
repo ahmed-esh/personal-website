@@ -387,6 +387,7 @@ document.addEventListener('DOMContentLoaded', function() {
         >
           <img src="${app.icon}" alt="${app.label}" class="app-icon-image" style="display: block;" />
           <div class="app-hover-overlay"></div>
+          <div class="app-tooltip">${app.label}</div>
             </button>
         </div>
     `).join('');

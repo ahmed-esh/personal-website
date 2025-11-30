@@ -183,6 +183,29 @@ body {
   opacity: 1;
 }
 
+/* App tooltip - shows app name on hover */
+.app-tooltip {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 20;
+  font-family: 'StoryScript-Regular', sans-serif;
+}
+
+.app-icon-button:hover .app-tooltip {
+  opacity: 1;
+}
+
 /* App Screen Content */
 .layout-phone-screen .h-full {
   height: 100%;
