@@ -291,6 +291,41 @@ body {
 /* Extra padding for socials app content */
 .socials-app-content {
   padding: 4rem 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Social icons container */
+.socials-icons-container {
+  display: flex;
+  gap: 4rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Social icon link */
+.social-icon-link {
+  display: inline-block;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.social-icon-link:hover {
+  transform: scale(1.1);
+}
+
+.social-icon-link:active {
+  transform: scale(0.95);
+}
+
+/* Social icon image */
+.social-icon {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  display: block;
 }
 
 .app-panel-close-btn,
