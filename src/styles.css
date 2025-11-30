@@ -202,6 +202,12 @@ body {
   font-family: 'StoryScript-Regular', sans-serif;
 }
 
+/* Tooltip for bottom row apps - appears above instead of below */
+.app-tooltip-top {
+  bottom: auto;
+  top: -40px;
+}
+
 .app-icon-button:hover .app-tooltip {
   opacity: 1;
 }

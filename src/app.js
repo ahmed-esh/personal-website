@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
     { key: "video", label: "Video", emoji: "🎥", icon: "src/assets/website layout/visuals/video app.png", x: 618, y: 233 },
     { key: "contact", label: "Contact", emoji: "✉️", icon: "src/assets/website layout/visuals/contact app.png", x: 755, y: 234 },
     { key: "instagram", label: "Socials", emoji: "📷", icon: "src/assets/website layout/visuals/socails app.png", x: 612, y: 326 },
-    { key: "game", label: "Game", emoji: "🎮", icon: "src/assets/website layout/visuals/game app.png", x: 751, y: 333 },
+    { key: "game", label: "Games", emoji: "🎮", icon: "src/assets/website layout/visuals/game app.png", x: 751, y: 333 },
     { key: "frames", label: "Frames", emoji: "🖼️", icon: "src/assets/website layout/visuals/frames app.png", x: 610, y: 428 },
     { key: "about", label: "About", emoji: "ℹ️", icon: "src/assets/website layout/visuals/about app.png", x: 754, y: 426 },
   ];
@@ -378,7 +378,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const phoneScreenContainerX = -10; // Container left position (was 490px, moved 500px left)
     const phoneScreenContainerY = -55; // Container top position (was 45px, moved 100px up)
     
-    return apps.map((app) => `
+    // Determine if app is in bottom row (y >= 400)
+    return apps.map((app) => {
+      const isBottomRow = app.y >= 400;
+      return `
       <div class="app-icon-wrapper" style="position: absolute; left: ${app.x - phoneScreenContainerX}px; top: ${app.y - phoneScreenContainerY}px; z-index: 17;">
             <button
           class="app-icon-button"
@@ -387,10 +390,11 @@ document.addEventListener('DOMContentLoaded', function() {
         >
           <img src="${app.icon}" alt="${app.label}" class="app-icon-image" style="display: block;" />
           <div class="app-hover-overlay"></div>
-          <div class="app-tooltip">${app.label}</div>
+          <div class="app-tooltip ${isBottomRow ? 'app-tooltip-top' : ''}">${app.label}</div>
             </button>
         </div>
-    `).join('');
+    `;
+    }).join('');
   }
 
   function renderAppScreen() {
